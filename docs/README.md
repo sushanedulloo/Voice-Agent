@@ -9,6 +9,7 @@ AI-BOT Outbound Telesales Voice Agent · TransOrg Analytics · September 2026
 | New to the engagement | [`Context.md`](Context.md) — the business, the competition, the economics |
 | Running it | [`RUNBOOK.md`](RUNBOOK.md) — every command, from a cold machine |
 | Picking up where we left off | [`APPROACH.md`](APPROACH.md) — next steps and the GPU render handoff |
+| Rendering the voices on a GPU | [`RUNBOOK.md` §6](RUNBOOK.md) → [the Colab notebook](../notebooks/render_audio_colab.ipynb) |
 | Picking up the build | [`../CLAUDE.md`](../CLAUDE.md), then [`SRS.md`](SRS.md), then [`DESIGN.md`](DESIGN.md) |
 | Reviewing the architecture | [`DIAGRAMS.md`](DIAGRAMS.md) and [`adr/`](adr/README.md) |
 | From the client's InfoSec | [`SRS.md` §6](SRS.md#6-compliance-requirements) and [`RISKS.md`](RISKS.md) |

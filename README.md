@@ -55,6 +55,7 @@ NeMo Guardrails' Colang falls through to an `llm continuation` flow that generat
 | `content/` | The default content pack — everything the bot may say |
 | `tools/` | Validator, importer, renderers, benchmark, reports |
 | `tests/` | The compliance invariants |
+| `notebooks/` | The Colab A100 voice render — a thin driver over `tools/colab_env.py` |
 | `docs/` | Every document. Start at [`docs/README.md`](docs/README.md) |
 | `incoming/` | Drop zone for a client-supplied script, with a sample |
 | `cost_model.py` | Unit economics. Runnable. One place an assumption lives |

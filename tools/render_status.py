@@ -30,8 +30,6 @@ import sys
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
 
-ROOT = pathlib.Path(__file__).resolve().parent.parent
-WAV = ROOT / "audio_cache" / "wav"
 SEP = "␟"
 
 
@@ -45,32 +43,31 @@ def main():
                     help="confirm every index entry points at a file that exists")
     ap.add_argument("--manifest", default=None,
                     help="write the outstanding spans to a JSON file")
+    ap.add_argument("--cache", default=None,
+                    help="cache to inspect; defaults to audio_cache/wav, or "
+                         "$VOICEAGENT_AUDIO_CACHE/wav if set")
     args = ap.parse_args()
 
     from engine import Content                                    # noqa: PLC0415
-    from engine.prerender import (cache_key, enumerate_utterances,  # noqa: PLC0415
-                                  RENDERERS)
+    from engine import prerender as pre                           # noqa: PLC0415
 
     content = Content(args.pack)
-    cls = RENDERERS[args.engine]
+    cls = pre.RENDERERS[args.engine]
     name, version = cls.name, cls.version
 
-    # every fixed span the pack can utter, per locale
-    wanted = {}
-    for utt in enumerate_utterances(content):
-        for span in utt.spans:
-            text = span.text.strip()
-            if span.fixed and text:
-                key = cache_key(text, utt.locale, args.voice, name, version)
-                wanted[key] = (utt.locale, text)
-
+    WAV = pathlib.Path(args.cache) / "wav" if args.cache else pre.WAV_CACHE
     WAV.mkdir(parents=True, exist_ok=True)
-    have = {p.stem for p in WAV.glob("*.wav")}
-    done = {k: v for k, v in wanted.items() if k in have}
-    todo = {k: v for k, v in wanted.items() if k not in have}
+
+    # The same plan the renderer works from - not a second implementation of it. If these two
+    # ever disagreed, this tool would cheerfully report a complete render the server cannot
+    # serve, which is the one failure it exists to catch.
+    wanted = pre.plan(content, engine=name, version=version, voice=args.voice)
+    todo = pre.outstanding(wanted, WAV)
+    done = {k: v for k, v in wanted.items() if k not in todo}
 
     print(f"\n  pack   {content.pack_name} @ {content.content_hash} ({content.provenance})")
-    print(f"  engine {name} v{version}   voice {args.voice}\n")
+    print(f"  engine {name} v{version}   voice {args.voice}")
+    print(f"  cache  {WAV}\n")
     print(f"  {'locale':8} {'needed':>7} {'rendered':>9} {'missing':>8}")
     by_locale = collections.Counter(loc for loc, _ in wanted.values())
     done_locale = collections.Counter(loc for loc, _ in done.values())
@@ -81,9 +78,9 @@ def main():
     pct = len(done) / len(wanted) * 100 if wanted else 100
     print(f"\n  {len(done)}/{len(wanted)} spans rendered ({pct:.0f}%)")
 
-    index_path = WAV / "INDEX.json"
+    index_path = WAV / pre.INDEX_NAME
     if index_path.exists():
-        doc = json.loads(index_path.read_text(encoding="utf-8"))
+        doc = pre.load_index(WAV)
         print(f"  index: {doc.get('engine')} v{doc.get('engine_version')} · "
               f"{len(doc.get('spans', {}))} entries")
         if doc.get("engine") != name:
@@ -94,7 +91,7 @@ def main():
         print("  index: none yet - written when a render finishes a locale set")
 
     if args.verify and index_path.exists():
-        doc = json.loads(index_path.read_text(encoding="utf-8"))
+        doc = pre.load_index(WAV)
         broken = [k for k, f in doc.get("spans", {}).items() if not (WAV / f).exists()]
         print(f"\n  verify: {len(doc.get('spans', {})) - len(broken)} entries resolve, "
               f"{len(broken)} broken")

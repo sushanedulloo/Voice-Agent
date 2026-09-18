@@ -124,36 +124,65 @@ The pack will not load until the validator passes. That is deliberate.
 
 ---
 
-## 6. Rendering the voices (build-time, WSL)
+## 6. Rendering the voices (build-time)
 
-Currently running: `indic-parler-tts`, all nine languages, ~10 hours.
+`indic-parler-tts`, all nine languages, 1,089 clips. **Do this on a GPU.**
 
-```bash
-wsl -d Ubuntu
-cd /mnt/c/Users/TransOrg/Documents/Outbound
-source .venv-tts/bin/activate
+### 6a. Colab A100 — the normal route
 
-python tools/tts_check.py                       # 9 samples, ~2 min — LISTEN first
+[**Open the notebook**](https://colab.research.google.com/github/transorg-engineering/VoiceAgent/blob/colab-gpu-render/notebooks/render_audio_colab.ipynb)
+· source: [`notebooks/render_audio_colab.ipynb`](../notebooks/render_audio_colab.ipynb)
 
-python tools/prerender_audio.py --engine parler --locales en hi mr gu
-python tools/prerender_audio.py --engine parler --locales bn ta te kn ml
-```
+Under an hour, against 15–50 on the laptop. The notebook is a thin driver; the logic is in
+[`tools/colab_env.py`](../tools/colab_env.py), so it is reviewable, importable and diffable like
+any other file in the repo.
 
-Two workers, not three — parler holds ~4 GB each and WSL has 12 GB (`~/.wslconfig`).
-Resumable: anything already on disk is skipped.
+Needs, once: an **A100** runtime, a Colab secret `GH_TOKEN` (fine-grained PAT, *Contents: read*),
+and a Colab secret `HF_TOKEN` for the gated model. No token is ever written into the notebook.
 
-Torch belongs **only** here. It will not load on Windows (Smart App Control), and it does not
-need to: the serving box plays files.
+Output goes straight to `MyDrive/VoiceAgent-audio/wav/` as each clip is produced, so a reclaimed
+session loses nothing — re-run the render cell and it continues. Bring it home by unzipping into
+`audio_cache/wav/`.
+
+### 6b. Any other GPU box
 
 ```bash
 pip install -r requirements-build.txt     # torch 2.5.1 + torchaudio 2.5.1, pinned TOGETHER
+python tools/tts_check.py                 # 9 samples, ~2 min — LISTEN first
+python tools/prerender_audio.py --engine parler --batch-size 8
+python tools/render_status.py  --engine parler --verify
 ```
 
-A mismatched pair breaks torchaudio's native extension and `parler_tts` will not import at all.
+A mismatched torch/torchaudio pair breaks torchaudio's native extension and `parler_tts` will
+not import at all. `--batch-size` is the whole GPU story: one clip at a time leaves the card
+idle, because the batch dimension is 1.
 
-When it finishes, restart `apps\server.py`. Audio resolves through `audio_cache/wav/INDEX.json`
-by *what is spoken*, not by which engine spoke it, so the swap needs no code change.
-Confirm with `/api/config` → `prerendered_engine` should read `indic-parler-tts`.
+### 6c. CPU fallback (WSL)
+
+~120 s per clip — about 36 hours, so this is a last resort.
+
+```bash
+wsl -d Ubuntu && cd /mnt/c/Users/TransOrg/Documents/Outbound
+source .venv-tts/bin/activate
+python tools/prerender_audio.py --engine parler --locales en hi mr gu    # worker A
+python tools/prerender_audio.py --engine parler --locales bn ta te kn ml # worker B
+```
+
+Two workers, not three — parler holds ~4 GB each and WSL has 12 GB (`~/.wslconfig`).
+
+Torch belongs **only** to this step. It will not load on Windows (Smart App Control), and it
+does not need to: the serving box plays files.
+
+### Then, wherever it ran
+
+Restart `apps/server.py`. Audio resolves through `audio_cache/wav/INDEX.json` by *what is
+spoken*, not by which engine spoke it, so the swap needs no code change. Confirm with
+`/api/config` → `prerendered_engine` should read `indic-parler-tts`.
+
+Every render step is safe to interrupt and safe to re-run: a clip's filename **is** the SHA-256
+of what it says, so partial results are complete files and `tools/render_status.py` says what is
+left. Point any of these tools at a different cache with `--cache`, or set
+`$VOICEAGENT_AUDIO_CACHE` once and they all follow it.
 
 ---
 

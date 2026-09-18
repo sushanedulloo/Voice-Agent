@@ -40,9 +40,9 @@ from fastapi.responses import JSONResponse                        # noqa: E402
 import cost_model as cm                                           # noqa: E402
 from engine import Content                                        # noqa: E402
 from engine.audit import Audit, DEFAULT_DIR                       # noqa: E402
+from engine.prerender import INDEX_NAME, WAV_CACHE                # noqa: E402
 from engine.insights import funnel, intelligence_cuts             # noqa: E402
 
-ROOT = pathlib.Path(__file__).resolve().parent.parent
 STARTED = time.time()
 TOKEN = os.environ.get("OUTBOUND_API_TOKEN", "")
 PACK = os.environ.get("OUTBOUND_CONTENT_PACK") or None
@@ -99,7 +99,7 @@ def ready():
     checks = {
         "content_pack": bool(CONTENT.products),
         "auth_configured": bool(TOKEN),
-        "audio_index": (ROOT / "audio_cache" / "wav" / "INDEX.json").exists(),
+        "audio_index": (WAV_CACHE / INDEX_NAME).exists(),
     }
     body = {
         "ready": checks["content_pack"],

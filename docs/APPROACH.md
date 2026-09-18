@@ -28,17 +28,32 @@ rather than needing new plumbing.
 
 ---
 
-## Immediate: finish the voice render  → **GPU collaborator**
+## Immediate: finish the voice render  → **Colab A100**
 
 The only outstanding build task. ~1,089 audio clips across nine languages.
 
 On this laptop it runs at roughly 50–170 s per clip, so 15–50 hours depending on contention.
-On a single T4 or L4 it is **under an hour**. That is the whole reason to hand it off.
+On an A100 with batching it is **under an hour**. That is the whole reason it moved.
 
-### For whoever has the GPU
+### [→ Open the render notebook](https://colab.research.google.com/github/transorg-engineering/VoiceAgent/blob/colab-gpu-render/notebooks/render_audio_colab.ipynb)
+
+Source: [`notebooks/render_audio_colab.ipynb`](../notebooks/render_audio_colab.ipynb). Pick an
+**A100** runtime, add two Colab secrets (`GH_TOKEN`, `HF_TOKEN`), run the cells.
+
+The notebook is nine lines of driver. Everything it does lives in
+[`tools/colab_env.py`](../tools/colab_env.py), because a notebook is not a reviewable artefact —
+cells cannot be imported, linted or diffed sensibly, and the version that ran is whatever
+happened to be in the browser. If Colab disappears tomorrow the render still runs from a
+terminal.
+
+Clips are written to `MyDrive/VoiceAgent-audio/wav/` as they are produced, not copied at the
+end. A Colab session can be reclaimed without warning; a run that dies at clip 700 has banked
+700 clips and the next run does the remaining 389.
+
+### On any other GPU box
 
 ```bash
-git clone <repo> && cd outbound && git checkout VoiceAgent
+git clone <repo> && cd VoiceAgent && git checkout colab-gpu-render
 
 python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
@@ -49,12 +64,11 @@ hf auth login
 python tools/fetch_models.py               # ~8 GB
 
 python tools/tts_check.py                  # 9 samples, ~2 min — LISTEN before the long run
-python tools/render_status.py              # what is outstanding
+python tools/render_status.py --engine parler          # what is outstanding
 
-python tools/prerender_audio.py --engine parler \
-  --locales en hi mr gu bn ta te kn ml
+python tools/prerender_audio.py --engine parler --batch-size 8
 
-python tools/render_status.py --verify     # expect 1089/1089 and 0 broken
+python tools/render_status.py --engine parler --verify # expect 1089/1089 and 0 broken
 ```
 
 Then ship back `audio_cache/wav/` — about 140 MB. Any transport is fine.

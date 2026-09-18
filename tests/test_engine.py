@@ -22,6 +22,7 @@ import sys
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
 
 from engine import Content, Session                                    # noqa: E402
+from engine import prerender as pre                                    # noqa: E402
 from engine.machine import ComplianceError, Machine                    # noqa: E402
 from engine.session import PIILeak, _assert_no_pii                     # noqa: E402
 
@@ -262,6 +263,97 @@ def test_every_node_line_renders_for_every_locale():
         for locale in CONTENT.locales:
             for node_id in CONTENT.products[product].nodes:
                 CONTENT.node_line(product, node_id, locale, CAMPAIGN)
+
+
+# ---------------------------------------------------------------------------------------------
+# The audio cache (ADR-005). These guard the seam between the machine that renders and the
+# machine that serves - a render is only useful if the server can find what it produced.
+# ---------------------------------------------------------------------------------------------
+
+def test_audio_index_key_matches_what_the_server_looks_up():
+    """The renderer writes the index; apps/server.py reads it. One function, both sides.
+
+    This was two hand-written f-strings in two files. They agreed, until one of them would not
+    have - and the failure is silent: every span misses the cache and the console quietly
+    re-synthesises BLC-approved audio at call time, which is the exact thing ADR-005 forbids.
+    """
+    assert pre.index_entry("hi", "default", "namaste") == "hi\u241fdefault\u241fnamaste"
+
+
+def test_render_plan_is_deduplicated_and_locale_scoped():
+    full = pre.plan(CONTENT, engine="x", version="1")
+    one = pre.plan(CONTENT, engine="x", version="1", locales=["en"])
+    assert all(loc == "en" for loc, _ in one.values())
+    assert 0 < len(one) < len(full)
+    # keyed by what is spoken, so a sentence shared by two nodes is one clip
+    assert len(full) == len({(loc, text) for loc, text in full.values()})
+
+
+def test_a_reworded_line_gets_a_new_clip():
+    """The cache cannot serve last month's approval for this month's wording."""
+    a = pre.cache_key("your limit can go up", "en", "default", "x", "1")
+    b = pre.cache_key("your limit may go up", "en", "default", "x", "1")
+    assert a != b
+    assert a == pre.cache_key("  your limit can go up  ", "en", "default", "x", "1")
+
+
+def test_slot_bearing_spans_are_never_prerendered():
+    """A cached "...about 4,500 rupees" would be played to a customer offered something else."""
+    for key, (locale, text) in pre.plan(CONTENT, engine="x", version="1").items():
+        assert "{" not in text, f"{locale} {key}: slot span in the pre-render plan: {text!r}"
+
+
+def test_index_merges_rather_than_replaces():
+    """Two machines render disjoint locales and ship back caches. Neither may erase the other."""
+    import tempfile
+
+    class _R:
+        name, version, sample_rate = "x", "1", 44100
+
+    with tempfile.TemporaryDirectory() as tmp:
+        cache = pathlib.Path(tmp)
+        for locales in (["en"], ["hi"]):
+            wanted = pre.plan(CONTENT, engine="x", version="1", locales=locales)
+            for key in wanted:
+                (cache / f"{key}.wav").write_bytes(b"")
+            pre.write_index(cache, wanted, content=CONTENT, renderer=_R())
+        spans = pre.load_index(cache)["spans"]
+        assert any(k.startswith("en\u241f") for k in spans)
+        assert any(k.startswith("hi\u241f") for k in spans), "second render erased the first"
+
+
+def test_outstanding_is_the_whole_resume_protocol():
+    import tempfile
+    with tempfile.TemporaryDirectory() as tmp:
+        cache = pathlib.Path(tmp)
+        wanted = pre.plan(CONTENT, engine="x", version="1", locales=["en"])
+        assert len(pre.outstanding(wanted, cache)) == len(wanted)
+        done = list(wanted)[:3]
+        for key in done:
+            (cache / f"{key}.wav").write_bytes(b"")
+        assert len(pre.outstanding(wanted, cache)) == len(wanted) - len(done)
+
+
+def test_render_seed_is_stable_across_processes():
+    """parler samples, so the seed is the only thing making a re-render reproduce the clip.
+
+    The literal is the point: Python salts str hashing per process, so a seed built on hash()
+    would match within a run and differ between runs. This value must survive a new interpreter,
+    a new machine and a new year.
+    """
+    assert pre._stable_seed(0, "aap ka limit") == 735276500
+    assert pre._stable_seed(7, "aap ka limit") == 735276499
+    assert pre._stable_seed(0, "a") != pre._stable_seed(0, "b")
+
+
+def test_batch_padding_is_trimmed_off():
+    """Untrimmed, a short span batched with a long one carries seconds of dead air."""
+    import numpy as np
+    sr = 16000
+    clip = np.concatenate([np.ones(sr, dtype="float32") * 0.5, np.zeros(sr * 3, "float32")])
+    out = pre.trim_trailing_silence(clip, sr)
+    assert sr <= out.size < sr * 1.2, out.size
+    assert pre.trim_trailing_silence(np.zeros(sr, "float32"), sr).size == 0
 
 
 if __name__ == "__main__":

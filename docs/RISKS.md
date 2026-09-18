@@ -257,6 +257,29 @@ time post-transfer against the control arm.
 
 ---
 
+### R-17 · The BLC script rendered on a foreign GPU
+**P** M · **I** 3 · **Score 6** · *Compliance*
+
+The nine-language voice render is a build step, not runtime, so constraint 4 ("no foreign API
+endpoint in the **runtime path**") is not engaged: ADR-005 means the serving box plays files and
+loads no model at all, and no customer data is involved — slot-bearing spans are deliberately the
+one thing never pre-rendered, so nothing leaves the machine but the approved script text itself.
+
+That covers DPDP. It does not cover confidentiality. Today's render runs on a Colab A100 in a
+Google region outside India, and the pack it renders is `synthetic-placeholder` — content we
+wrote, of no value to anyone. **The exposure appears the day the real BLC pack arrives**, because
+"send SBI Card's legally approved call script to a US datacentre" is a question their InfoSec
+will want to have been asked, not discovered.
+
+**Mitigation.** Fine as-is for synthetic content. Before the first render of a client-supplied
+pack, either confirm in writing that build-time processing of script text offshore is acceptable,
+or move the render to an India-region GPU — it is roughly an hour of A100 time and the tooling is
+already region-agnostic (`tools/prerender_audio.py` runs anywhere torch runs; the notebook is a
+convenience, not a dependency).
+**Trigger.** `tools/import_script.py` is run against a real BLC pack.
+
+---
+
 ## 2. Escalated risks — weekly review
 
 | ID | Risk | Score | Owner |
@@ -278,6 +301,7 @@ business case if the literal reading holds. Everything else can be managed durin
 
 | Risk | Why accepted |
 |---|---|
+| Rendering synthetic content on a non-India GPU | Build-time, no PII, and the content is ours. Re-decide before a real BLC pack is rendered — see R-17. |
 | Slower turn latency than a speech-to-speech competitor | Deliberate. A cascaded pipeline gives us an inspectable transcript, script-adherence proof and the three-year text archive the client requires. Speech-to-speech makes all three a bolt-on. See ADR-001. |
 | Not building our own Indic speech models | We will not beat the specialists by training from scratch and should not try. Differentiation is orchestration and analytics. |
 | POC operates at a loss | Priced to win a ~₹14 crore annual contract. Payback under one month of production revenue. |

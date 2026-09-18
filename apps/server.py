@@ -39,7 +39,8 @@ from fastapi.responses import FileResponse, Response              # noqa: E402
 from engine import Content, Session                               # noqa: E402
 from engine.machine import ComplianceError                        # noqa: E402
 from engine.streaming import Endpointer, to_telephony              # noqa: E402
-from engine.prerender import KokoroRenderer, cache_key, split_spans  # noqa: E402
+from engine.prerender import (INDEX_NAME, KokoroRenderer, WAV_CACHE,  # noqa: E402
+                              cache_key, index_entry, split_spans)
 from engine.ivr import Ivr                                        # noqa: E402
 
 
@@ -67,7 +68,8 @@ def _hold_music(seconds=4.0, sr=24000):
 # Real neural TTS, on this machine. ADR-005 says render each approved line once and play the
 # file; this is that cache, filled lazily on first use rather than by a build step, so the
 # console is usable without a separate pre-render pass.
-WAV_CACHE = ROOT_DIR = pathlib.Path(__file__).resolve().parent.parent / "audio_cache" / "wav"
+# WAV_CACHE comes from engine.prerender so the console reads exactly where the renderer wrote -
+# including when a render on a borrowed GPU pointed $VOICEAGENT_AUDIO_CACHE somewhere else.
 WAV_CACHE.mkdir(parents=True, exist_ok=True)
 try:
     TTS = KokoroRenderer()
@@ -228,7 +230,7 @@ def _load_audio_index():
     audio can be rendered on a GPU box, by a different engine, weeks earlier, and production
     needs nothing but the files and this JSON.
     """
-    path = WAV_CACHE / "INDEX.json"
+    path = WAV_CACHE / INDEX_NAME
     if not path.exists():
         return {}, None
     doc = json.loads(path.read_text(encoding="utf-8"))
@@ -239,7 +241,7 @@ AUDIO_INDEX, AUDIO_ENGINE = _load_audio_index()
 
 
 def _render_span(text, locale, voice="default"):
-    hit = AUDIO_INDEX.get(f"{locale}␟{voice}␟{text}")
+    hit = AUDIO_INDEX.get(index_entry(locale, voice, text))
     if hit and (WAV_CACHE / hit).exists():
         return f"/audio/{hit}"
     if TTS is None:
