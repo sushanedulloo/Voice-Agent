@@ -82,8 +82,19 @@ def on_colab() -> bool:
 
 
 def _run(cmd: list, **kw) -> int:
+    """Run it, and SAY SO when it fails.
+
+    This used to swallow the return code. pip installed transformers, failed on parler-tts,
+    exited non-zero, and install() printed nothing and carried on - so the first sign of trouble
+    was `ModuleNotFoundError: No module named 'parler_tts'` four cells later, in a traceback
+    pointing at engine/prerender.py. A build step that reports success it did not have is worse
+    than one that crashes.
+    """
     print("  $", " ".join(cmd[:6]) + (" ..." if len(cmd) > 6 else ""), flush=True)
-    return subprocess.run(cmd, check=False, **kw).returncode
+    code = subprocess.run(cmd, check=False, **kw).returncode
+    if code:
+        print(f"  ! FAILED (exit {code}): {' '.join(cmd)}")
+    return code
 
 
 # --------------------------------------------------------------------------------------------
@@ -146,7 +157,15 @@ def install(quiet: bool = True) -> bool:
     args = [sys.executable, "-m", "pip", "install"]
     if quiet:
         args.append("-q")
-    _run(args + [TRANSFORMERS, PARLER, *EXTRA])
+
+    # transformers and the extras first, parler-tts LAST and in its own call. parler-tts is a
+    # git install with a heavy dependency tree (descript-audio-codec and friends) and it is by
+    # far the most likely thing here to fail; on its own it fails by name instead of taking the
+    # whole command down with it, and the retry below is not quiet.
+    _run(args + [TRANSFORMERS, *EXTRA])
+    if _run(args + [PARLER]):
+        print("  ! retrying parler-tts with full output - the error above is truncated by -q")
+        _run([sys.executable, "-m", "pip", "install", PARLER])
     print("  torch left alone on purpose - see SKIP_TORCH_ON_COLAB in tools/colab_env.py")
 
     # Belt and braces: the floor in EXTRA should prevent a downgrade, but a transitive pin
@@ -158,6 +177,11 @@ def install(quiet: bool = True) -> bool:
         _run(args + [f"protobuf>={PROTOBUF_FLOOR}"])
         have = _version("protobuf")
         print(f"  protobuf now {have}")
+
+    missing = [n for n in ("transformers", "parler-tts", "accelerate") if not _version(n)]
+    if missing:
+        print(f"\n  ! NOT INSTALLED: {', '.join(missing)}. Nothing below this will work - read "
+              f"the pip output above before going on.")
 
     after = {"protobuf": have, "transformers": _version("transformers")}
     moved = [n for n in before if before[n] != after[n] and n in _loaded_roots()]
