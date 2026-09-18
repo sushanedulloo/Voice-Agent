@@ -417,9 +417,20 @@ class ParlerRenderer:
         # It needs `accelerate`. Degrade rather than refuse: a missing optional dependency
         # should cost memory headroom, not stop the render entirely. The warning is loud because
         # without it two parallel workers may not fit.
-        # sdpa is torch's own fused attention - no extra dependency, no flash-attn build, and
-        # it is the difference between a GPU render that is worth doing and one that is not.
-        kwargs = {"torch_dtype": self._dtype, "attn_implementation": "sdpa"}
+        # attn_implementation is deliberately NOT set, and that is not the same as not caring.
+        #
+        # Asking for "sdpa" explicitly turns transformers' soft capability check into a hard
+        # one, and it is applied to every sub-model. parler's description encoder is a
+        # T5EncoderModel, which has no sdpa path in transformers 4.46, so the load dies:
+        #
+        #   ValueError: T5EncoderModel does not support an attention implementation through
+        #   torch.nn.functional.scaled_dot_product_attention yet
+        #
+        # Left unset, transformers chooses per sub-model: sdpa for the ParlerTTS decoder, which
+        # is the autoregressive part and where essentially all the time goes, and eager for the
+        # T5 encoder, which runs once per clip over a short fixed description. That is the
+        # speedup we wanted, without asserting a capability the encoder does not have.
+        kwargs = {"torch_dtype": self._dtype}
         try:
             self._model = ParlerTTSForConditionalGeneration.from_pretrained(
                 base, low_cpu_mem_usage=True, **kwargs).to(self._device)
