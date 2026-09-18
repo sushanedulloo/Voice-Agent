@@ -35,7 +35,7 @@ The only outstanding build task. ~1,089 audio clips across nine languages.
 On this laptop it runs at roughly 50–170 s per clip, so 15–50 hours depending on contention.
 On an A100 with batching it is **under an hour**. That is the whole reason it moved.
 
-### [→ Open the render notebook](https://colab.research.google.com/github/transorg-engineering/VoiceAgent/blob/colab-gpu-render/notebooks/render_audio_colab.ipynb)
+### [→ Open the render notebook](https://colab.research.google.com/github/sushanedulloo/Voice-Agent/blob/main/notebooks/render_audio_colab.ipynb)
 
 Source: [`notebooks/render_audio_colab.ipynb`](../notebooks/render_audio_colab.ipynb). Pick an
 **A100** runtime, add two Colab secrets (`GH_TOKEN`, `HF_TOKEN`), run the cells.

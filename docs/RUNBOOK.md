@@ -130,15 +130,16 @@ The pack will not load until the validator passes. That is deliberate.
 
 ### 6a. Colab A100 — the normal route
 
-[**Open the notebook**](https://colab.research.google.com/github/transorg-engineering/VoiceAgent/blob/colab-gpu-render/notebooks/render_audio_colab.ipynb)
+[**Open the notebook**](https://colab.research.google.com/github/sushanedulloo/Voice-Agent/blob/main/notebooks/render_audio_colab.ipynb)
 · source: [`notebooks/render_audio_colab.ipynb`](../notebooks/render_audio_colab.ipynb)
 
 Under an hour, against 15–50 on the laptop. The notebook is a thin driver; the logic is in
 [`tools/colab_env.py`](../tools/colab_env.py), so it is reviewable, importable and diffable like
 any other file in the repo.
 
-Needs, once: an **A100** runtime, a Colab secret `GH_TOKEN` (fine-grained PAT, *Contents: read*),
-and a Colab secret `HF_TOKEN` for the gated model. No token is ever written into the notebook.
+Needs, once: an **A100** runtime and a Colab secret `HF_TOKEN` for the gated model. The render
+mirror at [`sushanedulloo/Voice-Agent`](https://github.com/sushanedulloo/Voice-Agent) is public,
+so the clone needs no GitHub token. No token is ever written into the notebook.
 
 Output goes straight to `MyDrive/VoiceAgent-audio/wav/` as each clip is produced, so a reclaimed
 session loses nothing — re-run the render cell and it continues. Bring it home by unzipping into
