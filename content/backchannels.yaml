@@ -1,0 +1,198 @@
+# Approved acknowledgement tokens. The cheapest naturalness available to us.
+#
+# WHY THIS FILE EXISTS
+#
+# A bot sounds like a bot mostly because it never acknowledges anything. A human agent says
+# "ji", "haan", "okay" before answering; the bot goes straight into its line. That single
+# difference is most of the "reading a script" feeling, and it costs one short pre-rendered clip.
+#
+# This is naturalness WITHOUT generation. ADR-002 forbids the model composing customer-facing
+# text, and that is not negotiable. But nothing stops us approving MORE ways to say the same
+# thing. In a regulated voice product, naturalness is a content problem, not a model problem -
+# and the ask to BLC is "approve three phrasings per line, not one", which is a far easier
+# conversation than "let the model improvise".
+#
+# Every token here is [TransOrg]-invented and needs BLC approval like any other utterance.
+# They are deliberately contentless: no token makes a claim, quantifies anything, or commits to
+# anything, so the compliance risk of a wrong pick is close to zero.
+
+version: 0.1.0
+status: synthetic
+play_probability: 0.55
+max_consecutive: 1
+tokens:
+  acknowledge:
+    en:
+    - Sure.
+    - Right.
+    - Okay.
+    - Got it.
+    hi_latn:
+    - Ji.
+    - Haan ji.
+    - Theek hai.
+    - Bilkul.
+    mr:
+    - हो.
+    - बरं.
+    - ठीक आहे.
+    - नक्की.
+    gu:
+    - હા.
+    - સારું.
+    - ઠીક છે.
+    - ચોક્કસ.
+    bn:
+    - হ্যাঁ.
+    - আচ্ছা.
+    - ঠিক আছে.
+    - অবশ্যই.
+    ta:
+    - ஆமா.
+    - சரி.
+    - ஓகே.
+    - கண்டிப்பா.
+    te:
+    - అవును.
+    - సరే.
+    - ఓకే.
+    - తప్పకుండా.
+    kn:
+    - ಹೌದು.
+    - ಸರಿ.
+    - ಓಕೆ.
+    - ಖಂಡಿತ.
+    ml:
+    - അതെ.
+    - ശരി.
+    - ഓകെ.
+    - തീർച്ചയായും.
+    hi:
+    - जी.
+    - जी हाँ.
+    - ठीक है.
+    - बिल्कुल.
+  before_answer:
+    en:
+    - Of course.
+    - Sure, let me tell you.
+    - Good question.
+    hi_latn:
+    - Ji zaroor.
+    - Haan, bataati hoon.
+    - Accha sawaal hai.
+    mr:
+    - हो नक्की.
+    - सांगते.
+    - चांगला प्रश्न आहे.
+    gu:
+    - હા ચોક્કસ.
+    - કહું છું.
+    - સારો પ્રશ્ન છે.
+    bn:
+    - হ্যাঁ অবশ্যই.
+    - বলছি.
+    - ভালো প্রশ্ন.
+    ta:
+    - ஆமா கண்டிப்பா.
+    - சொல்றேன்.
+    - நல்ல கேள்வி.
+    te:
+    - అవును తప్పకుండా.
+    - చెప్తాను.
+    - మంచి ప్రశ్న.
+    kn:
+    - ಹೌದು ಖಂಡಿತ.
+    - ಹೇಳ್ತೇನೆ.
+    - ಒಳ್ಳೆಯ ಪ್ರಶ್ನೆ.
+    ml:
+    - അതെ തീർച്ചയായും.
+    - പറയാം.
+    - നല്ല ചോദ്യം.
+    hi:
+    - जी ज़रूर.
+    - हाँ, बताती हूँ.
+    - अच्छा सवाल है.
+  soften:
+    en:
+    - I understand.
+    - That's alright.
+    hi_latn:
+    - Samajh sakti hoon.
+    - Koi baat nahi.
+    mr:
+    - समजू शकते.
+    - काही हरकत नाही.
+    gu:
+    - સમજી શકું છું.
+    - કોઈ વાંધો નથી.
+    bn:
+    - বুঝতে পারছি.
+    - কোনো সমস্যা নেই.
+    ta:
+    - புரியுது.
+    - பரவாயில்ல.
+    te:
+    - అర్థమైంది.
+    - ఫర్వాలేదు.
+    kn:
+    - ಅರ್ಥವಾಗುತ್ತೆ.
+    - ಪರವಾಗಿಲ್ಲ.
+    ml:
+    - മനസ്സിലാകുന്നു.
+    - കുഴപ്പമില്ല.
+    hi:
+    - समझ सकती हूँ.
+    - कोई बात नहीं.
+  thinking:
+    en:
+    - One moment.
+    - Just a second.
+    hi_latn:
+    - Ek second.
+    - Zara rukiye.
+    mr:
+    - एक सेकंद.
+    - जरा थांबा.
+    gu:
+    - એક સેકન્ડ.
+    - જરા થોભો.
+    bn:
+    - এক সেকেন্ড.
+    - একটু দাঁড়ান.
+    ta:
+    - ஒரு நிமிஷம்.
+    - கொஞ்சம் இருங்க.
+    te:
+    - ఒక సెకను.
+    - కొంచెం ఆగండి.
+    kn:
+    - ಒಂದು ಸೆಕೆಂಡ್.
+    - ಸ್ವಲ್ಪ ನಿಲ್ಲಿ.
+    ml:
+    - ഒരു സെക്കൻഡ്.
+    - അല്പം നിൽക്കൂ.
+    hi:
+    - एक सेकंड.
+    - ज़रा रुकिए.
+  language_switched:
+    en:
+    - Sure, we can continue in English.
+    hi_latn:
+    - Ji bilkul, hum Hindi mein baat karte hain.
+    mr:
+    - हो, आपण मराठीत बोलूया.
+    gu:
+    - હા, આપણે ગુજરાતીમાં વાત કરીએ.
+    bn:
+    - হ্যাঁ, আমরা বাংলায় কথা বলি.
+    ta:
+    - சரி, நாம தமிழ்ல பேசலாம்.
+    te:
+    - సరే, మనం తెలుగులో మాట్లాడదాం.
+    kn:
+    - ಸರಿ, ನಾವು ಕನ್ನಡದಲ್ಲಿ ಮಾತಾಡೋಣ.
+    ml:
+    - ശരി, നമുക്ക് മലയാളത്തിൽ സംസാരിക്കാം.
+    hi:
+    - जी बिल्कुल, हम हिंदी में बात करते हैं.

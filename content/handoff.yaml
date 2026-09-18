@@ -1,0 +1,131 @@
+# The handoff contract - what crosses our boundary at transfer, and what must come back.
+#
+# This is the part of the interface that is genuinely ours, and it is the part the charter and
+# the three flowcharts leave least specified. Everything downstream of `outbound` is the
+# advisor's; everything in `inbound` is what we need in order to close the loop on
+# cost-per-booked-SR. Without `inbound`, we can measure transfers but not outcomes, and the
+# engagement is judged on outcomes.
+#
+# BLOCKED ON: the Interface Control Document (DELIVERY-PLAN 0.8) and the CRM write-back API.
+# Field names here are [TransOrg] proposals, not agreed.
+
+version: 0.1.0
+status: proposed
+
+# ---------------------------------------------------------------------------
+# What we send at transfer.
+# ---------------------------------------------------------------------------
+outbound:
+
+  identity:
+    masked_ref_id:
+      required: true
+      description: The masked reference from the calling base. Our only customer key.
+    correlation_id:
+      required: true
+      description: >
+        Joins this call across bot, dialer, CRM and SBIC systems. Constraint 5 - an audit trail
+        that cannot be correlated is not an audit trail.
+    campaign_id: {required: true}
+    product: {required: true, enum: [flexipay, clip, multicarding]}
+
+  conversation:
+    language_used:
+      required: true
+      description: Locale the call was actually conducted in, which may differ from the base.
+    bot_duration_ms: {required: true}
+    turn_count: {required: true}
+    nodes_played:
+      required: true
+      description: >
+        Ordered list of node ids. With content_version this reconstructs every word the bot
+        said, without storing the audio twice.
+    disclosures_played:
+      required: true
+      description: >
+        Ordered list of disclosure ids with timestamps. This is the evidence for the
+        disclosure-before-restricted-topic control.
+    faqs_answered:
+      required: true
+      description: FAQ ids returned, with the confidence band for each.
+    truncated_utterances:
+      required: true
+      description: >
+        Node ids where barge-in cut playback, with the truncation offset. A line the customer
+        did not hear in full was not disclosed in full (DESIGN 2.3 step 4).
+    content_version: {required: true}
+
+  outcome:
+    disposition:
+      required: true
+      enum: [AGREED_TRANSFERRED, ESCALATED_TRANSFERRED, NOT_INTERESTED, CALLBACK_REQUESTED,
+             DNC_REQUESTED, WRONG_PERSON, ABUSIVE, NO_RESPONSE]
+      note: >
+        AGREED_TRANSFERRED and ESCALATED_TRANSFERRED are deliberately separate. The first is a
+        customer who accepted the pitch after hearing the terms; the second asked for a human or
+        raised something off-glossary. Both consume an advisor, only one is an agreement.
+        Collapsing them would inflate the conversion rate the engagement is measured on.
+    agreement_confidence:
+      required: true
+      description: >
+        Router confidence on the AGREE intent. The single number the whole business case rests
+        on - a false positive wastes advisor time, a false negative loses a sale. Its threshold
+        is a commercial decision, not a modelling one.
+    escalation_flags:
+      required: false
+      description: DNC, ABUSIVE, fraud report, complaint. Drives routing priority, not sales.
+    recording_pointer:
+      required: true
+      description: Reference to the partner's recording. We point at it; we do not hold a copy.
+
+  # Constraint 3. Enumerated so that a reviewer can check it, and so the validator can assert it.
+  must_never_contain:
+    - card number or any PAN fragment
+    - cardholder name
+    - address, PIN code, or any part of one
+    - date or year of birth
+    - mobile number or email
+    - OTP, PIN or CVV in any form
+    - raw ASR transcript containing any of the above
+
+# ---------------------------------------------------------------------------
+# What we need back. Without this the control arm has no denominator.
+# ---------------------------------------------------------------------------
+inbound:
+  advisor_disposition:
+    required: true
+    description: Outcome after the advisor took the call.
+  verification_result:
+    required: true
+    description: >
+      Pass/fail only. Never the values used to verify. See OPEN QUESTION below.
+  acceptance_result:
+    required: true
+    description: IVR outcome (flexipay, clip) or C2B form outcome (multicarding).
+  sr_number:
+    required: false
+    description: Present when an SR was raised in SBIC. The booked outcome we are measured on.
+  advisor_handle_time_ms:
+    required: true
+    description: Needed for the human-arm comparison. Bot time alone proves nothing.
+  timestamps:
+    required: true
+    description: Transfer accepted, verification complete, acceptance complete, SR raised.
+
+# ---------------------------------------------------------------------------
+open_questions:
+  - id: OI-1
+    text: >
+      If the bot ends up running the CLIP IVR, acceptance_result becomes an outbound field
+      rather than an inbound one, and we enter the regulated consent chain.
+  - id: OQ-FLEXIPAY-VERIFY
+    text: >
+      CH-FLEXIPAY step 10a - "customer is verified using their billing address PIN code and year
+      of birth" - names no actor. CH-MULTICARD makes the identical step explicitly the Ops
+      advisor. If FlexiPay expects the BOT to verify, constraint 3 and this contract cannot both
+      hold. Ask before building anything that depends on it.
+  - id: OQ-FLEXIPAY-SECOND-PITCH
+    text: >
+      CH-FLEXIPAY step 10b pitches the offer "based on SConnect transaction details", after
+      verification. If that pitch is the bot's, the bot needs transaction history, which is PII.
+      Reading it as the advisor's is the only version compatible with constraint 3.

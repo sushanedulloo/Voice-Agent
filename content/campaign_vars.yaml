@@ -1,0 +1,120 @@
+# Campaign variable slots.
+# Constraint 1 (CLAUDE.md): offer amounts, tenure, interest and fees are READ from campaign
+# variables, never generated. A literal rupee amount or rate in a script line is a defect.
+#
+# Values arrive per-record on the calling base, already stripped of PII (constraint 3).
+
+version: 0.1.0
+status: synthetic
+
+confidence:
+  auto: 0.80
+  flag: 0.50
+
+# Whether the bot greets by first name. Off means every script still works - the named greeting
+# is an alternate line, never a required one.
+use_customer_name: true
+
+# Locales the pack can actually SPEAK. A locale only belongs here once every node
+# line and disclosure exists in it - the validator enforces that (C6), which is how
+# a half-translated language is stopped from reaching a customer.
+required_locale: [en, hi, mr, gu, bn, ta, te, kn, ml]
+# hi_latn stays declared but is NOT spoken: the ASR emits Devanagari and parler
+# phonemises from it, so `hi` is the correct spoken locale. hi_latn remains in the
+# pack as router anchors for romanised/Hinglish ASR output and for typed demo input.
+declared_locale: [en, hi_latn, ta, te, kn, ml, mr, gu, bn]   # 9 per EM-1; charter's 8 was wrong
+
+slots:
+
+  # ---- identity / call-level -------------------------------------------------
+  masked_ref_id:
+    type: string
+    description: Masked reference id for the record. The only customer key we hold.
+    example: "SBIC-8F3A-2291"
+    pii: false
+  brand_name:
+    type: string
+    description: Issuer name as it must be spoken.
+    example: "SBI Card"
+    pii: false
+  customer_first_name:
+    type: string
+    description: >
+      Customer's first name, for the greeting only. THE ONLY PII-BEARING SLOT IN THE PACK.
+      Marked pii: true, which means session.py strips it from the handoff payload and the audit
+      trail before either leaves this process, and tests/test_engine.py fails if it ever appears.
+      It is spoken and then forgotten.
+      OPEN: constraint 3 says the base arrives with no PII. If SBIC will not pass a first name,
+      set use_customer_name: false below and the script falls back to the nameless greeting -
+      which is what every node was written for. Do not design anything else around this slot.
+    example: "Tushar"
+    pii: true
+  agent_display_name:
+    type: string
+    description: Bot's spoken name. Not a real person's name.
+    example: "Priya"
+    pii: false
+
+  # ---- FlexiPay --------------------------------------------------------------
+  min_txn_amt:
+    type: currency_inr
+    description: Minimum transaction value eligible for EMI conversion.
+    example: 2500
+  eligible_amount:
+    type: currency_inr
+    description: Total value the customer may convert under this offer.
+    example: 48000
+  tenure_months:
+    type: integer
+    description: Tenure offered for this record.
+    example: 12
+  tenure_options:
+    type: string
+    description: Spoken list of available tenures.
+    example: "3, 6, 9 or 12 months"
+  roi_annual_pct:
+    type: percentage
+    description: Annual rate of interest for this offer.
+    example: 16.0
+  processing_fee:
+    type: currency_inr
+    description: One-time processing fee.
+    example: 199
+  indicative_emi:
+    type: currency_inr
+    description: Indicative monthly EMI at the offered tenure and rate.
+    example: 4360
+
+  # ---- CLIP ------------------------------------------------------------------
+  current_limit:
+    type: currency_inr
+    description: Existing credit limit.
+    example: 120000
+  enhanced_limit:
+    type: currency_inr
+    description: Limit on offer.
+    example: 250000
+  offer_valid_days:
+    type: integer
+    description: Days the offer remains open.
+    example: 15
+
+  # ---- Multicarding ----------------------------------------------------------
+  offered_card_name:
+    type: string
+    description: Name of the additional card on offer.
+    example: "SimplyCLICK"
+  joining_fee:
+    type: currency_inr
+    example: 499
+  annual_fee:
+    type: currency_inr
+    example: 499
+  fee_waiver_condition:
+    type: string
+    description: Spend condition under which the annual fee is reversed.
+    example: "annual spends of 1 lakh rupees"
+  headline_benefit:
+    type: string
+    description: Single approved benefit line for the offered card.
+    example: "10X reward points on online spends"

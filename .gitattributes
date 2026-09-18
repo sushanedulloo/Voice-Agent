@@ -1,0 +1,7 @@
+# The GPU render runs on Linux while the console runs on Windows. Force LF on
+# everything executable so a shell script checked out on Windows and shipped
+# back does not arrive with CRLF and fail with "bad interpreter".
+* text=auto eol=lf
+*.sh  text eol=lf
+*.wav binary
+*.onnx binary

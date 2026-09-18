@@ -1,0 +1,702 @@
+# Global intent vocabulary. Node `intent_set`s draw from this file.
+#
+# SCRIPT MATTERS. indic-conformer emits NATIVE SCRIPT (Devanagari for Hindi, Tamil
+# script for Tamil, and so on). The router compares ASR output against these examples
+# by string similarity, so romanised examples score 0.000 against real ASR output and
+# every turn deflects. `examples_hi` are the Devanagari anchors; `examples_hi_latn`
+# stay because the TTS voice takes romanised input and typed demo input uses it.
+# Found by testing, not by review - see the note in engine/router.py.
+#
+# `global: true` means the intent is routable from EVERY non-terminal node.
+
+version: 0.1.0
+status: synthetic
+intents:
+  DNC:
+    global: true
+    severity: regulatory
+    description: Asks not to be called, mentions DND/DNC, or withdraws permission to contact.
+    examples_en:
+    - don't call me again
+    - put me on DND
+    - remove my number
+    - stop calling
+    examples_hi_latn:
+    - mujhe call mat karo
+    - DND pe daal do
+    - number hata do
+    examples_hi:
+    - मुझे कॉल मत करो
+    - डी एन डी पे डाल दो
+    - नंबर हटा दो
+    - कॉल करना बंद करो
+    examples_ta:
+    - எனக்கு கால் பண்ணாதீங்க
+    - டி என் டி ல போடுங்க
+    - என் நம்பர ரிமூவ் பண்ணுங்க
+    examples_te:
+    - నాకు కాల్ చేయకండి
+    - డి ఎన్ డి లో పెట్టండి
+    - నా నంబర్ తీసేయండి
+    examples_kn:
+    - ನನಗೆ ಕಾಲ್ ಮಾಡಬೇಡಿ
+    - ಡಿ ಎನ್ ಡಿ ಗೆ ಹಾಕಿ
+    - ನನ್ನ ನಂಬರ್ ತೆಗೆದುಹಾಕಿ
+    examples_ml:
+    - എന്നെ വിളിക്കരുത്
+    - ഡി എൻ ഡി യിൽ ഇടൂ
+    - എന്റെ നമ്പർ മാറ്റൂ
+    examples_mr:
+    - मला कॉल करू नका
+    - डी एन डी मध्ये टाका
+    - माझा नंबर काढून टाका
+    examples_gu:
+    - મને કોલ ન કરો
+    - ડી એન ડી માં નાખો
+    - મારો નંબર કાઢી નાખો
+    examples_bn:
+    - আমাকে কল করবেন না
+    - ডি এন ডি তে দিন
+    - আমার নম্বর সরিয়ে দিন
+  HUMAN_REQUEST:
+    global: true
+    description: Asks to speak to a person.
+    examples_en:
+    - let me talk to a human
+    - is this a robot
+    - transfer me to an agent
+    examples_hi_latn:
+    - kisi insaan se baat karao
+    - yeh robot hai kya
+    - agent se baat karni hai
+    examples_hi:
+    - किसी इंसान से बात कराओ
+    - यह रोबोट है क्या
+    - एजेंट से बात करनी है
+    examples_ta:
+    - ஒரு நபர்கிட்ட பேச முடியுமா
+    - இது ரோபோ தானே
+    - ஏஜென்ட் கிட்ட கொடுங்க
+    examples_te:
+    - ఒక మనిషితో మాట్లాడాలి
+    - ఇది రోబోట్ కదా
+    - ఏజెంట్ కి ఇవ్వండి
+    examples_kn:
+    - ಒಬ್ಬ ವ್ಯಕ್ತಿಯ ಜೊತೆ ಮಾತಾಡಬೇಕು
+    - ಇದು ರೋಬೋಟ್ ಅಲ್ಲವೇ
+    - ಏಜೆಂಟ್ ಗೆ ಕೊಡಿ
+    examples_ml:
+    - ഒരു ആളോട് സംസാരിക്കണം
+    - ഇത് റോബോട്ട് അല്ലേ
+    - ഏജന്റിന് കൊടുക്കൂ
+    examples_mr:
+    - कोणा माणसाशी बोलायचं आहे
+    - हा रोबोट आहे का
+    - एजंटला द्या
+    examples_gu:
+    - કોઈ માણસ સાથે વાત કરવી છે
+    - આ રોબોટ છે કે
+    - એજન્ટને આપો
+    examples_bn:
+    - একজন মানুষের সাথে কথা বলতে চাই
+    - এটা কি রোবট
+    - এজেন্টকে দিন
+  REPEAT:
+    global: true
+    description: Did not hear or did not follow; asks for the last line again.
+    examples_en:
+    - say that again
+    - sorry what
+    - can you repeat
+    examples_hi_latn:
+    - phir se boliye
+    - samajh nahi aaya
+    - repeat kariye
+    examples_hi:
+    - फिर से बोलिए
+    - समझ नहीं आया
+    - दोबारा कहिए
+    examples_ta:
+    - மறுபடியும் சொல்லுங்க
+    - புரியல
+    - இன்னொரு தடவை சொல்லுங்க
+    examples_te:
+    - మళ్ళీ చెప్పండి
+    - అర్థం కాలేదు
+    - ఇంకోసారి చెప్పండి
+    examples_kn:
+    - ಇನ್ನೊಮ್ಮೆ ಹೇಳಿ
+    - ಅರ್ಥ ಆಗಲಿಲ್ಲ
+    - ಮತ್ತೆ ಹೇಳಿ
+    examples_ml:
+    - ഒന്നുകൂടി പറയൂ
+    - മനസ്സിലായില്ല
+    - വീണ്ടും പറയൂ
+    examples_mr:
+    - पुन्हा सांगा
+    - समजलं नाही
+    - परत सांगा
+    examples_gu:
+    - ફરીથી કહો
+    - સમજાયું નહીં
+    - બીજી વાર કહો
+    examples_bn:
+    - আবার বলুন
+    - বুঝতে পারিনি
+    - আরেকবার বলুন
+  NOT_ME:
+    global: true
+    description: States they are not the cardholder, or it is a wrong number.
+    examples_en:
+    - wrong number
+    - this is not my card
+    - she is not here
+    examples_hi_latn:
+    - galat number hai
+    - yeh mera card nahi hai
+    - woh ghar par nahi hain
+    examples_hi:
+    - गलत नंबर है
+    - यह मेरा कार्ड नहीं है
+    - वो घर पर नहीं हैं
+    examples_ta:
+    - தப்பான நம்பர்
+    - இது என் கார்டு இல்ல
+    - அவங்க இங்க இல்ல
+    examples_te:
+    - రాంగ్ నంబర్
+    - ఇది నా కార్డ్ కాదు
+    - వాళ్ళు ఇక్కడ లేరు
+    examples_kn:
+    - ತಪ್ಪು ನಂಬರ್
+    - ಇದು ನನ್ನ ಕಾರ್ಡ್ ಅಲ್ಲ
+    - ಅವರು ಇಲ್ಲಿ ಇಲ್ಲ
+    examples_ml:
+    - തെറ്റായ നമ്പർ
+    - ഇത് എന്റെ കാർഡ് അല്ല
+    - അവർ ഇവിടെ ഇല്ല
+    examples_mr:
+    - चुकीचा नंबर आहे
+    - हे माझं कार्ड नाही
+    - ते इथे नाहीत
+    examples_gu:
+    - ખોટો નંબર છે
+    - આ મારું કાર્ડ નથી
+    - તે અહીં નથી
+    examples_bn:
+    - ভুল নম্বর
+    - এটা আমার কার্ড নয়
+    - উনি এখানে নেই
+  BUSY:
+    global: true
+    description: Cannot talk right now.
+    examples_en:
+    - I'm driving
+    - I'm in a meeting
+    - not now
+    examples_hi_latn:
+    - abhi busy hoon
+    - meeting mein hoon
+    - abhi nahi
+    examples_hi:
+    - अभी बिजी हूँ
+    - मीटिंग में हूँ
+    - अभी नहीं
+    examples_ta:
+    - இப்போ பிஸியா இருக்கேன்
+    - மீட்டிங்ல இருக்கேன்
+    - இப்போ வேணாம்
+    examples_te:
+    - ఇప్పుడు బిజీగా ఉన్నాను
+    - మీటింగ్ లో ఉన్నాను
+    - ఇప్పుడు వద్దు
+    examples_kn:
+    - ಈಗ ಬಿಜಿ ಇದ್ದೇನೆ
+    - ಮೀಟಿಂಗ್ ನಲ್ಲಿ ಇದ್ದೇನೆ
+    - ಈಗ ಬೇಡ
+    examples_ml:
+    - ഇപ്പോൾ തിരക്കിലാണ്
+    - മീറ്റിംഗിലാണ്
+    - ഇപ്പോൾ വേണ്ട
+    examples_mr:
+    - आत्ता बिझी आहे
+    - मीटिंगमध्ये आहे
+    - आत्ता नको
+    examples_gu:
+    - અત્યારે બિઝી છું
+    - મીટિંગમાં છું
+    - અત્યારે નહીં
+    examples_bn:
+    - এখন ব্যস্ত আছি
+    - মিটিংয়ে আছি
+    - এখন নয়
+  CALL_LATER:
+    global: true
+    description: Willing, but asks to be called at another time.
+    examples_en:
+    - call me tomorrow
+    - call in the evening
+    - try next week
+    examples_hi_latn:
+    - kal call karo
+    - shaam ko call karna
+    - agle hafte
+    examples_hi:
+    - कल कॉल करो
+    - शाम को कॉल करना
+    - अगले हफ्ते
+    examples_ta:
+    - நாளைக்கு கால் பண்ணுங்க
+    - சாயங்காலம் கூப்பிடுங்க
+    - அடுத்த வாரம்
+    examples_te:
+    - రేపు కాల్ చేయండి
+    - సాయంత్రం చేయండి
+    - వచ్చే వారం
+    examples_kn:
+    - ನಾಳೆ ಕಾಲ್ ಮಾಡಿ
+    - ಸಂಜೆ ಮಾಡಿ
+    - ಮುಂದಿನ ವಾರ
+    examples_ml:
+    - നാളെ വിളിക്കൂ
+    - വൈകുന്നേരം വിളിക്കൂ
+    - അടുത്ത ആഴ്ച
+    examples_mr:
+    - उद्या कॉल करा
+    - संध्याकाळी करा
+    - पुढच्या आठवड्यात
+    examples_gu:
+    - કાલે કોલ કરો
+    - સાંજે કરો
+    - આવતા અઠવાડિયે
+    examples_bn:
+    - কাল কল করুন
+    - সন্ধ্যায় করুন
+    - পরের সপ্তাহে
+  ABUSIVE:
+    global: true
+    severity: safety
+    description: Abusive or hostile. Call is closed politely and tagged.
+    examples_en: []
+    examples_hi_latn: []
+  SILENCE:
+    global: true
+    description: No speech detected within the endpointing window.
+    examples_en: []
+    examples_hi_latn: []
+  OUT_OF_SCOPE:
+    global: true
+    severity: safety
+    description: 'Anything the approved content does not cover. Trained as an explicit class from out_of_scope.yaml. Routes
+      to an approved deflection line plus a human. Never generated.
+
+      '
+    examples_en: []
+    examples_hi_latn: []
+  INTERESTED:
+    description: Positive signal toward the offer.
+    examples_en:
+    - yes tell me more
+    - sounds good
+    - how do I do it
+    - ok interested
+    examples_hi_latn:
+    - haan bataiye
+    - theek hai
+    - kaise karna hai
+    - interested hoon
+    examples_hi:
+    - हाँ बताइए
+    - ठीक है
+    - कैसे करना है
+    - मुझे इंटरेस्ट है
+    examples_ta:
+    - சரி சொல்லுங்க
+    - ஓகே என்ன விஷயம்
+    - எனக்கு இன்ட்ரெஸ்ட் இருக்கு
+    examples_te:
+    - సరే చెప్పండి
+    - ఓకే ఏంటి విషయం
+    - నాకు ఇంట్రెస్ట్ ఉంది
+    examples_kn:
+    - ಸರಿ ಹೇಳಿ
+    - ಓಕೆ ಏನು ವಿಷಯ
+    - ನನಗೆ ಇಂಟರೆಸ್ಟ್ ಇದೆ
+    examples_ml:
+    - ശരി പറയൂ
+    - ഓകെ എന്താണ് കാര്യം
+    - എനിക്ക് താല്പര്യം ഉണ്ട്
+    examples_mr:
+    - बरं सांगा
+    - ओके काय आहे
+    - मला इंटरेस्ट आहे
+    examples_gu:
+    - સારું કહો
+    - ઓકે શું વાત છે
+    - મને ઇન્ટરેસ્ટ છે
+    examples_bn:
+    - আচ্ছা বলুন
+    - ওকে কী ব্যাপার
+    - আমার ইন্টারেস্ট আছে
+  NOT_INTERESTED:
+    description: Declines the offer.
+    examples_en:
+    - not interested
+    - no thanks
+    - I don't need it
+    examples_hi_latn:
+    - nahi chahiye
+    - interest nahi hai
+    - zaroorat nahi
+    examples_hi:
+    - नहीं चाहिए
+    - मुझे नहीं चाहिए
+    - जरूरत नहीं
+    - रहने दो
+    - इंटरेस्ट नहीं है
+    - मुझे इंटरेस्ट नहीं
+    - नहीं चाहिए मुझे
+    examples_ta:
+    - வேணாம்
+    - எனக்கு தேவையில்ல
+    - இன்ட்ரெஸ்ட் இல்ல
+    - எனக்கு இன்ட்ரெஸ்ட் இல்ல
+    - எனக்கு வேணாம்
+    examples_te:
+    - వద్దు
+    - నాకు అవసరం లేదు
+    - ఇంట్రెస్ట్ లేదు
+    - నాకు ఇంట్రెస్ట్ లేదు
+    - నాకు వద్దు
+    examples_kn:
+    - ಬೇಡ
+    - ನನಗೆ ಅವಶ್ಯಕತೆ ಇಲ್ಲ
+    - ಇಂಟರೆಸ್ಟ್ ಇಲ್ಲ
+    - ನನಗೆ ಇಂಟರೆಸ್ಟ್ ಇಲ್ಲ
+    - ನನಗೆ ಬೇಡ
+    examples_ml:
+    - വേണ്ട
+    - എനിക്ക് ആവശ്യമില്ല
+    - താല്പര്യം ഇല്ല
+    - എനിക്ക് താല്പര്യം ഇല്ല
+    - എനിക്ക് വേണ്ട
+    examples_mr:
+    - नको
+    - मला गरज नाही
+    - इंटरेस्ट नाही
+    - मला इंटरेस्ट नाही
+    - नको मला
+    examples_gu:
+    - નથી જોઈતું
+    - મને જરૂર નથી
+    - ઇન્ટરેસ્ટ નથી
+    - મને ઇન્ટરેસ્ટ નથી
+    - મારે નથી જોઈતું
+    examples_bn:
+    - দরকার নেই
+    - আমার প্রয়োজন নেই
+    - ইন্টারেস্ট নেই
+    - আমার ইন্টারেস্ট নেই
+    - আমার দরকার নেই
+  AGREE:
+    description: Explicit agreement to proceed / be connected to an advisor.
+    examples_en:
+    - yes go ahead
+    - ok connect me
+    - please proceed
+    examples_hi_latn:
+    - haan aage badhiye
+    - connect kar dijiye
+    - theek hai karo
+    examples_hi:
+    - हाँ आगे बढ़िए
+    - कनेक्ट कर दीजिए
+    - ठीक है करो
+    - हाँ जी करिए
+    examples_ta:
+    - சரி பண்ணுங்க
+    - கனெக்ட் பண்ணுங்க
+    - ஓகே முன்னாடி போங்க
+    examples_te:
+    - సరే చేయండి
+    - కనెక్ట్ చేయండి
+    - ఓకే ముందుకు వెళ్ళండి
+    examples_kn:
+    - ಸರಿ ಮಾಡಿ
+    - ಕನೆಕ್ಟ್ ಮಾಡಿ
+    - ಓಕೆ ಮುಂದೆ ಹೋಗಿ
+    examples_ml:
+    - ശരി ചെയ്യൂ
+    - കണക്ട് ചെയ്യൂ
+    - ഓകെ മുന്നോട്ട് പോകൂ
+    examples_mr:
+    - ठीक आहे करा
+    - कनेक्ट करा
+    - ओके पुढे चला
+    examples_gu:
+    - ઠીક છે કરો
+    - કનેક્ટ કરો
+    - ઓકે આગળ વધો
+    examples_bn:
+    - ঠিক আছে করুন
+    - কানেক্ট করুন
+    - ওকে এগিয়ে যান
+  NEED_TIME:
+    description: Wants to think about it or consult someone.
+    examples_en:
+    - let me think
+    - I'll discuss with my wife
+    - give me a few days
+    examples_hi_latn:
+    - sochke batata hoon
+    - ghar mein baat karke
+    - thoda time dijiye
+    examples_hi:
+    - सोचकर बताता हूँ
+    - घर में बात करके
+    - थोड़ा टाइम दीजिए
+    examples_ta:
+    - யோசிச்சு சொல்றேன்
+    - வீட்ல கேட்டு சொல்றேன்
+    - கொஞ்சம் டைம் குடுங்க
+    examples_te:
+    - ఆలోచించి చెప్తాను
+    - ఇంట్లో అడిగి చెప్తాను
+    - కొంచెం టైమ్ ఇవ్వండి
+    examples_kn:
+    - ಯೋಚಿಸಿ ಹೇಳ್ತೇನೆ
+    - ಮನೆಯಲ್ಲಿ ಕೇಳಿ ಹೇಳ್ತೇನೆ
+    - ಸ್ವಲ್ಪ ಟೈಮ್ ಕೊಡಿ
+    examples_ml:
+    - ആലോചിച്ചു പറയാം
+    - വീട്ടിൽ ചോദിച്ചു പറയാം
+    - കുറച്ചു സമയം തരൂ
+    examples_mr:
+    - विचार करून सांगतो
+    - घरी विचारून सांगतो
+    - थोडा वेळ द्या
+    examples_gu:
+    - વિચારીને કહું છું
+    - ઘરે પૂછીને કહું
+    - થોડો સમય આપો
+    examples_bn:
+    - ভেবে জানাব
+    - বাড়িতে জিজ্ঞেস করে বলব
+    - একটু সময় দিন
+  HOW_DID_YOU_GET_NUMBER:
+    description: Questions how we obtained their number. Privacy-sensitive.
+    examples_en:
+    - how did you get my number
+    - who gave you my details
+    examples_hi_latn:
+    - mera number kahan se mila
+    - meri details kisne di
+    examples_hi:
+    - मेरा नंबर कहाँ से मिला
+    - मेरी डिटेल्स किसने दी
+    examples_ta:
+    - என் நம்பர் எங்க இருந்து கிடைச்சது
+    - என் டீடெயில்ஸ் யார் கொடுத்தா
+    examples_te:
+    - నా నంబర్ ఎక్కడ నుంచి వచ్చింది
+    - నా డీటెయిల్స్ ఎవరు ఇచ్చారు
+    examples_kn:
+    - ನನ್ನ ನಂಬರ್ ಎಲ್ಲಿಂದ ಸಿಕ್ಕಿತು
+    - ನನ್ನ ಡೀಟೇಲ್ಸ್ ಯಾರು ಕೊಟ್ಟರು
+    examples_ml:
+    - എന്റെ നമ്പർ എവിടെ നിന്ന് കിട്ടി
+    - എന്റെ വിവരങ്ങൾ ആരു തന്നു
+    examples_mr:
+    - माझा नंबर कुठून मिळाला
+    - माझी माहिती कोणी दिली
+    examples_gu:
+    - મારો નંબર ક્યાંથી મળ્યો
+    - મારી વિગતો કોણે આપી
+    examples_bn:
+    - আমার নম্বর কোথা থেকে পেলেন
+    - আমার তথ্য কে দিল
+  CONFIRM_IDENTITY:
+    description: Confirms they are the cardholder. Answers "am I speaking with...?".
+    examples_en:
+    - speaking
+    - yes that is me
+    - yes this is he
+    - that's right
+    - yes who is this
+    - yeah thats me
+    - correct
+    - yes I am
+    examples_hi_latn:
+    - ji haan
+    - haan main hi hoon
+    - haan boliye
+    - ji boliye
+    - haan bolo
+    - main hi hoon
+    examples_hi:
+    - जी हाँ
+    - हाँ मैं ही हूँ
+    - जी बोलिए
+    - हाँ बोलो
+    - मैं ही हूँ
+    examples_ta:
+    - ஆமா நான் தான்
+    - சொல்லுங்க
+    - ஆமாம்
+    - நான் தான் பேசுறேன்
+    examples_te:
+    - అవును నేనే
+    - చెప్పండి
+    - అవును
+    - నేనే మాట్లాడుతున్నాను
+    examples_kn:
+    - ಹೌದು ನಾನೇ
+    - ಹೇಳಿ
+    - ಹೌದು
+    - ನಾನೇ ಮಾತಾಡ್ತಿದ್ದೇನೆ
+    examples_ml:
+    - അതെ ഞാൻ തന്നെ
+    - പറയൂ
+    - അതെ
+    - ഞാൻ തന്നെയാണ്
+    examples_mr:
+    - हो मीच आहे
+    - बोला
+    - हो
+    - मीच बोलतोय
+    examples_gu:
+    - હા હું જ છું
+    - બોલો
+    - હા
+    - હું જ વાત કરું છું
+    examples_bn:
+    - হ্যাঁ আমিই
+    - বলুন
+    - হ্যাঁ
+    - আমিই বলছি
+  DONT_WANT_MORE_CREDIT:
+    description: CLIP-specific. Declines on principle rather than on terms.
+    examples_en:
+    - I don't want a higher limit
+    - I'll overspend
+    - this much is enough
+    examples_hi_latn:
+    - mujhe zyada limit nahi chahiye
+    - kharch badh jayega
+    - itni hi theek hai
+    examples_hi:
+    - मुझे ज्यादा लिमिट नहीं चाहिए
+    - खर्च बढ़ जाएगा
+    - इतनी ही ठीक है
+    examples_ta:
+    - எனக்கு அதிக லிமிட் வேணாம்
+    - செலவு அதிகமாயிடும்
+    - இது போதும்
+    examples_te:
+    - నాకు ఎక్కువ లిమిట్ వద్దు
+    - ఖర్చు పెరుగుతుంది
+    - ఇది చాలు
+    examples_kn:
+    - ನನಗೆ ಜಾಸ್ತಿ ಲಿಮಿಟ್ ಬೇಡ
+    - ಖರ್ಚು ಜಾಸ್ತಿ ಆಗುತ್ತೆ
+    - ಇಷ್ಟೇ ಸಾಕು
+    examples_ml:
+    - എനിക്ക് കൂടുതൽ ലിമിറ്റ് വേണ്ട
+    - ചെലവ് കൂടും
+    - ഇത്രയും മതി
+    examples_mr:
+    - मला जास्त लिमिट नको
+    - खर्च वाढेल
+    - एवढीच पुरे
+    examples_gu:
+    - મને વધારે લિમિટ નથી જોઈતી
+    - ખર્ચ વધી જશે
+    - આટલી બસ છે
+    examples_bn:
+    - আমার বেশি লিমিট দরকার নেই
+    - খরচ বেড়ে যাবে
+    - এটুকুই যথেষ্ট
+  ALREADY_HAVE_CARD:
+    description: Multicarding-specific. Already holds a card, questions the need for another.
+    examples_en:
+    - I already have your card
+    - why do I need two cards
+    - one is enough
+    examples_hi_latn:
+    - mere paas pehle se card hai
+    - do card kyun chahiye
+    - ek hi kaafi hai
+    examples_hi:
+    - मेरे पास पहले से कार्ड है
+    - दो कार्ड क्यों चाहिए
+    - एक ही काफी है
+    examples_ta:
+    - என்கிட்ட ஏற்கனவே கார்டு இருக்கு
+    - ரெண்டு கார்டு எதுக்கு
+    - ஒண்ணு போதும்
+    examples_te:
+    - నా దగ్గర ఇప్పటికే కార్డ్ ఉంది
+    - రెండు కార్డులు ఎందుకు
+    - ఒకటి చాలు
+    examples_kn:
+    - ನನ್ನ ಹತ್ತಿರ ಈಗಾಗಲೇ ಕಾರ್ಡ್ ಇದೆ
+    - ಎರಡು ಕಾರ್ಡ್ ಯಾಕೆ
+    - ಒಂದು ಸಾಕು
+    examples_ml:
+    - എന്റെ കയ്യിൽ ഇപ്പോൾ തന്നെ കാർഡ് ഉണ്ട്
+    - രണ്ട് കാർഡ് എന്തിന്
+    - ഒന്ന് മതി
+    examples_mr:
+    - माझ्याकडे आधीच कार्ड आहे
+    - दोन कार्ड कशाला
+    - एकच पुरे
+    examples_gu:
+    - મારી પાસે પહેલેથી કાર્ડ છે
+    - બે કાર્ડ શા માટે
+    - એક જ પૂરતું છે
+    examples_bn:
+    - আমার কাছে আগে থেকেই কার্ড আছে
+    - দুটো কার্ড কেন
+    - একটাই যথেষ্ট
+  IS_THIS_GENUINE:
+    description: Suspects a scam. Trust objection.
+    examples_en:
+    - is this a fraud call
+    - how do I know you're really SBI
+    - this is a scam
+    examples_hi_latn:
+    - yeh fraud call hai kya
+    - kaise pata aap SBI se hain
+    - scam hai
+    examples_hi:
+    - यह फ्रॉड कॉल है क्या
+    - कैसे पता आप एस बी आई से हैं
+    - स्कैम है
+    examples_ta:
+    - இது ஃப்ராட் கால் தானே
+    - நீங்க எஸ் பி ஐ தானா
+    - இது ஸ்கேம்
+    examples_te:
+    - ఇది ఫ్రాడ్ కాల్ కదా
+    - మీరు ఎస్ బి ఐ నుంచేనా
+    - ఇది స్కామ్
+    examples_kn:
+    - ಇದು ಫ್ರಾಡ್ ಕಾಲ್ ಅಲ್ಲವೇ
+    - ನೀವು ಎಸ್ ಬಿ ಐ ನಿಂದಲೇ
+    - ಇದು ಸ್ಕ್ಯಾಮ್
+    examples_ml:
+    - ഇത് ഫ്രോഡ് കോൾ അല്ലേ
+    - നിങ്ങൾ എസ് ബി ഐ യിൽ നിന്നാണോ
+    - ഇത് സ്കാം ആണ്
+    examples_mr:
+    - हा फ्रॉड कॉल आहे का
+    - तुम्ही एस बी आय कडून आहात का
+    - हा स्कॅम आहे
+    examples_gu:
+    - આ ફ્રોડ કોલ છે કે
+    - તમે એસ બી આઈ માંથી છો
+    - આ સ્કેમ છે
+    examples_bn:
+    - এটা কি ফ্রড কল
+    - আপনারা কি এস বি আই থেকে
+    - এটা স্ক্যাম

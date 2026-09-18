@@ -1,0 +1,552 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Call console — SBI Card outbound voice agent</title>
+<style>
+  :root{
+    --bg:#0d1117;--panel:#161b22;--raise:#1c2430;--line:#283039;--ink:#e6edf3;--dim:#8b949e;
+    --bot:#58a6ff;--you:#3fb950;--warn:#d29922;--bad:#f85149;--acc:#bc8cff;
+    --mono:ui-monospace,"Cascadia Code",Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font:14px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
+  header{padding:12px 20px;border-bottom:1px solid var(--line);display:flex;
+         gap:10px;align-items:center;flex-wrap:wrap;background:var(--panel)}
+  h1{font-size:14px;margin:0 14px 0 0;font-weight:650;letter-spacing:.2px}
+  .tag{font:11px var(--mono);color:var(--dim);border:1px solid var(--line);
+       padding:2px 8px;border-radius:20px;white-space:nowrap}
+  .tag.warn{color:var(--warn);border-color:#4a3a12}
+  .tag.ok{color:var(--you);border-color:#1d3325}
+  select,button,input{background:var(--raise);color:var(--ink);border:1px solid var(--line);
+       border-radius:7px;padding:6px 11px;font:inherit;font-size:13px}
+  button{cursor:pointer;transition:.12s}
+  button:hover:not(:disabled){border-color:var(--dim)}
+  button.primary{background:var(--bot);border-color:var(--bot);color:#08121f;font-weight:650}
+  button.stop{background:var(--bad);border-color:var(--bad);color:#fff;font-weight:650}
+  button:disabled{opacity:.35;cursor:not-allowed}
+  label.sw{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--dim);cursor:pointer;
+       border:1px solid var(--line);border-radius:7px;padding:5px 10px;background:var(--raise)}
+  label.sw input{margin:0;accent-color:var(--warn)}
+  label.sw.on{color:var(--warn);border-color:#4a3a12}
+  main{display:grid;grid-template-columns:1fr 370px;gap:1px;background:var(--line);
+       height:calc(100vh - 53px)}
+  @media(max-width:920px){main{grid-template-columns:1fr;height:auto}}
+  section{background:var(--bg);overflow-y:auto;padding:18px 20px}
+  .turn{margin-bottom:12px;animation:in .18s ease-out}
+  @keyframes in{from{opacity:0;transform:translateY(3px)}}
+  .who{font:10px var(--mono);letter-spacing:.7px;margin-bottom:3px;text-transform:uppercase}
+  .bot .who{color:var(--bot)}.you .who{color:var(--you)}
+  .bubble{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--bot);
+          border-radius:0 9px 9px 0;padding:9px 13px;max-width:80%}
+  .you .bubble{border-left-color:var(--you)}
+  .bubble.disclosure{border-left-color:var(--warn)}
+  .bubble.faq{border-left-style:dashed}
+  .bubble.interim{opacity:.5;font-style:italic}
+  .meta{font:10px var(--mono);color:var(--dim);margin-top:5px}
+  .route{font:11px var(--mono);color:var(--dim);margin:2px 0 10px 4px}
+  .band-auto{color:var(--you)}.band-flag{color:var(--warn)}.band-deflect{color:var(--bad)}
+  aside h2{font:600 10px var(--mono);color:var(--dim);text-transform:uppercase;
+           letter-spacing:.9px;margin:18px 0 7px}
+  aside h2:first-child{margin-top:0}
+  .kv{display:flex;justify-content:space-between;gap:10px;padding:4px 0;
+      border-bottom:1px solid var(--line);font:12px var(--mono)}
+  .kv span:last-child{color:var(--dim);text-align:right;word-break:break-all}
+  .chips{display:flex;flex-wrap:wrap;gap:5px}
+  .chip{font:10px var(--mono);background:var(--raise);border:1px solid var(--line);
+        padding:2px 7px;border-radius:4px;color:var(--dim)}
+  .chip.on{border-color:#4a3a12;color:var(--warn)}
+  pre{font:11px var(--mono);background:var(--panel);border:1px solid var(--line);
+      border-radius:7px;padding:10px;overflow-x:auto;color:var(--dim);white-space:pre-wrap}
+  .sub{font-weight:400;text-transform:none;letter-spacing:0;color:#5a6472}
+  .spark{display:flex;align-items:center;gap:2px;height:34px;margin-top:6px}
+  .spark i{flex:1;border-radius:1px;min-height:2px}
+  .mood-positive{color:var(--you)} .mood-negative{color:var(--warn)}
+  .mood-irritated{color:var(--bad)} .mood-confused{color:var(--acc)}
+  .rule{display:flex;gap:7px;align-items:center;font:11px var(--mono);padding:2px 0}
+  .rule b{width:13px;display:inline-block}
+  .rule.ok b{color:var(--you)} .rule.no b{color:var(--bad)} .rule.no{color:var(--bad)}
+  .switched{background:#12233a;border:1px solid #1f4068;color:var(--bot);padding:6px 11px;
+    border-radius:7px;font:11px var(--mono);margin:6px 0}
+  .live{width:8px;height:8px;border-radius:50%;background:#30363d;display:inline-block}
+  .live.on{background:var(--bad);animation:pulse 1.1s infinite}
+  .live.speech{background:var(--you)}
+  @keyframes pulse{50%{opacity:.25}}
+  .note{color:var(--dim);font-size:12px;border-left:2px solid var(--line);
+        padding-left:11px;margin:0 0 16px}
+  .note b{color:var(--warn)}
+  #typed{flex:1;min-width:200px}
+  .bar{display:flex;gap:8px;margin-bottom:16px}
+  .vu{height:3px;background:var(--line);border-radius:2px;overflow:hidden;margin-top:8px}
+  .vu i{display:block;height:100%;width:0;background:var(--you);transition:width .08s}
+  #ivrpanel{margin:18px 0;padding:14px;border:1px solid var(--line);border-radius:10px;
+            background:var(--panel);max-width:330px}
+  .ivrhead{display:flex;justify-content:space-between;align-items:center;gap:10px;
+           font:600 11px var(--mono);text-transform:uppercase;letter-spacing:.8px;
+           color:var(--dim);margin-bottom:12px}
+  .pad{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+  .pad button{padding:13px 0;font:600 17px var(--mono);border-radius:8px;
+              background:var(--raise);border:1px solid var(--line)}
+  .pad button:hover{background:#243040;border-color:var(--bot)}
+  .pad button.hit{background:var(--bot);color:#08121f;border-color:var(--bot)}
+  .pad button small{display:block;font:400 9px system-ui;color:var(--dim);margin-top:2px}
+  .pad button.hit small{color:#08121f}
+  .ivrstate{margin-top:11px;font:12px var(--mono);color:var(--dim);text-align:center}
+  .ivrstate.ok{color:var(--you)}.ivrstate.no{color:var(--bad)}.ivrstate.wait{color:var(--warn)}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Call console</h1>
+  <span class="tag" id="packtag">—</span>
+  <select id="customer" title="Who are we calling?" style="min-width:230px"></select>
+  <select id="product"></select>
+  <select id="locale"></select>
+  <select id="voice" title="Voice"></select>
+  <label class="sw" id="telelabel" title="Round-trip the audio through 8 kHz, as a phone line does">
+    <input type="checkbox" id="telephony"> 8 kHz telephony
+  </label>
+  <button id="call" class="primary">Start call</button>
+  <button id="hangup" class="stop" disabled>Hang up</button>
+  <span class="live" id="live"></span>
+  <span class="tag" id="micstate">idle</span>
+  <span class="tag" id="asrtag">—</span>
+</header>
+
+<main>
+  <section id="transcript">
+    <div class="note" id="banner">Loading…</div>
+    <div class="bar"><input id="typed" placeholder="…or type what the customer says" disabled></div>
+    <div class="vu"><i id="vu"></i></div>
+
+    <div id="ivrpanel" hidden>
+      <div class="ivrhead">
+        <span>Advisor IVR</span>
+        <span class="tag warn" id="ivrnote">advisor-side · simulated · OI-1 unresolved</span>
+      </div>
+      <div class="pad" id="pad"></div>
+      <div class="ivrstate" id="ivrstate">press a key</div>
+    </div>
+  </section>
+
+  <aside>
+    <section>
+      <h2>State</h2>
+      <div class="kv"><span>node</span><span id="s-node">—</span></div>
+      <div class="kv"><span>kind</span><span id="s-kind">—</span></div>
+      <div class="kv"><span>disposition</span><span id="s-disp">—</span></div>
+      <div class="kv"><span>engine p50</span><span id="s-lat">—</span></div>
+      <div class="kv"><span>asr</span><span id="s-asr">—</span></div>
+      <div class="kv"><span>correlation</span><span id="s-corr">—</span></div>
+      <h2>Disclosures played</h2>
+      <div class="chips" id="s-disc"><span class="chip">none</span></div>
+      <h2>Path</h2>
+      <div class="chips" id="s-path"><span class="chip">—</span></div>
+      <h2>Sentiment <span class="sub">FR-701 · uncalibrated</span></h2>
+      <div class="kv"><span>current</span><span id="s-mood">—</span></div>
+      <div class="spark" id="s-spark"></div>
+
+      <h2>Compliance <span class="sub">evaluated at hangup</span></h2>
+      <div id="s-rules"><span class="chip">call not finished</span></div>
+
+      <h2>Handoff payload</h2>
+      <pre id="s-payload">assembled during the call, not reported afterwards</pre>
+    </section>
+  </aside>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+const transcript = $("transcript"), typed = $("typed");
+let ws=null, cfg=null, rec=null, wantMic=false, speaking=null, speakStart=0;
+let audioCtx=null, node=null, stream=null, ourAsr=false;
+
+const BCP47 = {en:"en-IN",hi_latn:"hi-IN",ta:"ta-IN",te:"te-IN",kn:"kn-IN",
+               ml:"ml-IN",mr:"mr-IN",gu:"gu-IN",bn:"bn-IN"};
+
+// ---------------------------------------------------------------- voices
+// The default `speechSynthesis` voice is the robotic one. Windows and Chrome both ship neural
+// voices whose names carry "Natural"/"Neural"/"Online", and they sound markedly more human.
+// Rank them, prefer the region, and never silently fall back to the buzzy default.
+function rankVoice(v, want){
+  let s = 0;
+  if (/natural|neural|online/i.test(v.name)) s += 100;
+  if (/google/i.test(v.name)) s += 40;
+  if (v.lang === want) s += 50; else if (v.lang.split("-")[0] === want.split("-")[0]) s += 25;
+  if (/desktop|espeak|microsoft (david|zira|mark|hazel)\b/i.test(v.name)) s -= 60;
+  return s;
+}
+function loadVoices(){
+  const want = BCP47[$("locale").value] || "en-IN";
+  const all = speechSynthesis.getVoices();
+  if (!all.length) return;
+  const ranked = all.map(v=>({v,s:rankVoice(v,want)})).sort((a,b)=>b.s-a.s);
+  $("voice").innerHTML = "";
+  ranked.slice(0,14).forEach(({v,s})=>{
+    const o = new Option((s>=100?"★ ":"") + v.name.replace(/^Microsoft /,"") + " · " + v.lang, v.name);
+    $("voice").add(o);
+  });
+  const best = ranked[0];
+  $("voice").value = best.v.name;
+  if (best.s < 100) $("micstate").textContent = "no neural voice installed";
+}
+speechSynthesis.onvoiceschanged = loadVoices;
+
+// Speak one line. Split on sentence boundaries and leave a short gap between them - a single
+// flat utterance with no pauses is most of what makes a bot sound like a bot.
+function speakLine(text, done){
+  const voice = speechSynthesis.getVoices().find(v=>v.name===$("voice").value);
+  const parts = text.match(/[^.?!]+[.?!]*/g) || [text];
+  let i = 0;
+  const next = () => {
+    if (i >= parts.length) return done && done();
+    const u = new SpeechSynthesisUtterance(parts[i++].trim());
+    if (voice) u.voice = voice;
+    u.lang = voice ? voice.lang : (BCP47[$("locale").value] || "en-IN");
+    u.rate = 0.97;              // a touch under default; default reads like a form letter
+    u.pitch = 1.0;
+    u.onend = () => setTimeout(next, 130);   // breath between sentences
+    u.onerror = next;
+    speechSynthesis.speak(u);
+  };
+  next();
+}
+
+function add(who, text, cls, meta){
+  const d = document.createElement("div");
+  d.className = "turn " + who;
+  d.innerHTML = `<div class="who">${who==="bot"?"Bot":"Customer"}</div>
+    <div class="bubble ${cls||""}">${text}${meta?`<div class="meta">${meta}</div>`:""}</div>`;
+  transcript.appendChild(d);
+  transcript.scrollTop = transcript.scrollHeight;
+  return d;
+}
+
+let player = null;
+function say(utterances){
+  let i = 0;
+  const next = () => {
+    if (i >= utterances.length){ speaking = null; return; }
+    const u = utterances[i++];
+    add("bot", u.text, u.kind==="disclosure"?"disclosure":u.kind==="faq"?"faq":"",
+        `${u.kind} · ${u.id}${(u.audio&&u.audio.length) ? " · neural ×"+u.audio.length : " · system voice"}`);
+    speaking = u.id; speakStart = performance.now();
+    const clips = Array.isArray(u.audio) ? u.audio : (u.audio ? [u.audio] : []);
+    if (clips.length){
+      let c = 0;
+      const playNext = () => {
+        if (c >= clips.length) return setTimeout(next, 200);
+        player = new Audio(clips[c++]);
+        player.onended = playNext;
+        player.onerror = playNext;           // a missing span must not stall the call
+        player.play().catch(playNext);
+      };
+      playNext();
+    } else {
+      speakLine(u.text, () => setTimeout(next, 200));
+    }
+  };
+  next();
+}
+
+function bargeIn(){
+  if (!speaking) return;
+  if (player){ player.pause(); player.currentTime = 0; player = null; }
+  speechSynthesis.cancel();
+  ws && ws.readyState===1 && ws.send(JSON.stringify({type:"barge", node_id:speaking,
+      played_ms: Math.round(performance.now()-speakStart)}));
+  speaking = null;
+}
+
+// ---------------------------------------------------------------- our ASR path
+// 16 kHz AudioContext so no resampling is needed, then Float32 -> PCM16 in a worklet and
+// straight down the socket. The server does VAD, endpointing and IndicConformer.
+const WORKLET = `
+class Cap extends AudioURLProcessor {}
+`;
+async function startOurMic(){
+  audioCtx = new AudioContext({sampleRate:16000});
+  stream = await navigator.mediaDevices.getUserMedia({audio:{
+    channelCount:1, echoCancellation:true, noiseSuppression:true, autoGainControl:true}});
+  const src = audioCtx.createMediaStreamSource(stream);
+  const code = `
+    class PCM extends AudioWorkletProcessor{
+      process(inputs){
+        const ch = inputs[0][0];
+        if(!ch) return true;
+        const out = new Int16Array(ch.length);
+        let peak = 0;
+        for(let i=0;i<ch.length;i++){
+          const s = Math.max(-1, Math.min(1, ch[i]));
+          out[i] = s < 0 ? s*0x8000 : s*0x7FFF;
+          const a = Math.abs(s); if(a>peak) peak=a;
+        }
+        this.port.postMessage({pcm: out.buffer, peak}, [out.buffer]);
+        return true;
+      }
+    }
+    registerProcessor('pcm', PCM);`;
+  await audioCtx.audioWorklet.addModule(URL.createObjectURL(new Blob([code],{type:"text/javascript"})));
+  node = new AudioWorkletNode(audioCtx, "pcm");
+  node.port.onmessage = e => {
+    $("vu").style.width = Math.min(100, e.data.peak*260) + "%";
+    if (ws && ws.readyState === 1) ws.send(e.data.pcm);
+  };
+  src.connect(node);
+  $("live").classList.add("on");
+  $("micstate").textContent = "streaming PCM → our ASR";
+}
+function stopOurMic(){
+  node && node.disconnect();
+  stream && stream.getTracks().forEach(t=>t.stop());
+  audioCtx && audioCtx.close();
+  audioCtx = node = stream = null;
+  $("live").classList.remove("on","speech"); $("vu").style.width = "0";
+}
+
+// ---------------------------------------------------------------- browser ASR fallback (en)
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+function startBrowserMic(){
+  if (!SR){ $("micstate").textContent = "no Web Speech API — type instead"; return; }
+  rec = new SR();
+  rec.lang = BCP47[$("locale").value] || "en-IN";
+  rec.continuous = true; rec.interimResults = true;
+  let interimEl = null;
+  rec.onstart = ()=>{ $("live").classList.add("on"); $("micstate").textContent="browser ASR"; };
+  rec.onerror = e => $("micstate").textContent = "mic: " + e.error;
+  rec.onend = ()=>{ $("live").classList.remove("on"); if(wantMic){ try{rec.start()}catch(_){} } };
+  rec.onspeechstart = bargeIn;
+  rec.onresult = ev => {
+    let interim="", final="";
+    for(let i=ev.resultIndex;i<ev.results.length;i++)
+      ev.results[i].isFinal ? final+=ev.results[i][0].transcript : interim+=ev.results[i][0].transcript;
+    if(interim){ if(!interimEl) interimEl = add("you","","interim");
+                 interimEl.querySelector(".bubble").textContent = interim; }
+    if(final.trim()){ if(interimEl){interimEl.remove(); interimEl=null;} send(final.trim()); }
+  };
+  wantMic = true; try{rec.start()}catch(_){}
+}
+
+function send(text){ add("you", text); ws && ws.send(JSON.stringify({type:"said", text})); }
+
+// ---------------------------------------------------------------- wiring
+fetch("/api/config").then(r=>r.json()).then(c=>{
+  cfg = c;
+  c.products.forEach(p=>$("product").add(new Option(p,p)));
+  c.locales.forEach(l=>$("locale").add(new Option(l,l)));
+  $("packtag").textContent = `${c.pack.pack} @ ${c.pack.content_hash}`;
+  $("packtag").className = "tag " + (c.pack.provenance==="blc-approved" ? "ok" : "warn");
+  const a = c.asr;
+  $("asrtag").textContent = a.available ? `ASR ${a.name}` : "ASR unavailable";
+  $("asrtag").className = "tag " + (a.available ? "ok" : "warn");
+  $("banner").innerHTML = a.available
+    ? `Speech recognition is <b>ours</b> — ${a.name}, ${a.languages.length} Indian languages, on this
+       machine. English is not in that model, so <code>en</code> falls back to the browser recogniser.
+       The front-end is <b>unvalidated</b> (validated=${a.validated}) — see README.
+       Voice is <b>${c.tts.available ? c.tts.name + " neural TTS" : "the system voice"}</b>,
+       ${c.tts.available ? "rendered on this machine at " + c.tts.sample_rate + " Hz and cached per ADR-005" : "no neural TTS available"}.`
+    : `Our ASR is unavailable (${a.error}). Falling back to the browser recogniser.`;
+  loadTtsVoices();
+});
+function loadTtsVoices(){
+  const v = (cfg && cfg.tts && cfg.tts.available) ? (cfg.tts.voices[$("locale").value]||[]) : null;
+  if (!v){ loadVoices(); return; }          // fall back to system voices
+  $("voice").innerHTML = "";
+  v.forEach(n => $("voice").add(new Option(n + " · kokoro", n)));
+}
+// Picking a customer picks their product, language and offer variables together - they arrive
+// as one record from the dialer, so the console should not let them be chosen separately.
+let CUSTOMERS = [];
+fetch("/api/customers").then(r=>r.json()).then(d=>{
+  CUSTOMERS = d.customers;
+  const sel = $("customer");
+  sel.innerHTML = "";
+  if (!CUSTOMERS.length){
+    sel.add(new Option("no base — run tools/make_base.py", ""));
+    return;
+  }
+  sel.add(new Option("— example values —", ""));
+  CUSTOMERS.forEach(c => sel.add(new Option(`${c.name} · ${c.product} · ${c.locale}`, c.ref)));
+  sel.onchange = () => {
+    const c = CUSTOMERS.find(x => x.ref === sel.value);
+    if (!c) return;
+    $("product").value = c.product;
+    $("locale").value = c.locale;
+    loadTtsVoices();
+    $("banner").innerHTML = `Calling <b>${c.name}</b> · ${c.ref} · ${c.zone} zone<br>
+      <span style="color:#8b949e">${c.detail || ""}</span><br>
+      <span style="color:#8b949e">The name is spoken and then dropped — it is marked
+      <code>pii: true</code> and never reaches the handoff payload or the audit trail.</span>`;
+  };
+});
+
+$("locale").onchange = loadTtsVoices;
+$("voice").onchange = () => ws && ws.readyState===1 &&
+  ws.send(JSON.stringify({type:"set_mode", telephony:$("telephony").checked, voice:$("voice").value}));
+$("telephony").onchange = e => {
+  $("telelabel").classList.toggle("on", e.target.checked);
+  ws && ws.readyState===1 && ws.send(JSON.stringify({type:"set_mode", telephony:e.target.checked}));
+};
+
+$("call").onclick = async () => {
+  $("ivrpanel").hidden = true; $("pad").style.opacity = 1;
+  MOODS.length = 0; $("s-spark").innerHTML = ""; $("s-mood").textContent = "—";
+  $("s-rules").innerHTML = '<span class="chip">call not finished</span>';
+  ws = new WebSocket(`ws://${location.host}/ws`);
+  ws.binaryType = "arraybuffer";
+  ws.onopen = async () => {
+    ws.send(JSON.stringify({type:"start", product:$("product").value,
+                            locale:$("locale").value, masked_ref_id:$("customer").value||null}));
+    ws.send(JSON.stringify({type:"set_mode", telephony:$("telephony").checked, voice:$("voice").value}));
+    $("call").disabled = true; $("hangup").disabled = false; typed.disabled = false; typed.focus();
+    ourAsr = cfg.asr.available && $("locale").value !== "en";
+    try { ourAsr ? await startOurMic() : startBrowserMic(); }
+    catch(e){ $("micstate").textContent = "mic error: " + e.message; }
+  };
+  ws.onmessage = ev => {
+    const m = JSON.parse(ev.data);
+    if (m.type === "speech_start"){ $("live").classList.add("speech"); bargeIn(); }
+    if (m.type === "asr"){
+      $("live").classList.remove("speech");
+      if (m.switched){
+        const d = document.createElement("div");
+        d.className = "switched";
+        d.textContent = `language switched ${m.switched.from} → ${m.switched.to} `
+          + `(margin ${m.switched.margin}) — same node, different cache key, no re-synthesis`;
+        transcript.appendChild(d);
+        $("locale").value = Object.keys(BCP47).find(k => k === m.switched.to) || $("locale").value;
+      }
+      add("you", m.text || "<em>(nothing recognised)</em>", "",
+          `${m.engine} · ${m.audio_ms} ms audio · ${m.asr_ms} ms · RTF ${m.rtf}` +
+          (m.telephony ? " · <b style='color:#d29922'>8 kHz</b>" : " · 16 kHz"));
+      $("s-asr").textContent = `${m.asr_ms} ms · RTF ${m.rtf}`;
+    }
+    if (m.type === "say"){
+      if (m.route){
+        const d = document.createElement("div");
+        d.className = "route";
+        d.innerHTML = `↳ <span class="band-${m.route.band}">${m.route.kind}:${m.route.id}</span>
+           conf ${m.route.confidence} · ${m.route.band} · engine ${m.timing.engine_ms} ms`;
+        transcript.appendChild(d);
+      }
+      say(m.utterances); paint(m.state); paintMood(m.mood);
+      if (m.correlation_id) $("s-corr").textContent = m.correlation_id.slice(0,8);
+    }
+    if (m.type === "transfer"){
+      add("bot", `<strong>Transferring to advisor</strong> — ${m.mechanism} · run by the
+          ${m.operator}. <span style="color:#d29922">${m.note}</span>`, "disclosure",
+          "everything past this point is someone else's system");
+      playHold(m.hold_audio, m.hold_ms);
+      if (m.audio && m.audio.length) setTimeout(()=>say([{kind:"node",id:"IVR_HOLD",
+          text:m.text, audio:m.audio}]), (m.hold_ms||2600) - 300);
+    }
+    if (m.type === "ivr"){
+      stopHold();
+      buildPad();
+      $("ivrpanel").hidden = !m.dialpad && m.state !== "accepted" && m.state !== "rejected";
+      if (m.dialpad) $("ivrpanel").hidden = false;
+      if (m.text) say([{kind:"node", id:"IVR_"+m.prompt_key.toUpperCase(),
+                        text:m.text, audio:m.audio}]);
+      const st = m.state;
+      if (st === "accepted"){ $("ivrstate").textContent = "ACCEPTED — SR raised";
+                              $("ivrstate").className = "ivrstate ok"; $("pad").style.opacity=.35; }
+      else if (st === "rejected"){ $("ivrstate").textContent = "DECLINED";
+                              $("ivrstate").className = "ivrstate no"; $("pad").style.opacity=.35; }
+      else if (st === "exhausted"){ $("ivrstate").textContent = "no valid response — advisor callback";
+                              $("ivrstate").className = "ivrstate no"; $("pad").style.opacity=.35; }
+      else if (st === "invalid"){ $("ivrstate").textContent = `invalid key (attempt ${m.attempts})`;
+                              $("ivrstate").className = "ivrstate wait"; }
+      else { $("ivrstate").textContent = "press 1 to accept, 2 to decline";
+             $("ivrstate").className = "ivrstate"; }
+    }
+    if (m.type === "end"){
+      stopHold();
+      if (m.inbound){
+        $("s-payload").textContent = JSON.stringify(
+          {outbound: m.payload, inbound: m.inbound}, null, 2);
+      }
+      else $("s-payload").textContent = JSON.stringify(m.payload, null, 2);
+      $("s-lat").textContent = m.latency.p50_engine_ms != null ? m.latency.p50_engine_ms+" ms" : "—";
+      if (m.evidence) paintEvidence(m.evidence);
+      const failed = (m.evidence || []).filter(r => !r.pass).length;
+      add("bot", `<strong>Call ended — ${m.disposition}</strong>`, "",
+          `leg handed back to the dialer · compliance ${failed ? failed + " FAILED" : "all passed"}`);
+      hangup();
+    }
+    if (m.type === "compliance_stop") add("bot","COMPLIANCE STOP — "+m.detail,"disclosure");
+    if (m.type === "error") add("bot", m.detail, "");
+  };
+  ws.onclose = ()=> $("micstate").textContent = "disconnected";
+};
+
+// ---------------------------------------------------------------- IVR
+let holdAudio = null;
+const PAD = [["1","accept"],["2","decline"],["3",""],["4",""],["5",""],["6",""],
+             ["7",""],["8",""],["9",""],["*",""],["0",""],["#",""]];
+function buildPad(){
+  const pad = $("pad");
+  if (pad.childElementCount) return;
+  PAD.forEach(([k, hint]) => {
+    const b = document.createElement("button");
+    b.innerHTML = k + (hint ? `<small>${hint}</small>` : "<small>&nbsp;</small>");
+    b.onclick = () => {
+      b.classList.add("hit"); setTimeout(()=>b.classList.remove("hit"), 160);
+      $("ivrstate").textContent = `sent DTMF ${k}`;
+      $("ivrstate").className = "ivrstate wait";
+      ws && ws.readyState===1 && ws.send(JSON.stringify({type:"dtmf", key:k}));
+    };
+    pad.appendChild(b);
+  });
+}
+function playHold(url, ms){
+  holdAudio = new Audio(url); holdAudio.loop = true; holdAudio.volume = 0.5;
+  holdAudio.play().catch(()=>{});
+  setTimeout(stopHold, ms || 2600);
+}
+function stopHold(){ if (holdAudio){ holdAudio.pause(); holdAudio = null; } }
+
+const MOODS = [];
+function paintMood(m){
+  if (!m || !m.label) return;
+  MOODS.push(m);
+  const el = $("s-mood");
+  el.textContent = `${m.label} (${m.polarity > 0 ? "+" : ""}${m.polarity})`;
+  el.className = "mood-" + m.label;
+  // trajectory: how the call is TRENDING matters more than any single turn, and it is what
+  // an advisor picking up a warm transfer actually needs to see.
+  $("s-spark").innerHTML = MOODS.map(x => {
+    const h = Math.max(6, Math.abs(x.polarity) * 30);
+    const c = x.polarity > 0.2 ? "#3fb950" : x.polarity < -0.2 ? "#f85149" : "#3a4a5c";
+    return `<i style="height:${h}px;background:${c}" title="${x.label} ${x.polarity}"></i>`;
+  }).join("");
+}
+
+function paintEvidence(rules){
+  $("s-rules").innerHTML = rules.map(r =>
+    `<div class="rule ${r.pass ? "ok" : "no"}"><b>${r.pass ? "✓" : "✗"}</b>${r.rule}` +
+    (r.detail && r.detail.length ? ` <span style="opacity:.7">${r.detail.join(", ")}</span>` : "") +
+    `</div>`).join("");
+}
+
+function paint(s){
+  if(!s) return;
+  $("s-node").textContent = s.node||"—"; $("s-kind").textContent = s.kind||"—";
+  $("s-disp").textContent = s.disposition||"—";
+  $("s-disc").innerHTML = (s.disclosures.length?s.disclosures:["none"])
+    .map(d=>`<span class="chip ${s.disclosures.length?"on":""}">${d}</span>`).join("");
+  $("s-path").innerHTML = s.path.map(p=>`<span class="chip">${p}</span>`).join("");
+}
+function hangup(){
+  wantMic=false; rec&&rec.stop(); stopOurMic(); stopHold(); speechSynthesis.cancel();
+  if (player){ player.pause(); player = null; }
+  ws&&ws.close(); $("call").disabled=false; $("hangup").disabled=true; typed.disabled=true;
+  $("micstate").textContent="idle";
+}
+$("hangup").onclick = hangup;
+typed.onkeydown = e => { if(e.key==="Enter"&&typed.value.trim()){ send(typed.value.trim()); typed.value=""; } };
+</script>
+</body>
+</html>

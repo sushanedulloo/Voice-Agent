@@ -1,0 +1,367 @@
+# Multicarding-scoped FAQ entries. SYNTHETIC - replace with the SBIC glossary (OI-5).
+#
+# The bot never mentions the C2B link or an OTP. That journey is advisor-triggered and
+# customer-completed (CH-MULTICARD). FAQ_M012 exists so that a customer who raises it gets an
+# approved line rather than an invented one.
+
+scope: multicarding
+version: 0.1.0
+status: synthetic
+approval_ref: PENDING-BLC
+entries:
+- id: FAQ_M001
+  question:
+    en: Why do I need a second card?
+    hi_latn: Mujhe doosre card ki kya zaroorat hai?
+    mr: मला दुसऱ्या कार्डाची काय गरज आहे?
+    gu: મને બીજા કાર્ડની શી જરૂર છે?
+    bn: আমার দ্বিতীয় কার্ডের কী দরকার?
+    ta: எனக்கு ரெண்டாவது கார்டு எதுக்கு?
+    te: నాకు రెండో కార్డ్ ఎందుకు?
+    kn: ನನಗೆ ಎರಡನೇ ಕಾರ್ಡ್ ಯಾಕೆ ಬೇಕು?
+    ml: എനിക്ക് രണ്ടാമത്തെ കാർഡ് എന്തിന്?
+    hi: मुझे दूसरे कार्ड की क्या ज़रूरत है?
+  paraphrases_en:
+  - I already have one
+  - what is the point of another card
+  paraphrases_hi_latn:
+  - mere paas pehle se hai
+  - doosra card kyun
+  answer:
+    en: Each card carries its own benefits. The {offered_card_name} offers {headline_benefit}.
+    hi_latn: Har card ke apne benefits hote hain. {offered_card_name} mein {headline_benefit} milta hai.
+    mr: प्रत्येक कार्डाचे स्वतःचे फायदे असतात. {offered_card_name} मध्ये {headline_benefit} मिळतं.
+    gu: દરેક કાર્ડના પોતાના ફાયદા હોય છે. {offered_card_name} માં {headline_benefit} મળે છે.
+    bn: প্রতিটি কার্ডের নিজস্ব সুবিধা আছে। {offered_card_name} এ {headline_benefit} পাওয়া যায়।
+    ta: ஒவ்வொரு கார்டுக்கும் தனி பலன்கள் இருக்கு. {offered_card_name} ல {headline_benefit} கிடைக்கும்.
+    te: ప్రతి కార్డ్ కు దాని స్వంత ప్రయోజనాలు ఉంటాయి. {offered_card_name} లో {headline_benefit} లభిస్తుంది.
+    kn: ಪ್ರತಿ ಕಾರ್ಡ್ ಗೂ ತನ್ನದೇ ಪ್ರಯೋಜನಗಳಿವೆ. {offered_card_name} ನಲ್ಲಿ {headline_benefit} ಸಿಗುತ್ತದೆ.
+    ml: ഓരോ കാർഡിനും അതിന്റേതായ ആനുകൂല്യങ്ങളുണ്ട്. {offered_card_name} ൽ {headline_benefit} ലഭിക്കും.
+    hi: हर कार्ड के अपने फ़ायदे होते हैं. {offered_card_name} में {headline_benefit} मिलता है.
+- id: FAQ_M002
+  question:
+    en: What is the annual fee?
+    hi_latn: Annual fee kitni hai?
+    mr: वार्षिक फी किती आहे?
+    gu: વાર્ષિક ફી કેટલી છે?
+    bn: বার্ষিক ফি কত?
+    ta: ஆண்டு கட்டணம் எவ்வளவு?
+    te: వార్షిక ఫీజు ఎంత?
+    kn: ವಾರ್ಷಿಕ ಶುಲ್ಕ ಎಷ್ಟು?
+    ml: വാർഷിക ഫീസ് എത്ര?
+    hi: सालाना फ़ीस कितनी है?
+  paraphrases_en:
+  - how much does it cost per year
+  - what are the charges
+  paraphrases_hi_latn:
+  - saalana kitna lagega
+  answer:
+    en: The annual fee is {annual_fee} rupees, and it is reversed on {fee_waiver_condition}.
+    hi_latn: Annual fee {annual_fee} rupees hai, jo {fee_waiver_condition} par reverse ho jaati hai.
+    mr: वार्षिक फी {annual_fee} रुपये आहे, आणि {fee_waiver_condition} वर ती परत केली जाते.
+    gu: વાર્ષિક ફી {annual_fee} રૂપિયા છે, અને {fee_waiver_condition} પર એ પાછી મળે છે.
+    bn: বার্ষিক ফি {annual_fee} টাকা, এবং {fee_waiver_condition} এ তা ফেরত দেওয়া হয়।
+    ta: ஆண்டு கட்டணம் {annual_fee} ரூபாய், {fee_waiver_condition} ல அது திரும்ப தரப்படும்.
+    te: వార్షిక ఫీజు {annual_fee} రూపాయలు, {fee_waiver_condition} పై అది తిరిగి ఇవ్వబడుతుంది.
+    kn: ವಾರ್ಷಿಕ ಶುಲ್ಕ {annual_fee} ರೂಪಾಯಿ, {fee_waiver_condition} ಮೇಲೆ ಅದು ಹಿಂತಿರುಗಿಸಲಾಗುತ್ತದೆ.
+    ml: വാർഷിക ഫീസ് {annual_fee} രൂപയാണ്, {fee_waiver_condition} ൽ അത് തിരികെ നൽകും.
+    hi: सालाना फ़ीस {annual_fee} रुपये है, जो {fee_waiver_condition} पर वापस कर दी जाती है.
+  never_say:
+  - lifetime free
+  - no annual fee
+- id: FAQ_M003
+  question:
+    en: Is there a joining fee?
+    hi_latn: Koi joining fee hai?
+    mr: जॉइनिंग फी आहे का?
+    gu: જોઇનિંગ ફી છે?
+    bn: জয়েনিং ফি আছে?
+    ta: ஜாய்னிங் கட்டணம் இருக்கா?
+    te: జాయినింగ్ ఫీజు ఉందా?
+    kn: ಜಾಯಿನಿಂಗ್ ಶುಲ್ಕ ಇದೆಯಾ?
+    ml: ജോയിനിംഗ് ഫീസ് ഉണ്ടോ?
+    hi: क्या कोई जॉइनिंग फ़ीस है?
+  paraphrases_en:
+  - do I pay upfront
+  - what is the one-time cost
+  paraphrases_hi_latn:
+  - shuru mein kitna dena hoga
+  answer:
+    en: There is a joining fee of {joining_fee} rupees, plus applicable taxes.
+    hi_latn: '{joining_fee} rupees ki joining fee hai, aur uspar applicable taxes.'
+    mr: '{joining_fee} रुपयांची जॉइनिंग फी आहे, अधिक लागू कर.'
+    gu: '{joining_fee} રૂપિયાની જોઇનિંગ ફી છે, ઉપરાંત લાગુ કર.'
+    bn: '{joining_fee} টাকার জয়েনিং ফি আছে, সঙ্গে প্রযোজ্য কর।'
+    ta: '{joining_fee} ரூபாய் ஜாய்னிங் கட்டணம் இருக்கு, கூடவே பொருந்தும் வரிகள்.'
+    te: '{joining_fee} రూపాయల జాయినింగ్ ఫీజు ఉంది, అదనంగా వర్తించే పన్నులు.'
+    kn: '{joining_fee} ರೂಪಾಯಿ ಜಾಯಿನಿಂಗ್ ಶುಲ್ಕ ಇದೆ, ಜೊತೆಗೆ ಅನ್ವಯವಾಗುವ ತೆರಿಗೆ.'
+    ml: '{joining_fee} രൂപയുടെ ജോയിനിംഗ് ഫീസ് ഉണ്ട്, കൂടെ ബാധകമായ നികുതികളും.'
+    hi: '{joining_fee} रुपये की जॉइनिंग फ़ीस है, और उस पर लागू टैक्स.'
+  never_say:
+  - free card
+  - no joining fee
+- id: FAQ_M004
+  question:
+    en: Will this affect my credit score?
+    hi_latn: Kya isse mera credit score prabhavit hoga?
+    mr: याचा माझ्या क्रेडिट स्कोअरवर परिणाम होईल का?
+    gu: શું આની મારા ક્રેડિટ સ્કોર પર અસર થશે?
+    bn: এটি কি আমার ক্রেডিট স্কোরে প্রভাব ফেলবে?
+    ta: இது என் கிரெடிட் ஸ்கோரை பாதிக்குமா?
+    te: ఇది నా క్రెడిట్ స్కోర్ పై ప్రభావం చూపుతుందా?
+    kn: ಇದು ನನ್ನ ಕ್ರೆಡಿಟ್ ಸ್ಕೋರ್ ಮೇಲೆ ಪರಿಣಾಮ ಬೀರುತ್ತಾ?
+    ml: ഇത് എന്റെ ക്രെഡിറ്റ് സ്കോറിനെ ബാധിക്കുമോ?
+    hi: क्या इससे मेरा क्रेडिट स्कोर प्रभावित होगा?
+  paraphrases_en:
+  - does a new card hurt my CIBIL
+  - will my score drop
+  paraphrases_hi_latn:
+  - naya card lene se CIBIL par asar padega kya
+  answer:
+    en: Credit bureaus consider many factors. Our advisor can explain how a new card is reported.
+    hi_latn: Credit bureaus kai factors dekhte hain. Hamare advisor samjha sakte hain ki naya card kaise report hota hai.
+    mr: क्रेडिट ब्युरो अनेक गोष्टी विचारात घेतात. नवीन कार्ड कसं नोंदवलं जातं, हे आमचे अ‍ॅडव्हायझर सांगू शकतात.
+    gu: ક્રેડિટ બ્યુરો ઘણી બાબતો ધ્યાનમાં લે છે. નવું કાર્ડ કેવી રીતે નોંધાય છે એ અમારા એડવાઇઝર કહી શકે.
+    bn: ক্রেডিট ব্যুরো অনেক বিষয় বিবেচনা করে। নতুন কার্ড কীভাবে রিপোর্ট হয় তা আমাদের অ্যাডভাইজার ব্যাখ্যা করবেন।
+    ta: கிரெடிட் ப்யூரோ பல விஷயங்களை கணக்குல எடுக்குது. புது கார்டு எப்படி ரிப்போர்ட் ஆகுதுன்னு எங்க அட்வைசர் சொல்வாங்க.
+    te: క్రెడిట్ బ్యూరోలు అనేక అంశాలను పరిగణిస్తాయి. కొత్త కార్డ్ ఎలా రిపోర్ట్ అవుతుందో మా అడ్వైజర్ వివరించగలరు.
+    kn: ಕ್ರೆಡಿಟ್ ಬ್ಯೂರೋಗಳು ಹಲವು ಅಂಶಗಳನ್ನು ಪರಿಗಣಿಸುತ್ತವೆ. ಹೊಸ ಕಾರ್ಡ್ ಹೇಗೆ ವರದಿಯಾಗುತ್ತದೆ ಎಂದು ನಮ್ಮ ಅಡ್ವೈಸರ್ ವಿವರಿಸಬಲ್ಲರು.
+    ml: ക്രെഡിറ്റ് ബ്യൂറോകൾ പല ഘടകങ്ങളും പരിഗണിക്കുന്നു. പുതിയ കാർഡ് എങ്ങനെ റിപ്പോർട്ട് ചെയ്യപ്പെടുന്നു എന്ന് ഞങ്ങളുടെ അഡ്വൈസർ വിശദീകരിക്കും.
+    hi: क्रेडिट ब्यूरो कई बातें देखते हैं. नया कार्ड कैसे रिपोर्ट होता है, हमारे एडवाइज़र समझा सकते हैं.
+  never_say:
+  - this will improve your credit score
+  - this will not affect your score
+- id: FAQ_M005
+  question:
+    en: Do the two cards share a limit?
+    hi_latn: Kya dono cards ki limit ek hi hogi?
+    mr: दोन्ही कार्डांची लिमिट एकच असेल का?
+    gu: શું બંને કાર્ડની લિમિટ એક જ હશે?
+    bn: দুটি কার্ডের কি একই লিমিট হবে?
+    ta: ரெண்டு கார்டுக்கும் ஒரே லிமிட்டா?
+    te: రెండు కార్డులకు ఒకే లిమిట్ ఉంటుందా?
+    kn: ಎರಡೂ ಕಾರ್ಡ್ ಗೆ ಒಂದೇ ಲಿಮಿಟ್ ಇರುತ್ತಾ?
+    ml: രണ്ട് കാർഡിനും ഒരേ ലിമിറ്റ് ആണോ?
+    hi: क्या दोनों कार्ड की लिमिट एक ही होगी?
+  paraphrases_en:
+  - is the limit separate
+  - do I get a new limit
+  paraphrases_hi_latn:
+  - alag limit milegi kya
+  answer:
+    en: Our advisor can explain how the limit is set for your account.
+    hi_latn: Hamare advisor samjha sakte hain ki aapke account ke liye limit kaise tay hoti hai.
+    mr: तुमच्या खात्यासाठी लिमिट कशी ठरते, हे आमचे अ‍ॅडव्हायझर सांगू शकतात.
+    gu: તમારા એકાઉન્ટ માટે લિમિટ કેવી રીતે નક્કી થાય એ અમારા એડવાઇઝર કહી શકે.
+    bn: আপনার অ্যাকাউন্টের জন্য লিমিট কীভাবে নির্ধারিত হয় তা আমাদের অ্যাডভাইজার ব্যাখ্যা করবেন।
+    ta: உங்க அக்கவுண்டுக்கு லிமிட் எப்படி தீர்மானிக்கப்படுதுன்னு எங்க அட்வைசர் சொல்வாங்க.
+    te: మీ ఖాతాకు లిమిట్ ఎలా నిర్ణయించబడుతుందో మా అడ్వైజర్ వివరించగలరు.
+    kn: ನಿಮ್ಮ ಖಾತೆಗೆ ಲಿಮಿಟ್ ಹೇಗೆ ನಿರ್ಧರಿಸಲಾಗುತ್ತದೆ ಎಂದು ನಮ್ಮ ಅಡ್ವೈಸರ್ ವಿವರಿಸಬಲ್ಲರು.
+    ml: നിങ്ങളുടെ അക്കൗണ്ടിന് ലിമിറ്റ് എങ്ങനെ നിശ്ചയിക്കുന്നു എന്ന് ഞങ്ങളുടെ അഡ്വൈസർ വിശദീകരിക്കും.
+    hi: आपके अकाउंट के लिए लिमिट कैसे तय होती है, हमारे एडवाइज़र समझा सकते हैं.
+- id: FAQ_M006
+  question:
+    en: How long until I receive the card?
+    hi_latn: Card milne mein kitna time lagega?
+    mr: कार्ड मिळायला किती वेळ लागेल?
+    gu: કાર્ડ મળવામાં કેટલો સમય લાગશે?
+    bn: কার্ড পেতে কত সময় লাগবে?
+    ta: கார்டு கிடைக்க எவ்வளவு நேரம் ஆகும்?
+    te: కార్డ్ రావడానికి ఎంత సమయం పడుతుంది?
+    kn: ಕಾರ್ಡ್ ಸಿಗಲು ಎಷ್ಟು ಸಮಯ ಬೇಕು?
+    ml: കാർഡ് കിട്ടാൻ എത്ര സമയം എടുക്കും?
+    hi: कार्ड मिलने में कितना समय लगेगा?
+  paraphrases_en:
+  - when will it be delivered
+  - how soon do I get it
+  paraphrases_hi_latn:
+  - kab tak aa jayega
+  answer:
+    en: Our advisor will confirm the timeline once your request is raised.
+    hi_latn: Request raise hone ke baad hamare advisor timeline confirm karenge.
+    mr: तुमची विनंती नोंदवल्यानंतर आमचे अ‍ॅडव्हायझर कालावधी सांगतील.
+    gu: તમારી વિનંતી નોંધાયા પછી અમારા એડવાઇઝર સમયમર્યાદા જણાવશે.
+    bn: আপনার অনুরোধ নথিভুক্ত হওয়ার পর আমাদের অ্যাডভাইজার সময়সীমা জানাবেন।
+    ta: உங்க ரிக்வெஸ்ட் பதிவு ஆன பிறகு எங்க அட்வைசர் கால அளவை சொல்வாங்க.
+    te: మీ అభ్యర్థన నమోదైన తర్వాత మా అడ్వైజర్ కాలవ్యవధి చెప్తారు.
+    kn: ನಿಮ್ಮ ವಿನಂತಿ ದಾಖಲಾದ ನಂತರ ನಮ್ಮ ಅಡ್ವೈಸರ್ ಕಾಲಮಿತಿ ತಿಳಿಸುತ್ತಾರೆ.
+    ml: നിങ്ങളുടെ അഭ്യർത്ഥന രേഖപ്പെടുത്തിയ ശേഷം ഞങ്ങളുടെ അഡ്വൈസർ സമയപരിധി അറിയിക്കും.
+    hi: आपका अनुरोध दर्ज होने के बाद हमारे एडवाइज़र समय-सीमा कन्फ़र्म करेंगे.
+- id: FAQ_M007
+  question:
+    en: Can I choose a different card?
+    hi_latn: Kya main koi aur card chun sakta hoon?
+    mr: मी वेगळं कार्ड निवडू शकतो का?
+    gu: શું હું અલગ કાર્ડ પસંદ કરી શકું?
+    bn: আমি কি অন্য কার্ড বেছে নিতে পারি?
+    ta: நான் வேற கார்டு தேர்ந்தெடுக்கலாமா?
+    te: నేను వేరే కార్డ్ ఎంచుకోవచ్చా?
+    kn: ನಾನು ಬೇರೆ ಕಾರ್ಡ್ ಆಯ್ಕೆ ಮಾಡಬಹುದಾ?
+    ml: എനിക്ക് വേറെ കാർഡ് തിരഞ്ഞെടുക്കാമോ?
+    hi: क्या मैं कोई और कार्ड चुन सकता हूँ?
+  paraphrases_en:
+  - what other cards do you have
+  - I want a different variant
+  paraphrases_hi_latn:
+  - aur kaunse cards hain
+  answer:
+    en: The offer on your account is for the {offered_card_name}. Our advisor can discuss what else may be available to you.
+    hi_latn: Aapke account par offer {offered_card_name} ka hai. Hamare advisor bata sakte hain ki aur kya available ho sakta hai.
+    mr: तुमच्या खात्यावरची ऑफर {offered_card_name} ची आहे. आणखी काय उपलब्ध असू शकतं, हे आमचे अ‍ॅडव्हायझर सांगू शकतात.
+    gu: તમારા એકાઉન્ટ પરની ઓફર {offered_card_name} ની છે. બીજું શું ઉપલબ્ધ હોઈ શકે એ અમારા એડવાઇઝર કહી શકે.
+    bn: আপনার অ্যাকাউন্টে অফারটি {offered_card_name} এর। আর কী পাওয়া যেতে পারে তা আমাদের অ্যাডভাইজার বলতে পারবেন।
+    ta: உங்க அக்கவுண்ட்ல ஆஃபர் {offered_card_name} க்கானது. வேற என்ன கிடைக்கும்னு எங்க அட்வைசர் சொல்வாங்க.
+    te: మీ ఖాతాలో ఆఫర్ {offered_card_name} కు సంబంధించినది. ఇంకా ఏమి అందుబాటులో ఉందో మా అడ్వైజర్ చెప్పగలరు.
+    kn: ನಿಮ್ಮ ಖಾತೆಯಲ್ಲಿ ಆಫರ್ {offered_card_name} ಗೆ ಸಂಬಂಧಿಸಿದೆ. ಇನ್ನೇನು ಲಭ್ಯವಿದೆ ಎಂದು ನಮ್ಮ ಅಡ್ವೈಸರ್ ಹೇಳಬಲ್ಲರು.
+    ml: നിങ്ങളുടെ അക്കൗണ്ടിലെ ഓഫർ {offered_card_name} ന്റേതാണ്. മറ്റെന്ത് ലഭ്യമാണെന്ന് ഞങ്ങളുടെ അഡ്വൈസർ പറയാം.
+    hi: आपके अकाउंट पर ऑफर {offered_card_name} का है. और क्या उपलब्ध हो सकता है, हमारे एडवाइज़र बता सकते हैं.
+- id: FAQ_M008
+  question:
+    en: Do I need to submit documents?
+    hi_latn: Kya documents dene honge?
+    mr: मला कागदपत्रं द्यावी लागतील का?
+    gu: શું મારે દસ્તાવેજો આપવા પડશે?
+    bn: আমাকে কি নথি জমা দিতে হবে?
+    ta: நான் டாகுமெண்ட் கொடுக்கணுமா?
+    te: నేను పత్రాలు ఇవ్వాలా?
+    kn: ನಾನು ದಾಖಲೆ ಕೊಡಬೇಕಾ?
+    ml: എനിക്ക് രേഖകൾ നൽകേണ്ടതുണ്ടോ?
+    hi: क्या मुझे दस्तावेज़ देने होंगे?
+  paraphrases_en:
+  - what paperwork is needed
+  - do you need KYC
+  paraphrases_hi_latn:
+  - kaagaz lagenge kya
+  - KYC chahiye kya
+  answer:
+    en: Our advisor will confirm what is required for your application.
+    hi_latn: Hamare advisor confirm karenge ki aapki application ke liye kya chahiye.
+    mr: तुमच्या अर्जासाठी काय लागेल, हे आमचे अ‍ॅडव्हायझर सांगतील.
+    gu: તમારી અરજી માટે શું જોઈશે એ અમારા એડવાઇઝર જણાવશે.
+    bn: আপনার আবেদনের জন্য কী প্রয়োজন তা আমাদের অ্যাডভাইজার জানাবেন।
+    ta: உங்க அப்ளிகேஷனுக்கு என்ன தேவைன்னு எங்க அட்வைசர் சொல்வாங்க.
+    te: మీ దరఖాస్తుకు ఏమి అవసరమో మా అడ్వైజర్ చెప్తారు.
+    kn: ನಿಮ್ಮ ಅರ್ಜಿಗೆ ಏನು ಬೇಕು ಎಂದು ನಮ್ಮ ಅಡ್ವೈಸರ್ ತಿಳಿಸುತ್ತಾರೆ.
+    ml: നിങ്ങളുടെ അപേക്ഷയ്ക്ക് എന്ത് വേണമെന്ന് ഞങ്ങളുടെ അഡ്വൈസർ അറിയിക്കും.
+    hi: आपकी एप्लिकेशन के लिए क्या चाहिए, हमारे एडवाइज़र कन्फ़र्म करेंगे.
+- id: FAQ_M009
+  question:
+    en: What are the benefits of this card?
+    hi_latn: Is card ke kya benefits hain?
+    mr: या कार्डाचे फायदे काय आहेत?
+    gu: આ કાર્ડના ફાયદા શું છે?
+    bn: এই কার্ডের সুবিধা কী?
+    ta: இந்த கார்டோட பலன்கள் என்ன?
+    te: ఈ కార్డ్ ప్రయోజనాలు ఏమిటి?
+    kn: ಈ ಕಾರ್ಡ್ ನ ಪ್ರಯೋಜನಗಳೇನು?
+    ml: ഈ കാർഡിന്റെ ആനുകൂല്യങ്ങൾ എന്തൊക്കെ?
+    hi: इस कार्ड के क्या फ़ायदे हैं?
+  paraphrases_en:
+  - what do I get
+  - what rewards does it have
+  paraphrases_hi_latn:
+  - kya milega isme
+  - rewards kya hain
+  answer:
+    en: The {offered_card_name} offers {headline_benefit}. Our advisor can take you through the full list.
+    hi_latn: '{offered_card_name} mein {headline_benefit} milta hai. Hamare advisor poori list samjha sakte hain.'
+    mr: '{offered_card_name} मध्ये {headline_benefit} मिळतं. पूर्ण यादी आमचे अ‍ॅडव्हायझर सांगू शकतात.'
+    gu: '{offered_card_name} માં {headline_benefit} મળે છે. પૂરી યાદી અમારા એડવાઇઝર કહી શકે.'
+    bn: '{offered_card_name} এ {headline_benefit} পাওয়া যায়। পূর্ণ তালিকা আমাদের অ্যাডভাইজার জানাবেন।'
+    ta: '{offered_card_name} ல {headline_benefit} கிடைக்கும். முழு லிஸ்ட்டை எங்க அட்வைசர் சொல்வாங்க.'
+    te: '{offered_card_name} లో {headline_benefit} లభిస్తుంది. పూర్తి జాబితా మా అడ్వైజర్ చెప్పగలరు.'
+    kn: '{offered_card_name} ನಲ್ಲಿ {headline_benefit} ಸಿಗುತ್ತದೆ. ಪೂರ್ಣ ಪಟ್ಟಿಯನ್ನು ನಮ್ಮ ಅಡ್ವೈಸರ್ ಹೇಳಬಲ್ಲರು.'
+    ml: '{offered_card_name} ൽ {headline_benefit} ലഭിക്കും. പൂർണ്ണ പട്ടിക ഞങ്ങളുടെ അഡ്വൈസർ പറയാം.'
+    hi: '{offered_card_name} में {headline_benefit} मिलता है. पूरी सूची हमारे एडवाइज़र बता सकते हैं.'
+- id: FAQ_M010
+  question:
+    en: Can I cancel it later?
+    hi_latn: Kya main baad mein cancel kar sakta hoon?
+    mr: मी नंतर रद्द करू शकतो का?
+    gu: શું હું પછી રદ કરી શકું?
+    bn: আমি কি পরে বাতিল করতে পারি?
+    ta: நான் பிறகு கேன்சல் பண்ணலாமா?
+    te: నేను తర్వాత రద్దు చేయవచ్చా?
+    kn: ನಾನು ನಂತರ ರದ್ದು ಮಾಡಬಹುದಾ?
+    ml: എനിക്ക് പിന്നീട് റദ്ദാക്കാമോ?
+    hi: क्या मैं बाद में रद्द कर सकता हूँ?
+  paraphrases_en:
+  - what if I don't want it after it arrives
+  - is it reversible
+  paraphrases_hi_latn:
+  - baad mein band kar sakte hain kya
+  answer:
+    en: You can request closure later. Our advisor can explain the process and any applicable terms.
+    hi_latn: Aap baad mein closure request kar sakte hain. Hamare advisor process aur applicable terms samjha sakte hain.
+    mr: तुम्ही नंतर बंद करण्याची विनंती करू शकता. प्रक्रिया आणि लागू अटी आमचे अ‍ॅडव्हायझर सांगू शकतात.
+    gu: તમે પછી બંધ કરવાની વિનંતી કરી શકો છો. પ્રક્રિયા અને લાગુ શરતો અમારા એડવાઇઝર કહી શકે.
+    bn: আপনি পরে বন্ধ করার অনুরোধ করতে পারেন। প্রক্রিয়া ও প্রযোজ্য শর্ত আমাদের অ্যাডভাইজার জানাবেন।
+    ta: நீங்க பிறகு க்ளோஷருக்கு ரிக்வெஸ்ட் பண்ணலாம். செயல்முறை மற்றும் விதிமுறைகளை எங்க அட்வைசர் சொல்வாங்க.
+    te: మీరు తర్వాత క్లోజర్ కోసం అభ్యర్థించవచ్చు. ప్రక్రియ మరియు వర్తించే నిబంధనలు మా అడ్వైజర్ చెప్పగలరు.
+    kn: ನೀವು ನಂತರ ಕ್ಲೋಶರ್ ಗೆ ವಿನಂತಿಸಬಹುದು. ಪ್ರಕ್ರಿಯೆ ಮತ್ತು ಅನ್ವಯವಾಗುವ ನಿಯಮಗಳನ್ನು ನಮ್ಮ ಅಡ್ವೈಸರ್ ಹೇಳಬಲ್ಲರು.
+    ml: നിങ്ങൾക്ക് പിന്നീട് ക്ലോഷറിന് അഭ്യർത്ഥിക്കാം. നടപടിക്രമവും ബാധകമായ വ്യവസ്ഥകളും ഞങ്ങളുടെ അഡ്വൈസർ പറയാം.
+    hi: आप बाद में बंद करने का अनुरोध कर सकते हैं. प्रक्रिया और लागू शर्तें हमारे एडवाइज़र बता सकते हैं.
+- id: FAQ_M011
+  question:
+    en: Is approval guaranteed?
+    hi_latn: Kya approval pakka hai?
+    mr: मंजुरी नक्की मिळेल का?
+    gu: શું મંજૂરી ચોક્કસ મળશે?
+    bn: অনুমোদন কি নিশ্চিত?
+    ta: அப்ரூவல் உறுதியா கிடைக்குமா?
+    te: అప్రూవల్ ఖాయమా?
+    kn: ಅನುಮೋದನೆ ಖಚಿತವೇ?
+    ml: അംഗീകാരം ഉറപ്പാണോ?
+    hi: क्या मंज़ूरी पक्की है?
+  paraphrases_en:
+  - will I definitely get it
+  - can my application be rejected
+  paraphrases_hi_latn:
+  - mil hi jayega kya
+  - reject ho sakta hai kya
+  answer:
+    en: The card is issued subject to approval. Our advisor will explain the process.
+    hi_latn: Card approval ke adheen issue hota hai. Hamare advisor process samjha denge.
+    mr: कार्ड मंजुरीच्या अधीन राहून दिलं जातं. प्रक्रिया आमचे अ‍ॅडव्हायझर सांगतील.
+    gu: કાર્ડ મંજૂરીને આધીન આપવામાં આવે છે. પ્રક્રિયા અમારા એડવાઇઝર જણાવશે.
+    bn: কার্ড অনুমোদন সাপেক্ষে দেওয়া হয়। প্রক্রিয়া আমাদের অ্যাডভাইজার ব্যাখ্যা করবেন।
+    ta: கார்டு அப்ரூவலுக்கு உட்பட்டு தரப்படும். செயல்முறையை எங்க அட்வைசர் சொல்வாங்க.
+    te: కార్డ్ అప్రూవల్ కు లోబడి ఇవ్వబడుతుంది. ప్రక్రియను మా అడ్వైజర్ వివరిస్తారు.
+    kn: ಕಾರ್ಡ್ ಅನುಮೋದನೆಗೆ ಒಳಪಟ್ಟು ನೀಡಲಾಗುತ್ತದೆ. ಪ್ರಕ್ರಿಯೆಯನ್ನು ನಮ್ಮ ಅಡ್ವೈಸರ್ ವಿವರಿಸುತ್ತಾರೆ.
+    ml: കാർഡ് അംഗീകാരത്തിന് വിധേയമായി നൽകുന്നു. നടപടിക്രമം ഞങ്ങളുടെ അഡ്വൈസർ വിശദീകരിക്കും.
+    hi: कार्ड मंज़ूरी के अधीन जारी होता है. प्रक्रिया हमारे एडवाइज़र समझा देंगे.
+  never_say:
+  - guaranteed approval
+  - you are already approved
+- id: FAQ_M012
+  question:
+    en: Will you send me a link?
+    hi_latn: Kya aap mujhe koi link bhejenge?
+    mr: तुम्ही मला लिंक पाठवाल का?
+    gu: શું તમે મને લિંક મોકલશો?
+    bn: আপনি কি আমাকে লিঙ্ক পাঠাবেন?
+    ta: நீங்க எனக்கு லிங்க் அனுப்புவீங்களா?
+    te: మీరు నాకు లింక్ పంపుతారా?
+    kn: ನೀವು ನನಗೆ ಲಿಂಕ್ ಕಳುಹಿಸ್ತೀರಾ?
+    ml: നിങ്ങൾ എനിക്ക് ലിങ്ക് അയയ്ക്കുമോ?
+    hi: क्या आप मुझे कोई लिंक भेजेंगे?
+  paraphrases_en:
+  - do I have to fill a form online
+  - will I get an OTP
+  paraphrases_hi_latn:
+  - online form bharna hoga kya
+  - OTP aayega kya
+  answer:
+    en: Our advisor will explain the next steps. Please note that I will never ask you for an OTP.
+    hi_latn: Hamare advisor aage ke steps samjha denge. Kripya dhyan dein, main aapse kabhi OTP nahi maangungi.
+    mr: पुढच्या स्टेप्स आमचे अ‍ॅडव्हायझर सांगतील. कृपया लक्षात घ्या, मी तुम्हाला कधीही ओटीपी विचारणार नाही.
+    gu: આગળના પગલાં અમારા એડવાઇઝર જણાવશે. કૃપા કરીને નોંધો, હું તમને ક્યારેય ઓટીપી નહીં પૂછું.
+    bn: পরবর্তী ধাপ আমাদের অ্যাডভাইজার জানাবেন। অনুগ্রহ করে মনে রাখবেন, আমি কখনও আপনার কাছে ওটিপি চাইব না।
+    ta: அடுத்த ஸ்டெப்களை எங்க அட்வைசர் சொல்வாங்க. கவனிக்கவும், நான் உங்ககிட்ட எப்போதும் ஓடிபி கேட்க மாட்டேன்.
+    te: తదుపరి దశలు మా అడ్వైజర్ చెప్తారు. దయచేసి గమనించండి, నేను మిమ్మల్ని ఎప్పుడూ ఓటీపీ అడగను.
+    kn: ಮುಂದಿನ ಹಂತಗಳನ್ನು ನಮ್ಮ ಅಡ್ವೈಸರ್ ತಿಳಿಸುತ್ತಾರೆ. ದಯವಿಟ್ಟು ಗಮನಿಸಿ, ನಾನು ನಿಮ್ಮಿಂದ ಎಂದಿಗೂ ಓಟಿಪಿ ಕೇಳುವುದಿಲ್ಲ.
+    ml: അടുത്ത ഘട്ടങ്ങൾ ഞങ്ങളുടെ അഡ്വൈസർ അറിയിക്കും. ദയവായി ശ്രദ്ധിക്കുക, ഞാൻ ഒരിക്കലും നിങ്ങളോട് ഒടിപി ചോദിക്കില്ല.
+    hi: आगे के स्टेप हमारे एडवाइज़र समझा देंगे. कृपया ध्यान दें, मैं आपसे कभी ओटीपी नहीं माँगूँगी.
+  never_say:
+  - please share the OTP with me
+  - read out the code you received

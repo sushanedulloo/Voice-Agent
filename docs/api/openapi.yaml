@@ -1,0 +1,669 @@
+openapi: 3.1.0
+
+info:
+  title: SBI Card AI-BOT Voice Agent — Interface Contracts
+  version: 0.1.0-draft
+  description: |
+    HTTP interfaces for the TransOrg voice agent.
+
+    Two directions, and the distinction matters commercially:
+
+    - **Consumed** (`/partner/*` paths are illustrative of what we need FROM the calling partner).
+      These are our asks, not our implementation. They belong in the Interface Control Document
+      and must be agreed before build. See ADR-003.
+    - **Provided** (everything else) — what we expose.
+
+    The primary call interface is **SIP, not HTTP**. See `x-sip-contract` at the end of this file.
+
+    **No PII crosses any of these interfaces.** `masked_ref_id` is the only customer key (CR-101).
+    Any payload containing a name, card number, phone number or address is a defect, and servers
+    must reject it rather than log it.
+
+  contact:
+    name: TransOrg Analytics
+
+servers:
+  - url: https://voice.{env}.transorg.internal/v1
+    description: India region only (CR-105)
+    variables:
+      env:
+        enum: [dev, staging, prod]
+        default: dev
+
+security:
+  - mutualTLS: []
+
+tags:
+  - name: Campaign
+    description: Campaign record ingest
+  - name: Call
+    description: Call lifecycle and outcomes
+  - name: Content
+    description: BLC script and FAQ glossary management
+  - name: Reporting
+    description: Dashboards, MIS extract, audit
+  - name: Operations
+    description: Health and readiness
+
+paths:
+
+  /campaigns:
+    post:
+      tags: [Campaign]
+      summary: Register a campaign
+      description: |
+        Declares a campaign and pins the content versions it will run against. Content versions are
+        stamped on every call so a call can be reconstructed years later against the exact content
+        approved at the time (FR-204).
+      operationId: createCampaign
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/CampaignCreate' }
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Campaign' }
+        '409': { $ref: '#/components/responses/Conflict' }
+        '422': { $ref: '#/components/responses/ValidationError' }
+
+  /campaigns/{campaignId}/records:
+    post:
+      tags: [Campaign]
+      summary: Load campaign records
+      description: |
+        Bulk load of PII-free records. The server **rejects the entire batch** if any record
+        contains a field matching a PII pattern (IR-102). Partial acceptance is deliberately not
+        offered — a half-loaded campaign is harder to reason about than a rejected one.
+      operationId: loadRecords
+      parameters:
+        - $ref: '#/components/parameters/CampaignId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [records]
+              properties:
+                records:
+                  type: array
+                  minItems: 1
+                  maxItems: 10000
+                  items: { $ref: '#/components/schemas/CampaignRecord' }
+      responses:
+        '202':
+          description: Accepted for processing
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  accepted: { type: integer }
+                  batch_id: { type: string, format: uuid }
+        '422':
+          description: |
+            Rejected. `pii_detected` means at least one record carried a prohibited field. The
+            response names the offending field paths but **never echoes the offending values**.
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  /calls/{callId}:
+    get:
+      tags: [Call]
+      summary: Retrieve a call and its full turn trail
+      description: Reconstructs a single call for audit (CR-103).
+      operationId: getCall
+      parameters:
+        - $ref: '#/components/parameters/CallId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/CallDetail' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /calls/{callId}/evidence:
+    get:
+      tags: [Call]
+      summary: Compliance evidence packet
+      description: |
+        Everything needed to reproduce a call's decision path: transcript spans with timestamps,
+        the audio pointer, content and evaluator versions, rule outcomes.
+
+        Required under the RBI FREE-AI Assurance pillar. This cannot be reconstructed
+        retroactively, which is why it is produced for every call rather than sampled.
+      operationId: getEvidencePacket
+      parameters:
+        - $ref: '#/components/parameters/CallId'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/EvidencePacket' }
+
+  /content/scripts:
+    post:
+      tags: [Content]
+      summary: Publish a BLC-approved script version
+      description: |
+        Publishes an immutable script version and triggers offline audio pre-rendering (ADR-005).
+        A published version is never mutated — a correction is a new version.
+
+        Deployable without a code release (NFR-401): a Compliance edit must not wait on a sprint.
+      operationId: publishScript
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/ScriptVersion' }
+      responses:
+        '201':
+          description: Published; pre-rendering queued
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  script_version: { type: string }
+                  utterances_total: { type: integer }
+                  render_job_id: { type: string, format: uuid }
+        '409':
+          description: Version already exists. Script versions are immutable.
+
+  /content/glossary:
+    post:
+      tags: [Content]
+      summary: Publish a FAQ glossary version
+      description: |
+        The approved question/answer set. Answers are verbatim approved text — the router selects
+        among them and never rewrites them (ADR-002).
+      operationId: publishGlossary
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/GlossaryVersion' }
+      responses:
+        '201': { description: Published }
+
+  /reports/daily:
+    get:
+      tags: [Reporting]
+      summary: Daily MIS extract
+      description: Named deliverable in the charter (`CH-S6`) — IR-108.
+      operationId: getDailyReport
+      parameters:
+        - in: query
+          name: date
+          required: true
+          schema: { type: string, format: date }
+        - in: query
+          name: product
+          schema: { $ref: '#/components/schemas/ProductCode' }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/DailyReport' }
+            text/csv:
+              schema: { type: string }
+
+  /reports/funnel:
+    get:
+      tags: [Reporting]
+      summary: Funnel and unit economics
+      description: |
+        Conversion metrics and contact attempts (`CH-S4` feature 4), plus cost per booked SR against
+        the human control arm (FR-705) — the number the engagement is actually judged on.
+      operationId: getFunnel
+      parameters:
+        - in: query
+          name: from
+          required: true
+          schema: { type: string, format: date }
+        - in: query
+          name: to
+          required: true
+          schema: { type: string, format: date }
+        - in: query
+          name: arm
+          description: Compare bot against the human control arm on the same base
+          schema: { type: string, enum: [bot, control, both], default: both }
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/FunnelReport' }
+
+  /health:
+    get:
+      tags: [Operations]
+      summary: Liveness
+      operationId: health
+      security: []
+      responses:
+        '200': { description: Alive }
+
+  /ready:
+    get:
+      tags: [Operations]
+      summary: Readiness
+      description: |
+        Reports whether this worker will accept new call legs. Capacity headroom is surfaced so the
+        autoscaler can add capacity *before* workers begin refusing jobs (DESIGN §4).
+      operationId: ready
+      security: []
+      responses:
+        '200':
+          description: Ready
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  ready: { type: boolean }
+                  active_sessions: { type: integer }
+                  capacity: { type: integer }
+                  load: { type: number, format: float }
+        '503': { description: Not accepting new sessions }
+
+components:
+
+  securitySchemes:
+    mutualTLS:
+      type: mutualTLS
+      description: All interfaces require mutual TLS (CR-106). No bearer-token-only paths.
+
+  parameters:
+    CampaignId:
+      name: campaignId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+    CallId:
+      name: callId
+      in: path
+      required: true
+      schema: { type: string, format: uuid }
+
+  responses:
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    Conflict:
+      description: Conflict
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    ValidationError:
+      description: Validation failed
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+
+  schemas:
+
+    ProductCode:
+      type: string
+      enum: [FLEXIPAY, MULTICARD, CLIP]
+
+    LanguageCode:
+      type: string
+      description: |
+        Charter lists eight and omits Gujarati; Shrey's email says nine including it. Unresolved —
+        open item OI-3. `guj` is present here so resolving it is a config change, not a schema change.
+      enum: [eng, hin, ben, mar, tam, tel, mal, kan, guj]
+
+    CampaignCreate:
+      type: object
+      required: [product_code, campaign_date, script_version, glossary_version]
+      properties:
+        product_code: { $ref: '#/components/schemas/ProductCode' }
+        campaign_date: { type: string, format: date }
+        script_version: { type: string, example: "flexipay-v3" }
+        glossary_version: { type: string, example: "glossary-2026-09-01" }
+        attempt_policy:
+          type: object
+          description: Retry logic — a named step in the charter process flow (`CH-S6` step 5)
+          properties:
+            max_attempts: { type: integer, minimum: 1, default: 3 }
+            rechurn_days: { type: integer, default: 28 }
+            min_hours_between: { type: integer, default: 24 }
+
+    Campaign:
+      allOf:
+        - $ref: '#/components/schemas/CampaignCreate'
+        - type: object
+          properties:
+            campaign_id: { type: string, format: uuid }
+            status: { type: string, enum: [draft, loading, ready, running, complete] }
+            record_count: { type: integer }
+
+    CampaignRecord:
+      type: object
+      required: [masked_ref_id, zone]
+      additionalProperties: false
+      description: |
+        `additionalProperties: false` is a **compliance control**, not schema tidiness. It is the
+        mechanism that enforces CR-101 at the boundary: an unexpected field cannot silently arrive
+        and be persisted.
+      properties:
+        masked_ref_id:
+          type: string
+          description: The only customer key. Opaque. Not derivable back to a card or phone number.
+          pattern: '^[A-Za-z0-9_-]{8,64}$'
+        zone:
+          type: string
+          description: Used to derive a language hint without asking the customer (FR-502)
+        language_hint: { $ref: '#/components/schemas/LanguageCode' }
+        offer_variables:
+          type: object
+          description: |
+            Sourced from SConnect. **Read, never generated** (FR-202). The bot renders these values;
+            it never computes or infers one.
+          additionalProperties:
+            oneOf:
+              - type: string
+              - type: number
+          example: { amount: 47500, tenure_months: 12 }
+        prior_attempts: { type: integer, default: 0 }
+
+    CallDetail:
+      type: object
+      properties:
+        call_id: { type: string, format: uuid }
+        correlation_id:
+          type: string
+          description: |
+            **The partner's call identifier, adopted as ours.** SIP Call-ID changes at every B2BUA
+            hop, so it cannot be the join key. An audit trail across systems we do not own is built
+            by borrowing their key (ADR-003).
+        masked_ref_id: { type: string }
+        product_code: { $ref: '#/components/schemas/ProductCode' }
+        script_version: { type: string }
+        glossary_version: { type: string }
+        language_used: { $ref: '#/components/schemas/LanguageCode' }
+        language_switched: { type: boolean }
+        started_at: { type: string, format: date-time }
+        talk_seconds: { type: integer }
+        outcome: { $ref: '#/components/schemas/Disposition' }
+        consent_event: { $ref: '#/components/schemas/ConsentEvent' }
+        transfer: { $ref: '#/components/schemas/Transfer' }
+        turns:
+          type: array
+          items: { $ref: '#/components/schemas/Turn' }
+
+    Turn:
+      type: object
+      properties:
+        seq: { type: integer }
+        state_node: { type: string }
+        customer_transcript: { type: string }
+        asr_confidence:
+          type: number
+          description: Cheapest early warning that speech quality is degrading before it corrupts routing
+        detected_intent: { type: string }
+        intent_confidence: { type: number }
+        confidence_band: { type: string, enum: [high, review, escalated, out_of_scope] }
+        utterance_id:
+          type: string
+          description: |
+            References approved content. Its presence in the approved set is what makes FR-203
+            verifiable by inspection rather than by sampling.
+        barge_in: { type: boolean }
+        latency:
+          type: object
+          properties:
+            eot_ms: { type: integer }
+            asr_ms: { type: integer }
+            route_ms: { type: integer }
+            tts_ms: { type: integer }
+            total_ms: { type: integer, description: End of speech to first bot audio (NFR-101) }
+
+    ConsentEvent:
+      type: object
+      properties:
+        consent_id: { type: string, format: uuid }
+        consent_type:
+          type: string
+          enum: [verbal_agreement, ivr_keypress]
+          description: |
+            Both values exist so open item OI-1 resolves without a schema migration. The charter's
+            process map and RACI say the bot captures consent; the CLIP flowchart says the advisor
+            does. Until that is settled, the bot emits `verbal_agreement` only.
+        captured_at: { type: string, format: date-time }
+        recording_uri: { type: string }
+        content_hash:
+          type: string
+          description: Tamper evidence for the consent artefact (CR-102)
+
+    Disposition:
+      type: object
+      required: [code]
+      properties:
+        code:
+          type: string
+          enum:
+            - INTERESTED_TRANSFERRED
+            - NOT_INTERESTED
+            - CALLBACK_REQUESTED
+            - WRONG_NUMBER
+            - DNC_REQUESTED
+            - LANGUAGE_BARRIER
+            - ANSWERING_MACHINE
+            - SILENCE_NO_RESPONSE
+            - ABUSIVE_TERMINATED
+            - SYSTEM_FAILURE
+        reason: { type: string }
+        dnc_flag: { type: boolean }
+        written_to_crm_at: { type: string, format: date-time }
+
+    Transfer:
+      type: object
+      properties:
+        target:
+          type: string
+          description: |
+            A queue DID or routing target — **never a named advisor.** Advisor availability lives in
+            the partner's ACD, not ours (ADR-003).
+        whisper_text: { type: string }
+        refer_sent_at: { type: string, format: date-time }
+        accepted_at: { type: string, format: date-time }
+        result: { type: string, enum: [accepted, rejected, timeout, failed] }
+
+    ScriptVersion:
+      type: object
+      required: [version, product_code, nodes]
+      properties:
+        version: { type: string }
+        product_code: { $ref: '#/components/schemas/ProductCode' }
+        blc_approval_ref:
+          type: string
+          description: SBI Card's Business/Legal/Compliance approval reference. Required — content without it does not publish.
+        nodes:
+          type: array
+          items: { $ref: '#/components/schemas/ScriptNode' }
+
+    ScriptNode:
+      type: object
+      required: [node_id, utterances, allowed_intents, fallback_utterance_id]
+      properties:
+        node_id: { type: string }
+        utterances:
+          type: array
+          description: One approved utterance per language. Multiple variants permitted for re-prompts (ADR-005).
+          items: { $ref: '#/components/schemas/Utterance' }
+        allowed_intents:
+          type: array
+          description: The closed set this node accepts, and where each transition goes
+          items:
+            type: object
+            properties:
+              intent: { type: string }
+              target_node: { type: string }
+        prohibited_content:
+          type: array
+          description: Topics that must not be addressed at this node, enforced at routing
+          items: { type: string }
+        fallback_utterance_id: { type: string }
+        timeout_ms: { type: integer, default: 4000 }
+
+    Utterance:
+      type: object
+      required: [utterance_id, language, text]
+      properties:
+        utterance_id: { type: string }
+        language: { $ref: '#/components/schemas/LanguageCode' }
+        text:
+          type: string
+          description: Approved verbatim content. The model never rewrites this.
+        has_variables: { type: boolean }
+        audio_uri:
+          type: string
+          description: Populated by the offline pre-render job (ADR-005). Null until rendered.
+
+    GlossaryVersion:
+      type: object
+      required: [version, entries]
+      properties:
+        version: { type: string }
+        blc_approval_ref: { type: string }
+        entries:
+          type: array
+          items:
+            type: object
+            required: [faq_id, product_code, canonical_question, answer]
+            properties:
+              faq_id: { type: string }
+              product_code: { $ref: '#/components/schemas/ProductCode' }
+              canonical_question: { type: string }
+              example_utterances:
+                type: array
+                description: Training examples for the embedding router (ADR-004)
+                items: { type: string }
+              answer: { $ref: '#/components/schemas/Utterance' }
+
+    EvidencePacket:
+      type: object
+      properties:
+        call_id: { type: string, format: uuid }
+        correlation_id: { type: string }
+        script_version: { type: string }
+        glossary_version: { type: string }
+        evaluator_version:
+          type: string
+          description: Changing the judge changes the measurement, so the judge is versioned too
+        audio_uri: { type: string }
+        rule_results:
+          type: array
+          items:
+            type: object
+            properties:
+              rule_id: { type: string }
+              outcome: { type: string, enum: [pass, fail, not_applicable] }
+              transcript_span: { type: string }
+              timestamp_ms: { type: integer }
+              rationale: { type: string }
+        safety_tagged:
+          type: boolean
+          description: |
+            When true, human review is **mandatory**. LLM judges under-flag safety issues by 4–6×
+            against human reviewers in telecom transcripts; this flag is the gate to the human queue.
+        reviewer_decision: { type: string, enum: [pending, confirmed, dismissed] }
+
+    DailyReport:
+      type: object
+      properties:
+        date: { type: string, format: date }
+        attempts: { type: integer }
+        connects: { type: integer }
+        bot_handled: { type: integer }
+        transferred: { type: integer }
+        disposed_not_interested: { type: integer }
+        dnc_requests: { type: integer }
+        mean_talk_seconds: { type: number }
+        mean_time_to_disqualify_seconds:
+          type: number
+          description: Primary efficiency metric (NFR-104) — not mean handle time
+        by_language:
+          type: array
+          description: Reported per language, never aggregated (FR-505)
+          items:
+            type: object
+            properties:
+              language: { $ref: '#/components/schemas/LanguageCode' }
+              calls: { type: integer }
+              semantic_wer: { type: number }
+              intent_accuracy: { type: number }
+              agreement_rate: { type: number }
+
+    FunnelReport:
+      type: object
+      properties:
+        arm: { type: string, enum: [bot, control] }
+        contacts: { type: integer }
+        agreements: { type: integer }
+        booked_srs: { type: integer }
+        cost_per_contact_inr: { type: number }
+        cost_per_agreement_inr: { type: number }
+        cost_per_booked_sr_inr:
+          type: number
+          description: The only number that decides the engagement
+
+    Error:
+      type: object
+      required: [code, message]
+      properties:
+        code: { type: string, example: pii_detected }
+        message: { type: string }
+        fields:
+          type: array
+          description: Offending field paths. Values are never echoed.
+          items: { type: string }
+
+x-sip-contract:
+  description: |
+    The primary call interface is SIP, not HTTP. These terms belong in the Interface Control
+    Document with the calling partner and must be agreed before any code is written (ADR-003).
+  direction: Partner INVITEs us. We are a UAS. We never originate a call.
+  codec:
+    audio: PCMA/8000
+    note: |
+      A-law — India. Asserted explicitly in code, never left to negotiation defaults. The A-law /
+      μ-law confusion produces loud static that is still almost intelligible, so it survives a
+      cursory smoke test.
+    ptime_ms: 20
+    dtmf: RFC 4733 out-of-band
+    opus: Not offered on the carrier leg. Forces a transcode at their SBC and degrades ASR.
+  context_headers:
+    mechanism: X- headers or User-to-User (RFC 7433)
+    limit: ~128 bytes practical ceiling on UUI
+    usage: |
+      Opaque token only, never a payload. Full context is written to the CRM keyed by that token,
+      at qualification time rather than transfer time, so the screen-pop does not race it.
+  transfer:
+    preferred: REST call to the partner dialer; they re-bridge their own leg
+    alternative: SIP REFER to a queue DID
+    never: REFER to a named advisor — availability lives in their ACD
+    assumption: REFER-with-Replaces is unavailable until proven otherwise
+  amd:
+    owner: Partner dialer
+    rationale: |
+      AMD is a dialer function tied to their abandoned-call statistics. Running it ourselves costs
+      2.4–4s of dead air after answer, in front of a live human.
+  media_locality: Mumbai. The RTP path must not leave India (CR-105).
+  open_questions:
+    - Does the partner meter media streaming to us? (OI-4)
+    - Abandoned-call limit from their access provider's Code of Practice (R-14)
+    - Confirmation that DLT script templates cover the bot's utterances (R-15)

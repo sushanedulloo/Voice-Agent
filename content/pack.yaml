@@ -1,0 +1,44 @@
+# Content pack manifest.
+#
+# A pack is a directory holding everything the bot is allowed to say. The runtime loads a pack
+# by path and has no other source of customer-facing language. Swapping SBIC's BLC-approved
+# script for this synthetic one is therefore a directory, not a release:
+#
+#     python tools/validate_content.py --pack packs/sbic-blc-2026-10
+#     python apps/server.py            --pack packs/sbic-blc-2026-10
+#
+# The pack is validated on load, every time, in every process. A pack that fails validation does
+# not run - there is no flag to skip it. The alternative is a call centre discovering at 20 lakh
+# calls a month that a transition pointed at a node somebody deleted.
+
+name: synthetic-placeholder
+version: 0.1.0
+
+# "synthetic" or "blc-approved". The runtime records this in every audit row, so a transcript
+# can never be mistaken later for one produced under approved content.
+provenance: synthetic
+
+approval_ref: PENDING-BLC
+approved_by: null
+effective_from: null
+expires_on: null
+
+description: >
+  TransOrg-authored placeholder standing in for the SBI Card BLC-approved script and the SBIC
+  FAQ glossary, neither of which we have seen (OI-5). Every line is invented. It exists so the
+  runtime, the compliance controls and the measurement harness can be built and exercised
+  before the real content arrives, and so that when it arrives the only thing that changes is
+  this directory.
+
+products: [flexipay, clip, multicarding]
+locales: [en, hi_latn]
+
+files:
+  campaign_vars: campaign_vars.yaml
+  disclosures: disclosures.yaml
+  intents: intents.yaml
+  out_of_scope: out_of_scope.yaml
+  handoff: handoff.yaml
+  acceptance: acceptance.yaml
+  script_dir: script
+  faq_dir: faq

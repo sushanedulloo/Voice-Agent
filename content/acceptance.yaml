@@ -1,0 +1,111 @@
+# Post-transfer acceptance mechanisms.
+#
+# ============================================================================
+# THIS IS A STUB, AND DELIBERATELY SO.
+#
+# The three flowcharts give us exactly four facts:
+#   1. FlexiPay - advisor guides the customer through a secured IVR, press 1 to accept
+#      (CH-FLEXIPAY 11a)
+#   2. CLIP - advisor guides the customer through a secured IVR journey, press option 1 to
+#      confirm acceptance (CH-CLIP 11b)
+#   3. Multicarding - no IVR. Advisor fills the form and triggers a C2B link to the registered
+#      mobile; the customer submits an OTP and completes a pre-filled form (CH-MULTICARD)
+#   4. Accepted -> advisor submits the SR, created automatically in SBIC. Rejected -> advisor
+#      informs the customer and disposes the call.
+#
+# Everything else - prompt wording, timeout, retry count, invalid-key handling, no-input
+# behaviour, max attempts, what is logged - is [TransOrg] invention. It is marked as such below
+# and must not be presented to the client as a requirement we were given.
+#
+# All of it is ADVISOR-SIDE. We model it only so the end-to-end simulator has a terminal state
+# and so the handoff contract has something to return into. Do not make it load-bearing.
+# If OI-1 resolves such that the bot runs the CLIP IVR, this file becomes real and moves inside
+# our scope - at which point DTMF capture, consent artefact storage and retention all become
+# our InfoSec surface, and CLIP repricing follows.
+# ============================================================================
+
+version: 0.1.0
+status: stub
+source: CH-FLEXIPAY 11a, CH-CLIP 11b, CH-MULTICARD
+
+mechanisms:
+
+  flexipay:
+    type: ivr_dtmf
+    operator: advisor          # per CH-FLEXIPAY 11a. Contested by the charter process map.
+    given:
+      accept_key: "1"
+      outcomes: [accepted, rejected]
+    invented:                  # [TransOrg] - none of this is specified anywhere
+      max_attempts: 2
+      no_input_timeout_ms: 5000
+      invalid_key_behaviour: reprompt_once_then_advisor
+      dtmf_transport: RFC 4733 out-of-band
+      hold_ms: 2600
+      log: [attempt_count, key_pressed, outcome, timestamps]
+      prompts:                 # every word below is invented; the flowcharts give us none
+        hold:
+          en: "Please hold while I connect you to our advisor."
+          hi_latn: "Kripya hold kijiye, main aapko advisor se connect kar rahi hoon."
+        offer:
+          en: "To accept this offer, please press one. To decline, press two."
+          hi_latn: "Is offer ko accept karne ke liye, ek dabaiye. Decline karne ke liye, do dabaiye."
+        invalid:
+          en: "Sorry, I did not get that. To accept, press one. To decline, press two."
+          hi_latn: "Maaf kijiye, samajh nahi aaya. Accept ke liye ek, decline ke liye do dabaiye."
+        accepted:
+          en: "Thank you. Your request has been recorded and a service request has been raised."
+          hi_latn: "Dhanyavaad. Aapka request record ho gaya hai aur service request raise kar di gayi hai."
+        rejected:
+          en: "Thank you for your time. No changes have been made to your account."
+          hi_latn: "Aapke time ke liye dhanyavaad. Aapke account mein koi badlav nahi kiya gaya hai."
+        exhausted:
+          en: "I was unable to record your response. Our advisor will call you back."
+          hi_latn: "Main aapka response record nahi kar payi. Hamare advisor aapko call karenge."
+
+  clip:
+    type: ivr_dtmf
+    operator: advisor          # per CH-CLIP 11b. See OI-1.
+    given:
+      accept_key: "1"
+      outcomes: [accepted, rejected]
+    invented:
+      max_attempts: 2
+      no_input_timeout_ms: 5000
+      invalid_key_behaviour: reprompt_once_then_advisor
+      dtmf_transport: RFC 4733 out-of-band
+      hold_ms: 2600
+      prompts_from: flexipay    # identical journey; one place to change the wording
+      log: [attempt_count, key_pressed, outcome, timestamps]
+
+  multicarding:
+    type: c2b_link_otp
+    operator: advisor
+    given:
+      steps:
+        - advisor verifies customer (billing address, PIN code, year of birth)
+        - advisor fills multicarding form
+        - advisor triggers C2B link to registered mobile
+        - customer submits OTP and accesses pre-filled form
+        - customer corrects details if wrong, then submits
+      outcomes: [submitted, abandoned]
+    invented:
+      link_validity_minutes: 15
+      hold_ms: 2600
+      prompts:
+        hold:
+          en: "Please hold while I connect you to our advisor."
+          hi_latn: "Kripya hold kijiye, main aapko advisor se connect kar rahi hoon."
+        offer:
+          en: "Our advisor will send a secure link to your registered mobile number."
+          hi_latn: "Hamare advisor aapke registered mobile number par ek secure link bhejenge."
+      log: [link_sent_at, otp_attempts, form_submitted_at, outcome]
+    constraint: >
+      The bot never sends the link, never mentions the OTP, and never asks for one. FAQ_M012
+      exists so a customer who raises it gets an approved line rather than an invented one.
+
+# What we need back regardless of who operates the mechanism. See handoff.yaml `inbound`.
+returns_to_us:
+  - acceptance_result
+  - sr_number
+  - timestamps

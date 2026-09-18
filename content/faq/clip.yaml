@@ -1,0 +1,354 @@
+# CLIP-scoped FAQ entries. SYNTHETIC - replace with the SBIC glossary (OI-5).
+
+scope: clip
+version: 0.1.0
+status: synthetic
+approval_ref: PENDING-BLC
+entries:
+- id: FAQ_L001
+  question:
+    en: Why am I being offered a higher limit?
+    hi_latn: Mujhe zyada limit kyun offer ho rahi hai?
+    mr: मला जास्त लिमिट का देत आहात?
+    gu: મને વધારે લિમિટ કેમ આપો છો?
+    bn: আমাকে বেশি লিমিট কেন দেওয়া হচ্ছে?
+    ta: எனக்கு ஏன் அதிக லிமிட் தர்றீங்க?
+    te: నాకు ఎక్కువ లిమిట్ ఎందుకు ఇస్తున్నారు?
+    kn: ನನಗೆ ಹೆಚ್ಚು ಲಿಮಿಟ್ ಯಾಕೆ ಕೊಡ್ತಿದ್ದೀರಿ?
+    ml: എനിക്ക് എന്തിനാണ് കൂടുതൽ ലിമിറ്റ്?
+    hi: मुझे ज़्यादा लिमिट क्यों दी जा रही है?
+  paraphrases_en:
+  - why me
+  - how did you decide this
+  - who selected me
+  paraphrases_hi_latn:
+  - mujhe hi kyun
+  - yeh kaise decide hua
+  answer:
+    en: The offer is based on how your card account has been used. Our advisor can tell you more.
+    hi_latn: Yeh offer aapke card account ke usage ke aadhaar par hai. Hamare advisor aur bata sakte hain.
+    mr: ही ऑफर तुमच्या कार्ड खात्याच्या वापरावर आधारित आहे. आमचे अ‍ॅडव्हायझर अधिक सांगू शकतात.
+    gu: આ ઓફર તમારા કાર્ડ એકાઉન્ટના વપરાશ પર આધારિત છે. અમારા એડવાઇઝર વધુ કહી શકે.
+    bn: এই অফারটি আপনার কার্ড অ্যাকাউন্টের ব্যবহারের ভিত্তিতে। আমাদের অ্যাডভাইজার আরও বলতে পারবেন।
+    ta: இந்த ஆஃபர் உங்க கார்டு அக்கவுண்ட் யூஸ் அடிப்படையில் இருக்கு. எங்க அட்வைசர் மேலும் சொல்வாங்க.
+    te: ఈ ఆఫర్ మీ కార్డ్ ఖాతా వినియోగం ఆధారంగా ఉంది. మా అడ్వైజర్ మరింత చెప్పగలరు.
+    kn: ಈ ಆಫರ್ ನಿಮ್ಮ ಕಾರ್ಡ್ ಖಾತೆಯ ಬಳಕೆಯ ಆಧಾರದ ಮೇಲಿದೆ. ನಮ್ಮ ಅಡ್ವೈಸರ್ ಹೆಚ್ಚು ಹೇಳಬಲ್ಲರು.
+    ml: ഈ ഓഫർ നിങ്ങളുടെ കാർഡ് അക്കൗണ്ട് ഉപയോഗത്തിന്റെ അടിസ്ഥാനത്തിലാണ്. ഞങ്ങളുടെ അഡ്വൈസർ കൂടുതൽ പറയാം.
+    hi: यह ऑफर आपके कार्ड अकाउंट के उपयोग के आधार पर है. हमारे एडवाइज़र और बता सकते हैं.
+- id: FAQ_L002
+  question:
+    en: Is there a fee for increasing the limit?
+    hi_latn: Limit badhane ki koi fee hai?
+    mr: लिमिट वाढवण्याची फी आहे का?
+    gu: લિમિટ વધારવાની ફી છે?
+    bn: লিমিট বাড়ানোর কি ফি আছে?
+    ta: லிமிட் அதிகரிக்க கட்டணம் இருக்கா?
+    te: లిమిట్ పెంచడానికి ఫీజు ఉందా?
+    kn: ಲಿಮಿಟ್ ಹೆಚ್ಚಿಸಲು ಶುಲ್ಕ ಇದೆಯಾ?
+    ml: ലിമിറ്റ് കൂട്ടാൻ ഫീസ് ഉണ്ടോ?
+    hi: क्या लिमिट बढ़ाने की कोई फ़ीस है?
+  paraphrases_en:
+  - do I pay for this
+  - any charges for the increase
+  paraphrases_hi_latn:
+  - iska koi charge hai kya
+  answer:
+    en: There is no separate charge for the limit increase itself.
+    hi_latn: Limit badhane ka koi alag charge nahi hai.
+    mr: लिमिट वाढवण्यासाठी वेगळा कोणताही चार्ज नाही.
+    gu: લિમિટ વધારવા માટે અલગ કોઈ ચાર્જ નથી.
+    bn: লিমিট বাড়ানোর জন্য আলাদা কোনো চার্জ নেই।
+    ta: லிமிட் அதிகரிக்க தனி கட்டணம் எதுவும் இல்ல.
+    te: లిమిట్ పెంచడానికి వేరే ఎలాంటి చార్జ్ లేదు.
+    kn: ಲಿಮಿಟ್ ಹೆಚ್ಚಿಸಲು ಪ್ರತ್ಯೇಕ ಯಾವುದೇ ಶುಲ್ಕ ಇಲ್ಲ.
+    ml: ലിമിറ്റ് കൂട്ടുന്നതിന് പ്രത്യേകമായി ഒരു ചാർജും ഇല്ല.
+    hi: लिमिट बढ़ाने का कोई अलग चार्ज नहीं है.
+- id: FAQ_L003
+  question:
+    en: Will this affect my credit score?
+    hi_latn: Kya isse mera credit score prabhavit hoga?
+    mr: याचा माझ्या क्रेडिट स्कोअरवर परिणाम होईल का?
+    gu: શું આની મારા ક્રેડિટ સ્કોર પર અસર થશે?
+    bn: এটি কি আমার ক্রেডিট স্কোরে প্রভাব ফেলবে?
+    ta: இது என் கிரெடிட் ஸ்கோரை பாதிக்குமா?
+    te: ఇది నా క్రెడిట్ స్కోర్ పై ప్రభావం చూపుతుందా?
+    kn: ಇದು ನನ್ನ ಕ್ರೆಡಿಟ್ ಸ್ಕೋರ್ ಮೇಲೆ ಪರಿಣಾಮ ಬೀರುತ್ತಾ?
+    ml: ഇത് എന്റെ ക്രെഡിറ്റ് സ്കോറിനെ ബാധിക്കുമോ?
+    hi: क्या इससे मेरा क्रेडिट स्कोर प्रभावित होगा?
+  paraphrases_en:
+  - does it hurt my CIBIL
+  - will my score go down
+  paraphrases_hi_latn:
+  - CIBIL par asar padega kya
+  - score kam hoga kya
+  answer:
+    en: Credit bureaus consider many factors. Our advisor can explain how a limit revision is reported.
+    hi_latn: Credit bureaus kai factors dekhte hain. Hamare advisor samjha sakte hain ki limit revision kaise report hota hai.
+    mr: क्रेडिट ब्युरो अनेक गोष्टी विचारात घेतात. लिमिट बदल कसा नोंदवला जातो, हे आमचे अ‍ॅडव्हायझर सांगू शकतात.
+    gu: ક્રેડિટ બ્યુરો ઘણી બાબતો ધ્યાનમાં લે છે. લિમિટ ફેરફાર કેવી રીતે નોંધાય છે એ અમારા એડવાઇઝર કહી શકે.
+    bn: ক্রেডিট ব্যুরো অনেক বিষয় বিবেচনা করে। লিমিট পরিবর্তন কীভাবে রিপোর্ট হয় তা আমাদের অ্যাডভাইজার ব্যাখ্যা করবেন।
+    ta: கிரெடிட் ப்யூரோ பல விஷயங்களை கணக்குல எடுக்குது. லிமிட் மாற்றம் எப்படி ரிப்போர்ட் ஆகுதுன்னு எங்க அட்வைசர் சொல்வாங்க.
+    te: క్రెడిట్ బ్యూరోలు అనేక అంశాలను పరిగణిస్తాయి. లిమిట్ మార్పు ఎలా రిపోర్ట్ అవుతుందో మా అడ్వైజర్ వివరించగలరు.
+    kn: ಕ್ರೆಡಿಟ್ ಬ್ಯೂರೋಗಳು ಹಲವು ಅಂಶಗಳನ್ನು ಪರಿಗಣಿಸುತ್ತವೆ. ಲಿಮಿಟ್ ಬದಲಾವಣೆ ಹೇಗೆ ವರದಿಯಾಗುತ್ತದೆ ಎಂದು ನಮ್ಮ ಅಡ್ವೈಸರ್ ವಿವರಿಸಬಲ್ಲರು.
+    ml: ക്രെഡിറ്റ് ബ്യൂറോകൾ പല ഘടകങ്ങളും പരിഗണിക്കുന്നു. ലിമിറ്റ് മാറ്റം എങ്ങനെ റിപ്പോർട്ട് ചെയ്യപ്പെടുന്നു എന്ന് ഞങ്ങളുടെ അഡ്വൈസർ വിശദീകരിക്കും.
+    hi: क्रेडिट ब्यूरो कई बातें देखते हैं. लिमिट में बदलाव कैसे रिपोर्ट होता है, हमारे एडवाइज़र समझा सकते हैं.
+  never_say:
+  - this will improve your credit score
+  - this will not affect your score
+  - your CIBIL will go up
+- id: FAQ_L004
+  question:
+    en: How long will it take to reflect?
+    hi_latn: Kitne time mein reflect hoga?
+    mr: रिफ्लेक्ट व्हायला किती वेळ लागेल?
+    gu: રિફ્લેક્ટ થવામાં કેટલો સમય લાગશે?
+    bn: প্রতিফলিত হতে কত সময় লাগবে?
+    ta: ரிஃப்ளெக்ட் ஆக எவ்வளவு நேரம் ஆகும்?
+    te: ప్రతిబింబించడానికి ఎంత సమయం పడుతుంది?
+    kn: ಪ್ರತಿಬಿಂಬಿಸಲು ಎಷ್ಟು ಸಮಯ ಬೇಕು?
+    ml: പ്രതിഫലിക്കാൻ എത്ര സമയം എടുക്കും?
+    hi: रिफ़्लेक्ट होने में कितना समय लगेगा?
+  paraphrases_en:
+  - when will the new limit be active
+  - how soon can I use it
+  paraphrases_hi_latn:
+  - nayi limit kab active hogi
+  answer:
+    en: Our advisor will confirm the timeline once your request is raised.
+    hi_latn: Request raise hone ke baad hamare advisor timeline confirm karenge.
+    mr: तुमची विनंती नोंदवल्यानंतर आमचे अ‍ॅडव्हायझर कालावधी सांगतील.
+    gu: તમારી વિનંતી નોંધાયા પછી અમારા એડવાઇઝર સમયમર્યાદા જણાવશે.
+    bn: আপনার অনুরোধ নথিভুক্ত হওয়ার পর আমাদের অ্যাডভাইজার সময়সীমা জানাবেন।
+    ta: உங்க ரிக்வெஸ்ட் பதிவு ஆன பிறகு எங்க அட்வைசர் கால அளவை சொல்வாங்க.
+    te: మీ అభ్యర్థన నమోదైన తర్వాత మా అడ్వైజర్ కాలవ్యవధి చెప్తారు.
+    kn: ನಿಮ್ಮ ವಿನಂತಿ ದಾಖಲಾದ ನಂತರ ನಮ್ಮ ಅಡ್ವೈಸರ್ ಕಾಲಮಿತಿ ತಿಳಿಸುತ್ತಾರೆ.
+    ml: നിങ്ങളുടെ അഭ്യർത്ഥന രേഖപ്പെടുത്തിയ ശേഷം ഞങ്ങളുടെ അഡ്വൈസർ സമയപരിധി അറിയിക്കും.
+    hi: आपका अनुरोध दर्ज होने के बाद हमारे एडवाइज़र समय-सीमा कन्फ़र्म करेंगे.
+- id: FAQ_L005
+  question:
+    en: Can I reduce the limit later?
+    hi_latn: Kya main baad mein limit kam kara sakta hoon?
+    mr: मी नंतर लिमिट कमी करू शकतो का?
+    gu: શું હું પછી લિમિટ ઘટાડી શકું?
+    bn: আমি কি পরে লিমিট কমাতে পারি?
+    ta: நான் பிறகு லிமிட் குறைக்க முடியுமா?
+    te: నేను తర్వాత లిమిట్ తగ్గించవచ్చా?
+    kn: ನಾನು ನಂತರ ಲಿಮಿಟ್ ಕಡಿಮೆ ಮಾಡಬಹುದಾ?
+    ml: എനിക്ക് പിന്നീട് ലിമിറ്റ് കുറയ്ക്കാമോ?
+    hi: क्या मैं बाद में लिमिट कम करा सकता हूँ?
+  paraphrases_en:
+  - can I go back to the old limit
+  - is it reversible
+  paraphrases_hi_latn:
+  - purani limit par wapas ja sakte hain kya
+  answer:
+    en: You can request a change later. Our advisor can explain how.
+    hi_latn: Aap baad mein change request kar sakte hain. Hamare advisor tarika bata sakte hain.
+    mr: तुम्ही नंतर बदलाची विनंती करू शकता. कसं, हे आमचे अ‍ॅडव्हायझर सांगू शकतात.
+    gu: તમે પછી ફેરફારની વિનંતી કરી શકો છો. કેવી રીતે એ અમારા એડવાઇઝર કહી શકે.
+    bn: আপনি পরে পরিবর্তনের অনুরোধ করতে পারেন। কীভাবে তা আমাদের অ্যাডভাইজার বলতে পারবেন।
+    ta: நீங்க பிறகு மாற்றத்துக்கு ரிக்வெஸ்ட் பண்ணலாம். எப்படின்னு எங்க அட்வைசர் சொல்வாங்க.
+    te: మీరు తర్వాత మార్పు కోసం అభ్యర్థించవచ్చు. ఎలా అనేది మా అడ్వైజర్ చెప్పగలరు.
+    kn: ನೀವು ನಂತರ ಬದಲಾವಣೆಗೆ ವಿನಂತಿಸಬಹುದು. ಹೇಗೆ ಎಂದು ನಮ್ಮ ಅಡ್ವೈಸರ್ ಹೇಳಬಲ್ಲರು.
+    ml: നിങ്ങൾക്ക് പിന്നീട് മാറ്റത്തിന് അഭ്യർത്ഥിക്കാം. എങ്ങനെയെന്ന് ഞങ്ങളുടെ അഡ്വൈസർ പറയാം.
+    hi: आप बाद में बदलाव का अनुरोध कर सकते हैं. तरीक़ा हमारे एडवाइज़र बता सकते हैं.
+- id: FAQ_L006
+  question:
+    en: Do I have to use the extra limit?
+    hi_latn: Kya mujhe extra limit use karni hi hogi?
+    mr: मला वाढलेली लिमिट वापरावीच लागेल का?
+    gu: શું મારે વધારાની લિમિટ વાપરવી જ પડશે?
+    bn: আমাকে কি বাড়তি লিমিট ব্যবহার করতেই হবে?
+    ta: நான் கூடுதல் லிமிட் யூஸ் பண்ணணுமா?
+    te: నేను అదనపు లిమిట్ వాడాల్సిందేనా?
+    kn: ನಾನು ಹೆಚ್ಚಿನ ಲಿಮಿಟ್ ಬಳಸಲೇಬೇಕಾ?
+    ml: എനിക്ക് അധിക ലിമിറ്റ് ഉപയോഗിക്കണോ?
+    hi: क्या मुझे बढ़ी हुई लिमिट इस्तेमाल करनी ही होगी?
+  paraphrases_en:
+  - what if I don't use it
+  - is there a minimum spend
+  paraphrases_hi_latn:
+  - agar use na karoon to
+  - minimum kharch zaroori hai kya
+  answer:
+    en: No. A higher limit is available to you, not something you must use.
+    hi_latn: Nahi. Zyada limit aapke liye available hoti hai, use karna zaroori nahi hai.
+    mr: नाही. जास्त लिमिट तुमच्यासाठी उपलब्ध असते, ती वापरणं बंधनकारक नाही.
+    gu: ના. વધારે લિમિટ તમારા માટે ઉપલબ્ધ હોય છે, એ વાપરવી ફરજિયાત નથી.
+    bn: না। বেশি লিমিট আপনার জন্য উপলব্ধ থাকে, তা ব্যবহার করা বাধ্যতামূলক নয়।
+    ta: இல்ல. அதிக லிமிட் உங்களுக்கு கிடைக்குது, அத யூஸ் பண்ணணும்னு அவசியம் இல்ல.
+    te: లేదు. ఎక్కువ లిమిట్ మీకు అందుబాటులో ఉంటుంది, దాన్ని వాడటం తప్పనిసరి కాదు.
+    kn: ಇಲ್ಲ. ಹೆಚ್ಚಿನ ಲಿಮಿಟ್ ನಿಮಗೆ ಲಭ್ಯವಿರುತ್ತದೆ, ಅದನ್ನು ಬಳಸುವುದು ಕಡ್ಡಾಯವಲ್ಲ.
+    ml: ഇല്ല. കൂടുതൽ ലിമിറ്റ് നിങ്ങൾക്ക് ലഭ്യമാണ്, അത് ഉപയോഗിക്കേണ്ടത് നിർബന്ധമല്ല.
+    hi: नहीं. ज़्यादा लिमिट आपके लिए उपलब्ध होती है, इस्तेमाल करना ज़रूरी नहीं है.
+- id: FAQ_L007
+  question:
+    en: Do I need to submit documents?
+    hi_latn: Kya documents dene honge?
+    mr: मला कागदपत्रं द्यावी लागतील का?
+    gu: શું મારે દસ્તાવેજો આપવા પડશે?
+    bn: আমাকে কি নথি জমা দিতে হবে?
+    ta: நான் டாகுமெண்ட் கொடுக்கணுமா?
+    te: నేను పత్రాలు ఇవ్వాలా?
+    kn: ನಾನು ದಾಖಲೆ ಕೊಡಬೇಕಾ?
+    ml: എനിക്ക് രേഖകൾ നൽകേണ്ടതുണ്ടോ?
+    hi: क्या मुझे दस्तावेज़ देने होंगे?
+  paraphrases_en:
+  - do you need income proof
+  - what paperwork
+  paraphrases_hi_latn:
+  - income proof chahiye kya
+  answer:
+    en: Our advisor will confirm whether anything is needed for your account.
+    hi_latn: Hamare advisor confirm karenge ki aapke account ke liye kuch chahiye ya nahi.
+    mr: तुमच्या खात्यासाठी काही लागेल का, हे आमचे अ‍ॅडव्हायझर सांगतील.
+    gu: તમારા એકાઉન્ટ માટે કંઈ જોઈશે કે નહીં એ અમારા એડવાઇઝર જણાવશે.
+    bn: আপনার অ্যাকাউন্টের জন্য কিছু লাগবে কিনা আমাদের অ্যাডভাইজার জানাবেন।
+    ta: உங்க அக்கவுண்டுக்கு ஏதாவது வேணுமான்னு எங்க அட்வைசர் சொல்வாங்க.
+    te: మీ ఖాతాకు ఏదైనా అవసరమా అని మా అడ్వైజర్ చెప్తారు.
+    kn: ನಿಮ್ಮ ಖಾತೆಗೆ ಏನಾದರೂ ಬೇಕೇ ಎಂದು ನಮ್ಮ ಅಡ್ವೈಸರ್ ತಿಳಿಸುತ್ತಾರೆ.
+    ml: നിങ്ങളുടെ അക്കൗണ്ടിന് എന്തെങ്കിലും വേണോ എന്ന് ഞങ്ങളുടെ അഡ്വൈസർ അറിയിക്കും.
+    hi: आपके अकाउंट के लिए कुछ चाहिए या नहीं, हमारे एडवाइज़र कन्फ़र्म करेंगे.
+- id: FAQ_L008
+  question:
+    en: Can I choose how much the limit goes up by?
+    hi_latn: Kya main chun sakta hoon ki limit kitni badhe?
+    mr: लिमिट किती वाढावी हे मी ठरवू शकतो का?
+    gu: લિમિટ કેટલી વધે એ હું નક્કી કરી શકું?
+    bn: লিমিট কতটা বাড়বে তা কি আমি ঠিক করতে পারি?
+    ta: லிமிட் எவ்வளவு ஏறணும்னு நான் முடிவு பண்ணலாமா?
+    te: లిమిట్ ఎంత పెరగాలో నేను నిర్ణయించవచ్చా?
+    kn: ಲಿಮಿಟ್ ಎಷ್ಟು ಹೆಚ್ಚಬೇಕು ಎಂದು ನಾನು ನಿರ್ಧರಿಸಬಹುದಾ?
+    ml: ലിമിറ്റ് എത്ര കൂടണമെന്ന് ഞാൻ തീരുമാനിക്കാമോ?
+    hi: क्या मैं चुन सकता हूँ कि लिमिट कितनी बढ़े?
+  paraphrases_en:
+  - can I ask for a different amount
+  - I want a smaller increase
+  paraphrases_hi_latn:
+  - main kam badhwa sakta hoon kya
+  answer:
+    en: The offer on your account is {enhanced_limit} rupees. Our advisor can discuss your options.
+    hi_latn: Aapke account par offer {enhanced_limit} rupees ka hai. Hamare advisor aapke options discuss kar sakte hain.
+    mr: तुमच्या खात्यावरची ऑफर {enhanced_limit} रुपयांची आहे. तुमचे पर्याय आमचे अ‍ॅडव्हायझर सांगू शकतात.
+    gu: તમારા એકાઉન્ટ પરની ઓફર {enhanced_limit} રૂપિયાની છે. તમારા વિકલ્પો અમારા એડવાઇઝર કહી શકે.
+    bn: আপনার অ্যাকাউন্টে অফারটি {enhanced_limit} টাকার। আপনার বিকল্পগুলি আমাদের অ্যাডভাইজার আলোচনা করতে পারবেন।
+    ta: உங்க அக்கவுண்ட்ல ஆஃபர் {enhanced_limit} ரூபாய். உங்க ஆப்ஷன்களை எங்க அட்வைசர் சொல்வாங்க.
+    te: మీ ఖాతాలో ఆఫర్ {enhanced_limit} రూపాయలు. మీ ఎంపికలను మా అడ్వైజర్ చర్చించగలరు.
+    kn: ನಿಮ್ಮ ಖಾತೆಯಲ್ಲಿ ಆಫರ್ {enhanced_limit} ರೂಪಾಯಿ. ನಿಮ್ಮ ಆಯ್ಕೆಗಳನ್ನು ನಮ್ಮ ಅಡ್ವೈಸರ್ ಚರ್ಚಿಸಬಲ್ಲರು.
+    ml: നിങ്ങളുടെ അക്കൗണ്ടിലെ ഓഫർ {enhanced_limit} രൂപയാണ്. നിങ്ങളുടെ ഓപ്ഷനുകൾ ഞങ്ങളുടെ അഡ്വൈസർ ചർച്ച ചെയ്യാം.
+    hi: आपके अकाउंट पर ऑफर {enhanced_limit} रुपये का है. आपके विकल्प हमारे एडवाइज़र बता सकते हैं.
+- id: FAQ_L009
+  question:
+    en: Does my billing cycle change?
+    hi_latn: Kya mera billing cycle badlega?
+    mr: माझं बिलिंग सायकल बदलेल का?
+    gu: શું મારું બિલિંગ સાયકલ બદલાશે?
+    bn: আমার বিলিং সাইকেল কি বদলাবে?
+    ta: என் பில்லிங் சைக்கிள் மாறுமா?
+    te: నా బిల్లింగ్ సైకిల్ మారుతుందా?
+    kn: ನನ್ನ ಬಿಲ್ಲಿಂಗ್ ಸೈಕಲ್ ಬದಲಾಗುತ್ತಾ?
+    ml: എന്റെ ബില്ലിംഗ് സൈക്കിൾ മാറുമോ?
+    hi: क्या मेरा बिलिंग साइकिल बदलेगा?
+  paraphrases_en:
+  - will my due date change
+  - does my statement date move
+  paraphrases_hi_latn:
+  - due date badlegi kya
+  answer:
+    en: A limit revision does not change your billing cycle.
+    hi_latn: Limit revision se aapka billing cycle nahi badalta.
+    mr: लिमिट बदलामुळे तुमचं बिलिंग सायकल बदलत नाही.
+    gu: લિમિટ ફેરફારથી તમારું બિલિંગ સાયકલ બદલાતું નથી.
+    bn: লিমিট পরিবর্তনে আপনার বিলিং সাইকেল বদলায় না।
+    ta: லிமிட் மாற்றத்தால உங்க பில்லிங் சைக்கிள் மாறாது.
+    te: లిమిట్ మార్పు వల్ల మీ బిల్లింగ్ సైకిల్ మారదు.
+    kn: ಲಿಮಿಟ್ ಬದಲಾವಣೆಯಿಂದ ನಿಮ್ಮ ಬಿಲ್ಲಿಂಗ್ ಸೈಕಲ್ ಬದಲಾಗುವುದಿಲ್ಲ.
+    ml: ലിമിറ്റ് മാറ്റം കൊണ്ട് നിങ്ങളുടെ ബില്ലിംഗ് സൈക്കിൾ മാറുന്നില്ല.
+    hi: लिमिट में बदलाव से आपका बिलिंग साइकिल नहीं बदलता.
+- id: FAQ_L010
+  question:
+    en: Will my interest rate change?
+    hi_latn: Kya mera interest rate badlega?
+    mr: माझा व्याजदर बदलेल का?
+    gu: શું મારો વ્યાજ દર બદલાશે?
+    bn: আমার সুদের হার কি বদলাবে?
+    ta: என் வட்டி விகிதம் மாறுமா?
+    te: నా వడ్డీ రేటు మారుతుందా?
+    kn: ನನ್ನ ಬಡ್ಡಿ ದರ ಬದಲಾಗುತ್ತಾ?
+    ml: എന്റെ പലിശ നിരക്ക് മാറുമോ?
+    hi: क्या मेरी ब्याज दर बदलेगी?
+  paraphrases_en:
+  - does the rate go up with a higher limit
+  paraphrases_hi_latn:
+  - limit badhne se rate badhega kya
+  answer:
+    en: The rates on your card are governed by your card agreement and are not changed by this offer.
+    hi_latn: Aapke card ke rates aapke card agreement se tay hote hain, aur is offer se nahi badalte.
+    mr: तुमच्या कार्डचे दर तुमच्या कार्ड करारानुसार ठरतात आणि या ऑफरमुळे बदलत नाहीत.
+    gu: તમારા કાર્ડના દર તમારા કાર્ડ કરાર મુજબ નક્કી થાય છે અને આ ઓફરથી બદલાતા નથી.
+    bn: আপনার কার্ডের হার কার্ড চুক্তি অনুযায়ী নির্ধারিত এবং এই অফারে বদলায় না।
+    ta: உங்க கார்டு ரேட் உங்க கார்டு ஒப்பந்தத்தின்படி தீர்மானிக்கப்படுது, இந்த ஆஃபரால மாறாது.
+    te: మీ కార్డ్ రేట్లు మీ కార్డ్ ఒప్పందం ప్రకారం నిర్ణయించబడతాయి, ఈ ఆఫర్ వల్ల మారవు.
+    kn: ನಿಮ್ಮ ಕಾರ್ಡ್ ದರಗಳು ನಿಮ್ಮ ಕಾರ್ಡ್ ಒಪ್ಪಂದದ ಪ್ರಕಾರ ನಿರ್ಧರಿಸಲ್ಪಡುತ್ತವೆ, ಈ ಆಫರ್ ನಿಂದ ಬದಲಾಗುವುದಿಲ್ಲ.
+    ml: നിങ്ങളുടെ കാർഡ് നിരക്കുകൾ കാർഡ് കരാർ പ്രകാരമാണ്, ഈ ഓഫർ കൊണ്ട് മാറില്ല.
+    hi: आपके कार्ड की दरें आपके कार्ड एग्रीमेंट से तय होती हैं और इस ऑफर से नहीं बदलतीं.
+- id: FAQ_L011
+  question:
+    en: How long is the offer valid?
+    hi_latn: Offer kab tak valid hai?
+    mr: ऑफर किती दिवस वैध आहे?
+    gu: ઓફર કેટલા દિવસ માન્ય છે?
+    bn: অফারটি কত দিন বৈধ?
+    ta: ஆஃபர் எத்தனை நாள் இருக்கும்?
+    te: ఆఫర్ ఎన్ని రోజులు చెల్లుతుంది?
+    kn: ಆಫರ್ ಎಷ್ಟು ದಿನ ಮಾನ್ಯ?
+    ml: ഓഫർ എത്ര ദിവസം സാധുവാണ്?
+    hi: ऑफर कितने दिन वैध है?
+  paraphrases_en:
+  - when does it expire
+  - how many days do I have
+  paraphrases_hi_latn:
+  - kab tak hai yeh offer
+  answer:
+    en: This offer is open for {offer_valid_days} days.
+    hi_latn: Yeh offer {offer_valid_days} din tak khula hai.
+    mr: ही ऑफर {offer_valid_days} दिवस उपलब्ध आहे.
+    gu: આ ઓફર {offer_valid_days} દિવસ ઉપલબ્ધ છે.
+    bn: এই অফারটি {offer_valid_days} দিন উপলব্ধ।
+    ta: இந்த ஆஃபர் {offer_valid_days} நாட்களுக்கு இருக்கும்.
+    te: ఈ ఆఫర్ {offer_valid_days} రోజులు అందుబాటులో ఉంది.
+    kn: ಈ ಆಫರ್ {offer_valid_days} ದಿನ ಲಭ್ಯವಿದೆ.
+    ml: ഈ ഓഫർ {offer_valid_days} ദിവസത്തേക്ക് ലഭ്യമാണ്.
+    hi: यह ऑफर {offer_valid_days} दिन तक उपलब्ध है.
+- id: FAQ_L012
+  question:
+    en: Is the increase guaranteed?
+    hi_latn: Kya limit badhna guaranteed hai?
+    mr: लिमिट वाढणं नक्की आहे का?
+    gu: શું લિમિટ વધવી નક્કી છે?
+    bn: লিমিট বৃদ্ধি কি নিশ্চিত?
+    ta: லிமிட் ஏறுறது உறுதியா?
+    te: లిమిట్ పెరగడం ఖాయమా?
+    kn: ಲಿಮಿಟ್ ಹೆಚ್ಚಳ ಖಚಿತವೇ?
+    ml: ലിമിറ്റ് കൂടുന്നത് ഉറപ്പാണോ?
+    hi: क्या लिमिट बढ़ना पक्का है?
+  paraphrases_en:
+  - will it definitely happen
+  - can it be rejected
+  paraphrases_hi_latn:
+  - pakka ho jayega kya
+  answer:
+    en: The revised limit is subject to the terms and conditions of your card agreement. Our advisor will confirm the position for your account.
+    hi_latn: Revised limit aapke card agreement ke terms and conditions ke adheen hai. Hamare advisor aapke account ke liye sthiti confirm karenge.
+    mr: सुधारित लिमिट तुमच्या कार्ड कराराच्या अटींच्या अधीन आहे. तुमच्या खात्याची स्थिती आमचे अ‍ॅडव्हायझर सांगतील.
+    gu: સુધારેલી લિમિટ તમારા કાર્ડ કરારની શરતોને આધીન છે. તમારા એકાઉન્ટની સ્થિતિ અમારા એડવાઇઝર જણાવશે.
+    bn: সংশোধিত লিমিট আপনার কার্ড চুক্তির শর্তাবলীর অধীন। আপনার অ্যাকাউন্টের অবস্থা আমাদের অ্যাডভাইজার জানাবেন।
+    ta: திருத்தப்பட்ட லிமிட் உங்க கார்டு ஒப்பந்த விதிமுறைகளுக்கு உட்பட்டது. உங்க அக்கவுண்ட் நிலையை எங்க அட்வைசர் சொல்வாங்க.
+    te: సవరించిన లిమిట్ మీ కార్డ్ ఒప్పంద నిబంధనలకు లోబడి ఉంటుంది. మీ ఖాతా స్థితిని మా అడ్వైజర్ చెప్తారు.
+    kn: ಪರಿಷ್ಕೃತ ಲಿಮಿಟ್ ನಿಮ್ಮ ಕಾರ್ಡ್ ಒಪ್ಪಂದದ ನಿಯಮಗಳಿಗೆ ಒಳಪಟ್ಟಿದೆ. ನಿಮ್ಮ ಖಾತೆಯ ಸ್ಥಿತಿಯನ್ನು ನಮ್ಮ ಅಡ್ವೈಸರ್ ತಿಳಿಸುತ್ತಾರೆ.
+    ml: പുതുക്കിയ ലിമിറ്റ് നിങ്ങളുടെ കാർഡ് കരാർ വ്യവസ്ഥകൾക്ക് വിധേയമാണ്. നിങ്ങളുടെ അക്കൗണ്ട് സ്ഥിതി ഞങ്ങളുടെ അഡ്വൈസർ അറിയിക്കും.
+    hi: संशोधित लिमिट आपके कार्ड एग्रीमेंट की शर्तों के अधीन है. आपके अकाउंट की स्थिति हमारे एडवाइज़र कन्फ़र्म करेंगे.
+  never_say:
+  - guaranteed
+  - your limit has already been increased
+  - approval is certain

@@ -1,0 +1,12 @@
+# Build-time only. Never installed on a serving box.
+#
+# Used by tools/prerender_audio.py to render the approved lines to audio once, and by
+# tools/benchmark_asr.py. Pin torch and torchaudio TOGETHER - a mismatched pair breaks
+# torchaudio's native extension and parler_tts will not import at all.
+torch==2.5.1
+torchaudio==2.5.1
+transformers==4.46.1
+accelerate>=0.26.0        # low_cpu_mem_usage: halves the model load peak
+parler-tts @ git+https://github.com/huggingface/parler-tts.git
+kokoro-onnx>=0.4           # ONNX fallback TTS, en+hi only
+huggingface_hub>=0.26

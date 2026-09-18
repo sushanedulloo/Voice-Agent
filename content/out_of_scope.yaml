@@ -1,0 +1,484 @@
+# OUT_OF_SCOPE training corpus.
+#
+# WHY THIS FILE EXISTS (RESEARCH 2.4):
+#
+# A router with no reject option misroutes confidently, and a confident misroute on a credit
+# product is mis-selling. Softmax forces probability mass onto some class by construction - it
+# cannot express "none of these". Ask about a cash-advance rate against a glossary holding a
+# purchase-APR entry and the router returns the purchase answer at high confidence.
+#
+# So OUT_OF_SCOPE is a TRAINED CLASS with its own examples, not the residue left over when
+# nothing clears a threshold. Required alongside it:
+#   - one-vs-rest sigmoid, not softmax
+#   - per-class rejection thresholds, calibrated per language
+#   - confidence bands (campaign_vars.yaml): >=0.80 act | >=0.50 act + flag | <0.50 deflect
+#
+# Every category below routes to an approved line plus a human. There is no generative branch.
+# Categories marked `severity: safety` must additionally be tagged for async human review, and
+# `priority: urgent` ones must not sit in a queue behind a sales transfer.
+
+version: 0.1.0
+status: synthetic
+default_route: N99_FALLBACK_TRANSFER
+categories:
+- id: OOS_CASH_ADVANCE
+  severity: safety
+  rationale: 'The canonical misroute. Lexically adjacent to the FlexiPay glossary (rates, fees, tenure) but a different product with different pricing. Answering
+    from the purchase-APR entry is a misstatement of terms.
+
+    '
+  examples_en:
+  - what is the interest on cash withdrawal
+  - can I take cash on this card
+  - what is the cash advance fee
+  - what is the rate if I withdraw money from ATM
+  examples_hi_latn:
+  - cash nikalne par kitna interest lagta hai
+  - ATM se paisa nikal sakte hain kya
+  - cash advance ka charge kya hai
+  examples_mr:
+  - कॅश काढल्यावर किती व्याज लागतं
+  - या कार्डवर कॅश मिळेल का
+  - एटीएम मधून पैसे काढता येतील का
+  examples_gu:
+  - કેશ ઉપાડવા પર કેટલું વ્યાજ લાગે
+  - આ કાર્ડ પર કેશ મળશે
+  - એટીએમમાંથી પૈસા ઉપાડી શકાય
+  examples_bn:
+  - ক্যাশ তুললে কত সুদ লাগে
+  - এই কার্ডে ক্যাশ পাওয়া যাবে
+  - এটিএম থেকে টাকা তোলা যাবে
+  examples_ta:
+  - கேஷ் எடுத்தா எவ்வளவு வட்டி
+  - இந்த கார்டுல கேஷ் கிடைக்குமா
+  - ஏடிஎம்ல பணம் எடுக்க முடியுமா
+  examples_te:
+  - క్యాష్ తీస్తే ఎంత వడ్డీ
+  - ఈ కార్డ్ పై క్యాష్ వస్తుందా
+  - ఏటీఎం నుంచి డబ్బు తీయవచ్చా
+  examples_kn:
+  - ಕ್ಯಾಶ್ ತೆಗೆದರೆ ಎಷ್ಟು ಬಡ್ಡಿ
+  - ಈ ಕಾರ್ಡ್ ಮೇಲೆ ಕ್ಯಾಶ್ ಸಿಗುತ್ತಾ
+  - ಎಟಿಎಂ ನಿಂದ ಹಣ ತೆಗೆಯಬಹುದಾ
+  examples_ml:
+  - ക്യാഷ് എടുത്താൽ എത്ര പലിശ
+  - ഈ കാർഡിൽ ക്യാഷ് കിട്ടുമോ
+  - എടിഎമ്മിൽ നിന്ന് പണം എടുക്കാമോ
+- id: OOS_OTHER_CREDIT_PRODUCTS
+  severity: safety
+  rationale: Personal, home, auto and gold loans are not on our approved content set.
+  examples_en:
+  - can I get a personal loan
+  - do you give home loans
+  - what is your car loan rate
+  - I need a gold loan
+  examples_hi_latn:
+  - personal loan mil sakta hai kya
+  - home loan dete hain aap
+  - car loan ka rate kya hai
+  examples_mr:
+  - पर्सनल लोन मिळेल का
+  - होम लोन देता का
+  - कार लोनचा रेट काय आहे
+  examples_gu:
+  - પર્સનલ લોન મળશે
+  - હોમ લોન આપો છો
+  - કાર લોનનો રેટ શું છે
+  examples_bn:
+  - পার্সোনাল লোন পাওয়া যাবে
+  - হোম লোন দেন
+  - কার লোনের রেট কত
+  examples_ta:
+  - பர்சனல் லோன் கிடைக்குமா
+  - ஹோம் லோன் தருவீங்களா
+  - கார் லோன் ரேட் என்ன
+  examples_te:
+  - పర్సనల్ లోన్ వస్తుందా
+  - హోమ్ లోన్ ఇస్తారా
+  - కార్ లోన్ రేట్ ఎంత
+  examples_kn:
+  - ಪರ್ಸನಲ್ ಲೋನ್ ಸಿಗುತ್ತಾ
+  - ಹೋಮ್ ಲೋನ್ ಕೊಡ್ತೀರಾ
+  - ಕಾರ್ ಲೋನ್ ರೇಟ್ ಎಷ್ಟು
+  examples_ml:
+  - പേഴ്സണൽ ലോൺ കിട്ടുമോ
+  - ഹോം ലോൺ തരുമോ
+  - കാർ ലോൺ റേറ്റ് എത്ര
+- id: OOS_INSURANCE
+  severity: safety
+  rationale: 'Insurance carries its own regulatory regime. Never answered from a credit-card glossary, even where the question sounds adjacent.
+
+    '
+  examples_en:
+  - is there insurance on this card
+  - I want to buy a policy
+  - what is the accident cover
+  examples_hi_latn:
+  - is card par insurance hai kya
+  - policy leni hai mujhe
+  examples_mr:
+  - या कार्डवर इन्शुरन्स आहे का
+  - मला पॉलिसी घ्यायची आहे
+  examples_gu:
+  - આ કાર્ડ પર ઇન્શ્યોરન્સ છે
+  - મારે પોલિસી લેવી છે
+  examples_bn:
+  - এই কার্ডে ইন্স্যুরেন্স আছে
+  - আমি পলিসি নিতে চাই
+  examples_ta:
+  - இந்த கார்டுல இன்ஷூரன்ஸ் இருக்கா
+  - எனக்கு பாலிசி வேணும்
+  examples_te:
+  - ఈ కార్డ్ పై ఇన్సూరెన్స్ ఉందా
+  - నాకు పాలసీ కావాలి
+  examples_kn:
+  - ಈ ಕಾರ್ಡ್ ಮೇಲೆ ಇನ್ಶೂರೆನ್ಸ್ ಇದೆಯಾ
+  - ನನಗೆ ಪಾಲಿಸಿ ಬೇಕು
+  examples_ml:
+  - ഈ കാർഡിൽ ഇൻഷുറൻസ് ഉണ്ടോ
+  - എനിക്ക് പോളിസി വേണം
+- id: OOS_OTHER_ISSUER
+  rationale: Questions about another bank's card or offer.
+  examples_en:
+  - HDFC is giving me a better rate
+  - what about my ICICI card
+  - can you compare with Axis
+  examples_hi_latn:
+  - HDFC better rate de raha hai
+  - mere ICICI card ka kya
+- id: OOS_DISPUTE_OR_FRAUD
+  severity: safety
+  priority: urgent
+  rationale: 'A fraud or unauthorised-transaction report is a service event with its own timelines. It must not be parked behind a sales transfer, and it must never
+    receive a scripted sales deflection.
+
+    '
+  route: N90_HUMAN_HANDOFF
+  examples_en:
+  - there is a transaction I did not make
+  - my card has been used by someone else
+  - I want to report a fraud
+  - I lost my card
+  - someone stole my card
+  examples_hi_latn:
+  - maine yeh transaction nahi kiya
+  - mera card kisi aur ne use kiya hai
+  - mera card kho gaya hai
+  - fraud ki report karni hai
+  examples_mr:
+  - मी हा ट्रान्झॅक्शन केला नाही
+  - माझं कार्ड कोणीतरी वापरलं
+  - माझं कार्ड हरवलं आहे
+  examples_gu:
+  - મેં આ ટ્રાન્ઝેક્શન નથી કર્યું
+  - મારું કાર્ડ કોઈએ વાપર્યું
+  - મારું કાર્ડ ખોવાઈ ગયું
+  examples_bn:
+  - আমি এই লেনদেন করিনি
+  - আমার কার্ড কেউ ব্যবহার করেছে
+  - আমার কার্ড হারিয়ে গেছে
+  examples_ta:
+  - நான் இந்த டிரான்சாக்ஷன் பண்ணல
+  - என் கார்டை யாரோ யூஸ் பண்ணிட்டாங்க
+  - என் கார்டு தொலைஞ்சு போச்சு
+  examples_te:
+  - నేను ఈ లావాదేవీ చేయలేదు
+  - నా కార్డ్ ఎవరో వాడారు
+  - నా కార్డ్ పోయింది
+  examples_kn:
+  - ನಾನು ಈ ವ್ಯವಹಾರ ಮಾಡಿಲ್ಲ
+  - ನನ್ನ ಕಾರ್ಡ್ ಯಾರೋ ಬಳಸಿದ್ದಾರೆ
+  - ನನ್ನ ಕಾರ್ಡ್ ಕಳೆದುಹೋಗಿದೆ
+  examples_ml:
+  - ഞാൻ ഈ ഇടപാട് നടത്തിയിട്ടില്ല
+  - എന്റെ കാർഡ് ആരോ ഉപയോഗിച്ചു
+  - എന്റെ കാർഡ് നഷ്ടപ്പെട്ടു
+- id: OOS_ACCOUNT_SERVICING
+  rationale: Servicing requests belong to the service channel, not an outbound sales campaign.
+  examples_en:
+  - I want to change my address
+  - block my card
+  - send me my statement
+  - I need to update my email
+  - what is my outstanding balance
+  examples_hi_latn:
+  - mera address badalna hai
+  - card block kar dijiye
+  - statement bhej dijiye
+  - mera balance kitna hai
+  examples_mr:
+  - माझा पत्ता बदलायचा आहे
+  - कार्ड ब्लॉक करा
+  - माझं बॅलन्स किती आहे
+  examples_gu:
+  - મારું સરનામું બદલવું છે
+  - કાર્ડ બ્લોક કરો
+  - મારું બેલેન્સ કેટલું છે
+  examples_bn:
+  - আমার ঠিকানা বদলাতে হবে
+  - কার্ড ব্লক করুন
+  - আমার ব্যালেন্স কত
+  examples_ta:
+  - என் அட்ரஸ் மாத்தணும்
+  - கார்டை பிளாக் பண்ணுங்க
+  - என் பேலன்ஸ் எவ்வளவு
+  examples_te:
+  - నా అడ్రస్ మార్చాలి
+  - కార్డ్ బ్లాక్ చేయండి
+  - నా బ్యాలెన్స్ ఎంత
+  examples_kn:
+  - ನನ್ನ ವಿಳಾಸ ಬದಲಾಯಿಸಬೇಕು
+  - ಕಾರ್ಡ್ ಬ್ಲಾಕ್ ಮಾಡಿ
+  - ನನ್ನ ಬ್ಯಾಲೆನ್ಸ್ ಎಷ್ಟು
+  examples_ml:
+  - എന്റെ വിലാസം മാറ്റണം
+  - കാർഡ് ബ്ലോക്ക് ചെയ്യൂ
+  - എന്റെ ബാലൻസ് എത്ര
+- id: OOS_FOREX_AND_CHARGES
+  severity: safety
+  rationale: 'Forex markup, international usage and fee schedules are real card questions and a genuine content gap - they are lexically close to the FlexiPay glossary
+    (rate, charge, percent) and misroute to it. Found by tests/test_engine.py, not by inspection.
+
+    '
+  examples_en:
+  - what is the exchange rate for euros on this card
+  - what is the forex markup
+  - can I use this card abroad
+  - what is the international transaction charge
+  - what are the late payment charges
+  examples_hi_latn:
+  - videsh mein yeh card chalega kya
+  - forex charge kitna hai
+  - late payment ka charge kya hai
+  examples_mr:
+  - परदेशात हे कार्ड चालेल का
+  - फॉरेक्स चार्ज किती आहे
+  - लेट पेमेंट चार्ज किती
+  examples_gu:
+  - વિદેશમાં આ કાર્ડ ચાલશે
+  - ફોરેક્સ ચાર્જ કેટલો છે
+  - લેટ પેમેન્ટ ચાર્જ કેટલો
+  examples_bn:
+  - বিদেশে এই কার্ড চলবে
+  - ফরেক্স চার্জ কত
+  - লেট পেমেন্ট চার্জ কত
+  examples_ta:
+  - வெளிநாட்டுல இந்த கார்டு வேலை செய்யுமா
+  - ஃபாரெக்ஸ் சார்ஜ் எவ்வளவு
+  - லேட் பேமெண்ட் சார்ஜ் எவ்வளவு
+  examples_te:
+  - విదేశాల్లో ఈ కార్డ్ పనిచేస్తుందా
+  - ఫారెక్స్ చార్జ్ ఎంత
+  - లేట్ పేమెంట్ చార్జ్ ఎంత
+  examples_kn:
+  - ವಿದೇಶದಲ್ಲಿ ಈ ಕಾರ್ಡ್ ಕೆಲಸ ಮಾಡುತ್ತಾ
+  - ಫಾರೆಕ್ಸ್ ಚಾರ್ಜ್ ಎಷ್ಟು
+  - ಲೇಟ್ ಪೇಮೆಂಟ್ ಚಾರ್ಜ್ ಎಷ್ಟು
+  examples_ml:
+  - വിദേശത്ത് ഈ കാർഡ് പ്രവർത്തിക്കുമോ
+  - ഫോറെക്സ് ചാർജ് എത്ര
+  - ലേറ്റ് പേയ്മെന്റ് ചാർജ് എത്ര
+- id: OOS_REWARDS
+  rationale: Reward balances and redemption are outside the campaign content set.
+  examples_en:
+  - how many reward points do I have
+  - how do I redeem my points
+  - have my points expired
+  examples_hi_latn:
+  - mere kitne reward points hain
+  - points kaise redeem karein
+  examples_mr:
+  - माझे किती रिवॉर्ड पॉइंट्स आहेत
+  - पॉइंट्स कसे वापरायचे
+  examples_gu:
+  - મારા કેટલા રિવોર્ડ પોઈન્ટ છે
+  - પોઈન્ટ કેવી રીતે વાપરવા
+  examples_bn:
+  - আমার কত রিওয়ার্ড পয়েন্ট আছে
+  - পয়েন্ট কীভাবে ব্যবহার করব
+  examples_ta:
+  - என் ரிவார்ட் பாயின்ட் எவ்வளவு
+  - பாயின்ட் எப்படி யூஸ் பண்றது
+  examples_te:
+  - నా రివార్డ్ పాయింట్లు ఎన్ని
+  - పాయింట్లు ఎలా వాడాలి
+  examples_kn:
+  - ನನ್ನ ರಿವಾರ್ಡ್ ಪಾಯಿಂಟ್ ಎಷ್ಟು
+  - ಪಾಯಿಂಟ್ ಹೇಗೆ ಬಳಸೋದು
+  examples_ml:
+  - എന്റെ റിവാർഡ് പോയിന്റ് എത്ര
+  - പോയിന്റ് എങ്ങനെ ഉപയോഗിക്കും
+- id: OOS_COMPLAINT_OR_LEGAL
+  severity: safety
+  priority: urgent
+  rationale: 'A complaint, an escalation or any mention of legal or regulatory action is handled by a person. A scripted deflection here is itself a complaint-worthy
+    event.
+
+    '
+  route: N90_HUMAN_HANDOFF
+  examples_en:
+  - I want to file a complaint
+  - I am going to the ombudsman
+  - I will take legal action
+  - this is harassment
+  - let me speak to your manager
+  examples_hi_latn:
+  - mujhe shikayat karni hai
+  - main legal action loonga
+  - yeh pareshaan karna hai
+  - aapke manager se baat karao
+  examples_mr:
+  - मला तक्रार करायची आहे
+  - मी कायदेशीर कारवाई करेन
+  - तुमच्या मॅनेजरशी बोलायचं आहे
+  examples_gu:
+  - મારે ફરિયાદ કરવી છે
+  - હું કાનૂની પગલાં લઈશ
+  - તમારા મેનેજર સાથે વાત કરવી છે
+  examples_bn:
+  - আমি অভিযোগ করতে চাই
+  - আমি আইনি ব্যবস্থা নেব
+  - আপনাদের ম্যানেজারের সাথে কথা বলব
+  examples_ta:
+  - நான் புகார் கொடுக்கணும்
+  - நான் சட்ட நடவடிக்கை எடுப்பேன்
+  - உங்க மேனேஜர்கிட்ட பேசணும்
+  examples_te:
+  - నేను ఫిర్యాదు చేయాలి
+  - నేను చట్టపరమైన చర్య తీసుకుంటాను
+  - మీ మేనేజర్ తో మాట్లాడాలి
+  examples_kn:
+  - ನಾನು ದೂರು ಕೊಡಬೇಕು
+  - ನಾನು ಕಾನೂನು ಕ್ರಮ ತೆಗೆದುಕೊಳ್ಳುತ್ತೇನೆ
+  - ನಿಮ್ಮ ಮ್ಯಾನೇಜರ್ ಜೊತೆ ಮಾತಾಡಬೇಕು
+  examples_ml:
+  - എനിക്ക് പരാതി നൽകണം
+  - ഞാൻ നിയമനടപടി എടുക്കും
+  - നിങ്ങളുടെ മാനേജരോട് സംസാരിക്കണം
+- id: OOS_FINANCIAL_ADVICE
+  severity: safety
+  rationale: 'Requests for a recommendation. Anything resembling advice on what the customer should do with their money is outside an approved product script.
+
+    '
+  examples_en:
+  - should I take this or not
+  - what would you do in my place
+  - is this good for me
+  - which is better, EMI or paying in full
+  examples_hi_latn:
+  - main loon ya na loon
+  - aap hote to kya karte
+  - mere liye theek rahega kya
+  examples_mr:
+  - मी घेऊ का नको
+  - तुम्ही असता तर काय केलं असतं
+  - माझ्यासाठी हे योग्य आहे का
+  examples_gu:
+  - મારે લેવું કે નહીં
+  - તમે હોત તો શું કરત
+  - મારા માટે આ યોગ્ય છે
+  examples_bn:
+  - আমার নেওয়া উচিত কিনা
+  - আপনি হলে কী করতেন
+  - এটা আমার জন্য ঠিক হবে
+  examples_ta:
+  - நான் எடுக்கலாமா வேணாமா
+  - நீங்க இருந்தா என்ன பண்ணுவீங்க
+  - இது எனக்கு நல்லதா
+  examples_te:
+  - నేను తీసుకోవాలా వద్దా
+  - మీరైతే ఏం చేసేవారు
+  - ఇది నాకు మంచిదేనా
+  examples_kn:
+  - ನಾನು ತೆಗೆದುಕೊಳ್ಳಲಾ ಬೇಡವಾ
+  - ನೀವಾಗಿದ್ದರೆ ಏನು ಮಾಡುತ್ತಿದ್ದಿರಿ
+  - ಇದು ನನಗೆ ಒಳ್ಳೆಯದಾ
+  examples_ml:
+  - ഞാൻ എടുക്കണോ വേണ്ടയോ
+  - നിങ്ങളായിരുന്നെങ്കിൽ എന്ത് ചെയ്യുമായിരുന്നു
+  - ഇത് എനിക്ക് നല്ലതാണോ
+- id: OOS_PII_SOLICITATION
+  severity: safety
+  rationale: 'The customer offers card credentials unprompted. The bot must decline to receive them and must never echo, confirm or log the value. This is a no-PII
+    control (constraint 3), not a routing preference.
+
+    '
+  examples_en:
+  - my card number is
+  - let me give you the OTP
+  - the CVV is
+  - my PIN is
+  examples_hi_latn:
+  - mera card number hai
+  - OTP bata deta hoon
+  - mera PIN hai
+  examples_mr:
+  - माझा कार्ड नंबर आहे
+  - ओटीपी सांगतो
+  - माझा पिन आहे
+  examples_gu:
+  - મારો કાર્ડ નંબર છે
+  - ઓટીપી કહું છું
+  - મારો પિન છે
+  examples_bn:
+  - আমার কার্ড নম্বর হল
+  - ওটিপি বলছি
+  - আমার পিন হল
+  examples_ta:
+  - என் கார்டு நம்பர்
+  - ஓடிபி சொல்றேன்
+  - என் பின் நம்பர்
+  examples_te:
+  - నా కార్డ్ నంబర్
+  - ఓటీపీ చెప్తాను
+  - నా పిన్
+  examples_kn:
+  - ನನ್ನ ಕಾರ್ಡ್ ನಂಬರ್
+  - ಓಟಿಪಿ ಹೇಳ್ತೇನೆ
+  - ನನ್ನ ಪಿನ್
+  examples_ml:
+  - എന്റെ കാർഡ് നമ്പർ
+  - ഒടിപി പറയാം
+  - എന്റെ പിൻ
+- id: OOS_SMALL_TALK
+  rationale: Chit-chat. Deflect politely rather than improvise a personality.
+  examples_en:
+  - what is your name
+  - are you married
+  - where are you from
+  - what is the weather like
+  examples_hi_latn:
+  - aapka naam kya hai
+  - aap kahan se ho
+  - shaadi hui hai kya
+  examples_mr:
+  - तुमचं नाव काय आहे
+  - तुम्ही कुठून आहात
+  examples_gu:
+  - તમારું નામ શું છે
+  - તમે ક્યાંથી છો
+  examples_bn:
+  - আপনার নাম কী
+  - আপনি কোথা থেকে
+  examples_ta:
+  - உங்க பேரு என்ன
+  - நீங்க எங்க இருந்து
+  examples_te:
+  - మీ పేరు ఏంటి
+  - మీరు ఎక్కడి నుంచి
+  examples_kn:
+  - ನಿಮ್ಮ ಹೆಸರೇನು
+  - ನೀವು ಎಲ್ಲಿಂದ
+  examples_ml:
+  - നിങ്ങളുടെ പേര് എന്താണ്
+  - നിങ്ങൾ എവിടെ നിന്ന്
+- id: OOS_NONSENSE
+  rationale: 'ASR garble, crosstalk, background television, or speech that carries no intent. Distinct from silence, which has its own handler.
+
+    '
+  examples_en:
+  - hello hello hello
+  - one two three testing
+  examples_hi_latn:
+  - hello hello sunai de raha hai
+  - arre ruko zara

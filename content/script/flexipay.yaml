@@ -1,0 +1,472 @@
+# FlexiPay (loan on card / EMI conversion) - bot-side state machine.
+#
+# SYNTHETIC. Every line is [TransOrg]-invented and must be replaced by the BLC-approved script.
+# Scope ends at transfer. Verification, the secured IVR and SR submission are advisor-side
+# (CH-FLEXIPAY steps 10a, 11a, 12) and are NOT modelled here.
+
+product: flexipay
+version: 0.1.0
+status: synthetic
+approval_ref: PENDING-BLC
+effective_from: null
+entry: N01_OPENING
+global_routes:
+  DNC: N42_CLOSE_DNC
+  HUMAN_REQUEST: N90_HUMAN_HANDOFF
+  REPEAT: __REPLAY__
+  NOT_ME: N30_WRONG_PERSON
+  BUSY: N31_BUSY
+  CALL_LATER: N20_CALLBACK
+  ABUSIVE: N44_CLOSE_ABUSIVE
+  SILENCE: N50_SILENCE_REPROMPT
+  OUT_OF_SCOPE: N99_FALLBACK_TRANSFER
+nodes:
+- id: N01_OPENING
+  kind: chain
+  plays_disclosure:
+  - D01_IDENTITY
+  - D02_RECORDED_LINE
+  line:
+    en: Hello, good day.
+    hi_latn: Namaste.
+    bn: নমস্কার.
+    gu: નમસ્તે.
+    mr: नमस्कार.
+    ta: வணக்கம்.
+    te: నమస్కారం.
+    kn: ನಮಸ್ಕಾರ.
+    ml: നമസ്കാരം.
+    hi: नमस्ते.
+  next: N02_CONFIRM_CARDHOLDER
+- id: N02_CONFIRM_CARDHOLDER
+  kind: normal
+  faq_enabled: true
+  faq_scope:
+  - common
+  intent_set:
+  - CONFIRM_IDENTITY
+  - AGREE
+  - NOT_INTERESTED
+  line:
+    en: Am I speaking with {customer_first_name}?
+    hi_latn: Kya main {customer_first_name} ji se baat kar rahi hoon?
+    bn: আমি কি {customer_first_name} এর সাথে কথা বলছি?
+    gu: શું હું {customer_first_name} સાથે વાત કરું છું?
+    mr: मी {customer_first_name} यांच्याशी बोलतोय का?
+    ta: நான் {customer_first_name} அவர்களிடம் பேசுகிறேனா?
+    te: నేను {customer_first_name} గారితో మాట్లాడుతున్నానా?
+    kn: ನಾನು {customer_first_name} ಅವರೊಂದಿಗೆ ಮಾತನಾಡುತ್ತಿದ್ದೇನೆಯೇ?
+    ml: ഞാൻ {customer_first_name} യോടാണോ സംസാരിക്കുന്നത്?
+    hi: क्या मैं {customer_first_name} जी से बात कर रही हूँ?
+  routes:
+    CONFIRM_IDENTITY: N03_PURPOSE
+    AGREE: N03_PURPOSE
+    NOT_INTERESTED: N40_CLOSE_NOT_INTERESTED
+- id: N03_PURPOSE
+  kind: chain
+  line:
+    en: I am calling about an offer available on your card. It will take about a minute.
+    hi_latn: Main aapke card par available ek offer ke baare mein call kar rahi hoon. Sirf ek minute lagega.
+    bn: আমি আপনার কার্ডে থাকা একটি অফার নিয়ে কল করছি। প্রায় এক মিনিট লাগবে।
+    gu: હું તમારા કાર્ડ પરની એક ઓફર વિશે કોલ કરું છું. લગભગ એક મિનિટ લાગશે.
+    mr: मी तुमच्या कार्डवरील एका ऑफरबद्दल कॉल करतोय. फक्त एक मिनिट लागेल.
+    ta: உங்கள் கார்டில் உள்ள ஒரு ஆஃபர் பற்றி கால் பண்ணுகிறேன். ஒரு நிமிடம் தான் ஆகும்.
+    te: మీ కార్డ్ పై ఉన్న ఒక ఆఫర్ గురించి కాల్ చేస్తున్నాను. ఒక నిమిషం పడుతుంది.
+    kn: ನಿಮ್ಮ ಕಾರ್ಡ್ ಮೇಲಿನ ಒಂದು ಆಫರ್ ಬಗ್ಗೆ ಕಾಲ್ ಮಾಡುತ್ತಿದ್ದೇನೆ. ಸುಮಾರು ಒಂದು ನಿಮಿಷ ಆಗುತ್ತದೆ.
+    ml: നിങ്ങളുടെ കാർഡിലുള്ള ഒരു ഓഫറിനെക്കുറിച്ച് വിളിക്കുന്നു. ഏകദേശം ഒരു മിനിറ്റ് എടുക്കും.
+    hi: मैं आपके कार्ड पर उपलब्ध एक ऑफर के बारे में कॉल कर रही हूँ. सिर्फ़ एक मिनट लगेगा.
+  next: N04_PITCH
+- id: N04_PITCH
+  kind: normal
+  requires_disclosure:
+  - D01_IDENTITY
+  - D02_RECORDED_LINE
+  faq_enabled: true
+  faq_scope:
+  - common
+  - flexipay
+  intent_set:
+  - INTERESTED
+  - AGREE
+  - NOT_INTERESTED
+  - NEED_TIME
+  - IS_THIS_GENUINE
+  - HOW_DID_YOU_GET_NUMBER
+  line:
+    en: You are eligible to convert purchases above {min_txn_amt} rupees into easy monthly instalments. On your card, up to {eligible_amount} rupees can be converted over {tenure_options}.
+    hi_latn: Aap {min_txn_amt} rupees se upar ke purchases ko aasaan monthly instalments mein convert kar sakte hain. Aapke card par {eligible_amount} rupees tak, {tenure_options} mein convert ho sakta
+      hai.
+    bn: আপনি {min_txn_amt} টাকার উপরের কেনাকাটা সহজ মাসিক কিস্তিতে পরিবর্তন করতে পারেন। আপনার কার্ডে {eligible_amount} টাকা পর্যন্ত, {tenure_options} এ পরিবর্তন করা যাবে।
+    gu: તમે {min_txn_amt} રૂપિયાથી વધુની ખરીદીને સરળ માસિક હપ્તામાં ફેરવી શકો છો. તમારા કાર્ડ પર {eligible_amount} રૂપિયા સુધી, {tenure_options} માં ફેરવી શકાય છે.
+    mr: तुम्ही {min_txn_amt} रुपयांवरील खरेदी सोप्या मासिक हप्त्यांमध्ये बदलू शकता. तुमच्या कार्डवर {eligible_amount} रुपयांपर्यंत, {tenure_options} मध्ये बदलता येईल.
+    ta: '{min_txn_amt} ரூபாய்க்கு மேல் உள்ள பர்ச்சேஸ்களை எளிய மாத தவணைகளாக மாற்றலாம். உங்கள் கார்டில் {eligible_amount} ரூபாய் வரை, {tenure_options} ல் மாற்ற முடியும்.'
+    te: '{min_txn_amt} రూపాయల పైన ఉన్న పర్చేజ్‌లను సులభమైన నెలవారీ వాయిదాలుగా మార్చుకోవచ్చు. మీ కార్డ్ పై {eligible_amount} రూపాయల వరకు, {tenure_options} లో మార్చవచ్చు.'
+    kn: '{min_txn_amt} ರೂಪಾಯಿಗಿಂತ ಹೆಚ್ಚಿನ ಖರೀದಿಗಳನ್ನು ಸುಲಭ ಮಾಸಿಕ ಕಂತುಗಳಾಗಿ ಬದಲಾಯಿಸಬಹುದು. ನಿಮ್ಮ ಕಾರ್ಡ್ ಮೇಲೆ {eligible_amount} ರೂಪಾಯಿವರೆಗೆ, {tenure_options} ನಲ್ಲಿ ಬದಲಾಯಿಸಬಹುದು.'
+    ml: '{min_txn_amt} രൂപയ്ക്ക് മുകളിലുള്ള പർച്ചേസുകൾ എളുപ്പമുള്ള മാസ തവണകളാക്കി മാറ്റാം. നിങ്ങളുടെ കാർഡിൽ {eligible_amount} രൂപ വരെ, {tenure_options} ൽ മാറ്റാൻ കഴിയും.'
+    hi: आप {min_txn_amt} रुपये से ऊपर की ख़रीदारी को आसान मासिक क़िस्तों में बदल सकते हैं. आपके कार्ड पर {eligible_amount} रुपये तक, {tenure_options} में बदला जा सकता है.
+  never_say:
+  - guaranteed approval
+  - no interest
+  - zero cost
+  - free loan
+  - pre-approved loan
+  routes:
+    INTERESTED: N05_TERMS
+    AGREE: N05_TERMS
+    NOT_INTERESTED: N40_CLOSE_NOT_INTERESTED
+    NEED_TIME: N10_OBJECTION_NEED_TIME
+    IS_THIS_GENUINE: N11_OBJECTION_TRUST
+    HOW_DID_YOU_GET_NUMBER: N12_HOW_GOT_NUMBER
+- id: N05_TERMS
+  kind: chain
+  plays_disclosure:
+  - D03_FLEXIPAY_TERMS
+  line:
+    en: At a tenure of {tenure_months} months, your indicative instalment would be about {indicative_emi} rupees per month.
+    hi_latn: '{tenure_months} mahine ki tenure par, aapki indicative instalment lagbhag {indicative_emi} rupees monthly hogi.'
+    bn: '{tenure_months} মাসের মেয়াদে, আপনার আনুমানিক কিস্তি মাসে প্রায় {indicative_emi} টাকা হবে।'
+    gu: '{tenure_months} મહિનાની મુદત પર, તમારો અંદાજિત હપ્તો દર મહિને લગભગ {indicative_emi} રૂપિયા થશે.'
+    mr: '{tenure_months} महिन्यांच्या मुदतीवर, तुमचा अंदाजे हप्ता दरमहा सुमारे {indicative_emi} रुपये असेल.'
+    ta: '{tenure_months} மாத தவணையில், உங்கள் மாதாந்திர தவணை தோராயமாக {indicative_emi} ரூபாய் இருக்கும்.'
+    te: '{tenure_months} నెలల వ్యవధిలో, మీ అంచనా వాయిదా నెలకు సుమారు {indicative_emi} రూపాయలు ఉంటుంది.'
+    kn: '{tenure_months} ತಿಂಗಳ ಅವಧಿಯಲ್ಲಿ, ನಿಮ್ಮ ಅಂದಾಜು ಕಂತು ತಿಂಗಳಿಗೆ ಸುಮಾರು {indicative_emi} ರೂಪಾಯಿ ಆಗುತ್ತದೆ.'
+    ml: '{tenure_months} മാസത്തെ കാലാവധിയിൽ, നിങ്ങളുടെ ഏകദേശ തവണ മാസം {indicative_emi} രൂപ ആയിരിക്കും.'
+    hi: '{tenure_months} महीने की अवधि पर, आपकी अनुमानित क़िस्त हर महीने लगभग {indicative_emi} रुपये होगी.'
+  next: N06_AGREEMENT_PROBE
+- id: N06_AGREEMENT_PROBE
+  kind: normal
+  requires_disclosure:
+  - D03_FLEXIPAY_TERMS
+  faq_enabled: true
+  faq_scope:
+  - common
+  - flexipay
+  intent_set:
+  - AGREE
+  - NOT_INTERESTED
+  - NEED_TIME
+  line:
+    en: Shall I connect you to our advisor to take this forward?
+    hi_latn: Kya main aapko hamare advisor se connect karoon, aage badhane ke liye?
+    bn: এগিয়ে যাওয়ার জন্য আমি কি আপনাকে আমাদের অ্যাডভাইজারের সাথে যুক্ত করব?
+    gu: આગળ વધવા માટે હું તમને અમારા એડવાઇઝર સાથે જોડું?
+    mr: पुढे जाण्यासाठी मी तुम्हाला आमच्या अ‍ॅडव्हायझरशी जोडू का?
+    ta: இதை தொடர எங்கள் அட்வைசரிடம் உங்களை இணைக்கட்டுமா?
+    te: దీన్ని ముందుకు తీసుకెళ్ళడానికి మిమ్మల్ని మా అడ్వైజర్ కు కనెక్ట్ చేయనా?
+    kn: ಇದನ್ನು ಮುಂದುವರಿಸಲು ನಿಮ್ಮನ್ನು ನಮ್ಮ ಅಡ್ವೈಸರ್ ಗೆ ಕನೆಕ್ಟ್ ಮಾಡಲೇ?
+    ml: ഇത് മുന്നോട്ട് കൊണ്ടുപോകാൻ ഞാൻ നിങ്ങളെ ഞങ്ങളുടെ അഡ്വൈസറുമായി ബന്ധിപ്പിക്കട്ടെ?
+    hi: आगे बढ़ने के लिए क्या मैं आपको हमारे एडवाइज़र से जोड़ूँ?
+  never_say:
+  - your loan is approved
+  - the amount will be credited
+  routes:
+    AGREE: N07_PRE_TRANSFER
+    NOT_INTERESTED: N40_CLOSE_NOT_INTERESTED
+    NEED_TIME: N10_OBJECTION_NEED_TIME
+- id: N07_PRE_TRANSFER
+  kind: chain
+  requires_disclosure:
+  - D03_FLEXIPAY_TERMS
+  plays_disclosure:
+  - D06_ADVISOR_HANDOFF
+  line:
+    en: Thank you. Please stay on the line.
+    hi_latn: Dhanyavaad. Kripya line par bane rahiye.
+    bn: ধন্যবাদ। অনুগ্রহ করে লাইনে থাকুন।
+    gu: આભાર. કૃપા કરીને લાઇન પર રહો.
+    mr: धन्यवाद. कृपया लाइनवर थांबा.
+    ta: நன்றி. தயவுசெய்து லைனில் இருங்கள்.
+    te: ధన్యవాదాలు. దయచేసి లైన్ లో ఉండండి.
+    kn: ಧನ್ಯವಾದಗಳು. ದಯವಿಟ್ಟು ಲೈನ್ ನಲ್ಲಿ ಇರಿ.
+    ml: നന്ദി. ദയവായി ലൈനിൽ തുടരുക.
+    hi: धन्यवाद. कृपया लाइन पर बने रहिए.
+  next: N08_TRANSFER
+- id: N08_TRANSFER
+  kind: transfer
+  disposition: AGREED_TRANSFERRED
+  line:
+    en: ''
+    hi_latn: ''
+    mr: ''
+    gu: ''
+    bn: ''
+    ta: ''
+    te: ''
+    kn: ''
+    ml: ''
+    hi: ''
+- id: N09_TRANSFER_ESCALATED
+  kind: transfer
+  disposition: ESCALATED_TRANSFERRED
+  line:
+    en: ''
+    hi_latn: ''
+    mr: ''
+    gu: ''
+    bn: ''
+    ta: ''
+    te: ''
+    kn: ''
+    ml: ''
+    hi: ''
+- id: N10_OBJECTION_NEED_TIME
+  kind: normal
+  faq_enabled: true
+  faq_scope:
+  - common
+  - flexipay
+  intent_set:
+  - AGREE
+  - NOT_INTERESTED
+  line:
+    en: Of course. The offer is open for {offer_valid_days} days. Would you prefer that our advisor explains the details now, or should we call you back?
+    hi_latn: Bilkul. Yeh offer {offer_valid_days} din tak khula hai. Kya advisor abhi details samjhaayein, ya hum aapko baad mein call karein?
+    bn: অবশ্যই। অফারটি {offer_valid_days} দিন খোলা আছে। আমাদের অ্যাডভাইজার এখন বিস্তারিত বলবেন, নাকি আমরা পরে কল করব?
+    gu: ચોક્કસ. આ ઓફર {offer_valid_days} દિવસ ખુલ્લી છે. અમારા એડવાઇઝર અત્યારે વિગતો સમજાવે, કે અમે પાછા કોલ કરીએ?
+    mr: नक्कीच. ही ऑफर {offer_valid_days} दिवस उपलब्ध आहे. आमच्या अ‍ॅडव्हायझरने आत्ता तपशील सांगावा, की आम्ही परत कॉल करू?
+    ta: கண்டிப்பாக. இந்த ஆஃபர் {offer_valid_days} நாட்களுக்கு உள்ளது. எங்கள் அட்வைசர் இப்போது விவரங்களை சொல்லட்டுமா, அல்லது நாங்கள் திரும்ப கால் பண்ணட்டுமா?
+    te: తప్పకుండా. ఈ ఆఫర్ {offer_valid_days} రోజులు ఉంది. మా అడ్వైజర్ ఇప్పుడు వివరాలు చెప్పాలా, లేక మేము తిరిగి కాల్ చేయాలా?
+    kn: ಖಂಡಿತ. ಈ ಆಫರ್ {offer_valid_days} ದಿನ ಇದೆ. ನಮ್ಮ ಅಡ್ವೈಸರ್ ಈಗ ವಿವರ ಹೇಳಲೇ, ಅಥವಾ ನಾವು ಮತ್ತೆ ಕಾಲ್ ಮಾಡಲೇ?
+    ml: തീർച്ചയായും. ഈ ഓഫർ {offer_valid_days} ദിവസം ലഭ്യമാണ്. ഞങ്ങളുടെ അഡ്വൈസർ ഇപ്പോൾ വിശദാംശങ്ങൾ പറയണോ, അതോ ഞങ്ങൾ തിരികെ വിളിക്കണോ?
+    hi: ज़रूर. यह ऑफर {offer_valid_days} दिन तक उपलब्ध है. क्या हमारे एडवाइज़र अभी डिटेल बताएँ, या हम आपको दोबारा कॉल करें?
+  routes:
+    AGREE: N05_TERMS
+    NOT_INTERESTED: N40_CLOSE_NOT_INTERESTED
+- id: N11_OBJECTION_TRUST
+  kind: normal
+  faq_enabled: true
+  faq_scope:
+  - common
+  intent_set:
+  - AGREE
+  - NOT_INTERESTED
+  line:
+    en: That is a fair question. I am not asking for any card number, PIN or OTP, and I never will. You can also verify this offer on your {brand_name} app, or by calling the number printed on the back
+      of your card. Shall I continue?
+    hi_latn: Yeh sahi sawaal hai. Main aapse koi card number, PIN ya OTP nahi maang rahi hoon, aur na hi kabhi maangungi. Aap yeh offer apne {brand_name} app par ya card ke peeche likhe number par bhi verify
+      kar sakte hain. Kya main aage badhoon?
+    bn: এটি একটি যুক্তিসঙ্গত প্রশ্ন। আমি আপনার কার্ড নম্বর, পিন বা ওটিপি চাইছি না, এবং কখনও চাইব না। আপনি এই অফারটি আপনার {brand_name} অ্যাপে, অথবা কার্ডের পিছনে ছাপা নম্বরে কল করে যাচাই করতে পারেন। আমি
+      কি এগিয়ে যাব?
+    gu: આ યોગ્ય પ્રશ્ન છે. હું તમારો કાર્ડ નંબર, પિન કે ઓટીપી માંગતો નથી, અને ક્યારેય માંગીશ નહીં. તમે આ ઓફર તમારી {brand_name} એપ પર, અથવા કાર્ડની પાછળ છપાયેલા નંબર પર કોલ કરીને ચકાસી શકો છો. હું આગળ વધું?
+    mr: हा योग्य प्रश्न आहे. मी तुमचा कार्ड नंबर, पिन किंवा ओटीपी मागत नाही, आणि कधीही मागणार नाही. तुम्ही ही ऑफर तुमच्या {brand_name} अ‍ॅपवर, किंवा कार्डच्या मागे छापलेल्या नंबरवर कॉल करून तपासू शकता.
+      मी पुढे बोलू का?
+    ta: இது நியாயமான கேள்வி. நான் உங்கள் கார்டு நம்பர், பின் அல்லது ஓடிபி கேட்கவில்லை, எப்போதும் கேட்க மாட்டேன். இந்த ஆஃபரை உங்கள் {brand_name} ஆப்பில், அல்லது கார்டின் பின்புறம் உள்ள நம்பருக்கு கால் பண்ணி
+      சரிபார்க்கலாம். நான் தொடரட்டுமா?
+    te: ఇది సరైన ప్రశ్న. నేను మీ కార్డ్ నంబర్, పిన్ లేదా ఓటీపీ అడగడం లేదు, ఎప్పుడూ అడగను. ఈ ఆఫర్ ను మీ {brand_name} యాప్ లో, లేదా కార్డ్ వెనుక ఉన్న నంబర్ కు కాల్ చేసి చెక్ చేసుకోవచ్చు. నేను కొనసాగించనా?
+    kn: ಇದು ಸರಿಯಾದ ಪ್ರಶ್ನೆ. ನಾನು ನಿಮ್ಮ ಕಾರ್ಡ್ ನಂಬರ್, ಪಿನ್ ಅಥವಾ ಓಟಿಪಿ ಕೇಳುತ್ತಿಲ್ಲ, ಎಂದಿಗೂ ಕೇಳುವುದಿಲ್ಲ. ಈ ಆಫರ್ ಅನ್ನು ನಿಮ್ಮ {brand_name} ಆ್ಯಪ್ ನಲ್ಲಿ, ಅಥವಾ ಕಾರ್ಡ್ ಹಿಂದೆ ಇರುವ ನಂಬರ್ ಗೆ ಕಾಲ್ ಮಾಡಿ ಪರಿಶೀಲಿಸಬಹುದು.
+      ನಾನು ಮುಂದುವರಿಸಲೇ?
+    ml: ഇത് ന്യായമായ ചോദ്യമാണ്. ഞാൻ നിങ്ങളുടെ കാർഡ് നമ്പർ, പിൻ അല്ലെങ്കിൽ ഒടിപി ചോദിക്കുന്നില്ല, ഒരിക്കലും ചോദിക്കില്ല. ഈ ഓഫർ നിങ്ങളുടെ {brand_name} ആപ്പിൽ, അല്ലെങ്കിൽ കാർഡിന്റെ പിന്നിൽ അച്ചടിച്ച നമ്പറിൽ
+      വിളിച്ച് പരിശോധിക്കാം. ഞാൻ തുടരട്ടെ?
+    hi: यह सही सवाल है. मैं आपसे कोई कार्ड नंबर, पिन या ओटीपी नहीं माँग रही हूँ, और न कभी माँगूँगी. आप यह ऑफर अपने {brand_name} ऐप पर, या कार्ड के पीछे लिखे नंबर पर कॉल करके भी जाँच सकते हैं. क्या मैं आगे
+      बढ़ूँ?
+  routes:
+    AGREE: N04_PITCH
+    NOT_INTERESTED: N40_CLOSE_NOT_INTERESTED
+- id: N12_HOW_GOT_NUMBER
+  kind: normal
+  faq_enabled: true
+  faq_scope:
+  - common
+  intent_set:
+  - AGREE
+  - NOT_INTERESTED
+  line:
+    en: I am calling on the number registered with your {brand_name} card account. If you would prefer not to receive such calls, I can note that right away.
+    hi_latn: Main aapke {brand_name} card account par registered number par call kar rahi hoon. Agar aap aise calls nahi chahte, main abhi note kar sakti hoon.
+    bn: আমি আপনার {brand_name} কার্ড অ্যাকাউন্টে নিবন্ধিত নম্বরে কল করছি। আপনি এ ধরনের কল না চাইলে, আমি এখনই তা নথিভুক্ত করতে পারি।
+    gu: હું તમારા {brand_name} કાર્ડ એકાઉન્ટ પર રજિસ્ટર્ડ નંબર પર કોલ કરું છું. તમને આવા કોલ ન જોઈતા હોય, તો હું તરત નોંધી શકું છું.
+    mr: मी तुमच्या {brand_name} कार्ड खात्यावर नोंदणीकृत नंबरवर कॉल करतोय. तुम्हाला असे कॉल नको असतील, तर मी लगेच नोंद करू शकतो.
+    ta: உங்கள் {brand_name} கார்டு அக்கவுண்டில் பதிவு செய்யப்பட்ட நம்பருக்கு கால் பண்ணுகிறேன். இதுபோன்ற கால்கள் வேண்டாம் என்றால், நான் உடனே பதிவு செய்கிறேன்.
+    te: మీ {brand_name} కార్డ్ ఖాతాలో రిజిస్టర్ అయిన నంబర్ కు కాల్ చేస్తున్నాను. మీకు ఇలాంటి కాల్స్ వద్దు అనుకుంటే, నేను వెంటనే నోట్ చేస్తాను.
+    kn: ನಿಮ್ಮ {brand_name} ಕಾರ್ಡ್ ಖಾತೆಯಲ್ಲಿ ನೋಂದಾಯಿತ ನಂಬರ್ ಗೆ ಕಾಲ್ ಮಾಡುತ್ತಿದ್ದೇನೆ. ನಿಮಗೆ ಇಂತಹ ಕಾಲ್ ಬೇಡ ಎಂದಾದರೆ, ನಾನು ಈಗಲೇ ನೋಂದಾಯಿಸುತ್ತೇನೆ.
+    ml: നിങ്ങളുടെ {brand_name} കാർഡ് അക്കൗണ്ടിൽ രജിസ്റ്റർ ചെയ്ത നമ്പറിലാണ് വിളിക്കുന്നത്. ഇത്തരം കോളുകൾ വേണ്ടെങ്കിൽ, ഞാൻ ഉടൻ രേഖപ്പെടുത്താം.
+    hi: मैं आपके {brand_name} कार्ड अकाउंट पर रजिस्टर्ड नंबर पर कॉल कर रही हूँ. अगर आप ऐसे कॉल नहीं चाहते, तो मैं अभी नोट कर सकती हूँ.
+  routes:
+    AGREE: N04_PITCH
+    NOT_INTERESTED: N40_CLOSE_NOT_INTERESTED
+- id: N20_CALLBACK
+  kind: chain
+  line:
+    en: Certainly. We will call you back at a more convenient time.
+    hi_latn: Zaroor. Hum aapko kisi convenient time par dobara call karenge.
+    bn: অবশ্যই। আমরা আপনাকে সুবিধাজনক সময়ে আবার কল করব।
+    gu: ચોક્કસ. અમે તમને અનુકૂળ સમયે પાછા કોલ કરીશું.
+    mr: नक्कीच. आम्ही तुम्हाला सोयीच्या वेळी परत कॉल करू.
+    ta: கண்டிப்பாக. வசதியான நேரத்தில் நாங்கள் திரும்ப கால் பண்ணுகிறோம்.
+    te: తప్పకుండా. మేము మీకు అనుకూలమైన సమయంలో తిరిగి కాల్ చేస్తాము.
+    kn: ಖಂಡಿತ. ನಾವು ನಿಮಗೆ ಅನುಕೂಲಕರ ಸಮಯದಲ್ಲಿ ಮತ್ತೆ ಕಾಲ್ ಮಾಡುತ್ತೇವೆ.
+    ml: തീർച്ചയായും. സൗകര്യപ്രദമായ സമയത്ത് ഞങ്ങൾ തിരികെ വിളിക്കാം.
+    hi: ज़रूर. हम आपको किसी सुविधाजनक समय पर दोबारा कॉल करेंगे.
+  next: N41_CLOSE_CALLBACK
+- id: N30_WRONG_PERSON
+  kind: chain
+  line:
+    en: I apologise for the inconvenience. I will update our records.
+    hi_latn: Asuvidha ke liye khed hai. Main hamare records update kar dungi.
+    bn: অসুবিধার জন্য দুঃখিত। আমি আমাদের রেকর্ড আপডেট করে দেব।
+    gu: અસુવિધા બદલ માફ કરશો. હું અમારા રેકોર્ડમાં અપડેટ કરીશ.
+    mr: गैरसोयीबद्दल क्षमस्व. मी आमच्या रेकॉर्डमध्ये अपडेट करतो.
+    ta: சிரமத்திற்கு வருந்துகிறேன். எங்கள் ரெக்கார்டை அப்டேட் பண்ணுகிறேன்.
+    te: అసౌకర్యానికి క్షమించండి. మా రికార్డులను అప్‌డేట్ చేస్తాను.
+    kn: ಅನಾನುಕೂಲತೆಗೆ ಕ್ಷಮಿಸಿ. ನಾನು ನಮ್ಮ ದಾಖಲೆಗಳನ್ನು ಅಪ್‌ಡೇಟ್ ಮಾಡುತ್ತೇನೆ.
+    ml: അസൗകര്യത്തിന് ക്ഷമിക്കണം. ഞാൻ ഞങ്ങളുടെ രേഖകൾ അപ്ഡേറ്റ് ചെയ്യാം.
+    hi: असुविधा के लिए खेद है. मैं हमारे रिकॉर्ड अपडेट कर दूँगी.
+  next: N43_CLOSE_WRONG_PERSON
+- id: N31_BUSY
+  kind: normal
+  intent_set:
+  - AGREE
+  - NOT_INTERESTED
+  line:
+    en: I understand. May we call you back later today?
+    hi_latn: Main samajh sakti hoon. Kya hum aaj baad mein call karein?
+    bn: আমি বুঝতে পারছি। আমরা কি আজ পরে আপনাকে কল করব?
+    gu: હું સમજી શકું છું. અમે તમને આજે પછી કોલ કરીએ?
+    mr: मी समजू शकतो. आम्ही तुम्हाला आज नंतर कॉल करू का?
+    ta: புரிகிறது. இன்று பிறகு கால் பண்ணலாமா?
+    te: అర్థమైంది. ఈరోజు తర్వాత కాల్ చేయవచ్చా?
+    kn: ಅರ್ಥವಾಯಿತು. ಇಂದು ನಂತರ ಕಾಲ್ ಮಾಡಬಹುದೇ?
+    ml: മനസ്സിലായി. ഇന്ന് പിന്നീട് വിളിക്കട്ടെ?
+    hi: मैं समझ सकती हूँ. क्या हम आज बाद में कॉल करें?
+  routes:
+    AGREE: N20_CALLBACK
+    NOT_INTERESTED: N40_CLOSE_NOT_INTERESTED
+- id: N50_SILENCE_REPROMPT
+  kind: normal
+  max_visits: 2
+  intent_set:
+  - AGREE
+  - NOT_INTERESTED
+  line:
+    en: I am sorry, I could not hear you. Are you still there?
+    hi_latn: Maaf kijiye, main aapko sun nahi paayi. Kya aap line par hain?
+    bn: দুঃখিত, আমি শুনতে পাইনি। আপনি কি লাইনে আছেন?
+    gu: માફ કરશો, મને સંભળાયું નહીં. તમે લાઇન પર છો?
+    mr: माफ करा, मला ऐकू आले नाही. तुम्ही लाइनवर आहात का?
+    ta: மன்னிக்கவும், கேட்கவில்லை. நீங்கள் லைனில் இருக்கிறீர்களா?
+    te: క్షమించండి, వినిపించలేదు. మీరు లైన్ లో ఉన్నారా?
+    kn: ಕ್ಷಮಿಸಿ, ಕೇಳಿಸಲಿಲ್ಲ. ನೀವು ಲೈನ್ ನಲ್ಲಿ ಇದ್ದೀರಾ?
+    ml: ക്ഷമിക്കണം, കേൾക്കാൻ കഴിഞ്ഞില്ല. നിങ്ങൾ ലൈനിൽ ഉണ്ടോ?
+    hi: माफ़ कीजिए, मुझे सुनाई नहीं दिया. क्या आप लाइन पर हैं?
+  routes:
+    AGREE: __RESUME__
+    NOT_INTERESTED: N40_CLOSE_NOT_INTERESTED
+  on_max_visits: N45_CLOSE_SILENCE
+- id: N90_HUMAN_HANDOFF
+  kind: chain
+  plays_disclosure:
+  - D06_ADVISOR_HANDOFF
+  line:
+    en: Certainly.
+    hi_latn: Zaroor.
+    bn: অবশ্যই।
+    gu: ચોક્કસ.
+    mr: नक्कीच.
+    ta: கண்டிப்பாக.
+    te: తప్పకుండా.
+    kn: ಖಂಡಿತ.
+    ml: തീർച്ചയായും.
+    hi: ज़रूर.
+  next: N09_TRANSFER_ESCALATED
+- id: N99_FALLBACK_TRANSFER
+  kind: chain
+  plays_disclosure:
+  - D06_ADVISOR_HANDOFF
+  line:
+    en: That is a good question, and I would rather our advisor answer it properly for you.
+    hi_latn: Yeh accha sawaal hai, aur behtar hoga ki hamare advisor aapko iska sahi jawaab dein.
+    bn: এটি একটি ভালো প্রশ্ন, এবং এর সঠিক উত্তর আমাদের অ্যাডভাইজার দিলেই ভালো হবে।
+    gu: આ સારો પ્રશ્ન છે, અને એનો યોગ્ય જવાબ અમારા એડવાઇઝર આપે એ વધુ સારું રહેશે.
+    mr: हा चांगला प्रश्न आहे, आणि याचे योग्य उत्तर आमच्या अ‍ॅडव्हायझरनेच द्यावे असे मला वाटते.
+    ta: இது நல்ல கேள்வி, இதற்கு எங்கள் அட்வைசர் சரியான பதில் சொல்வது நல்லது.
+    te: ఇది మంచి ప్రశ్న, దీనికి మా అడ్వైజర్ సరైన సమాధానం ఇవ్వడం మంచిది.
+    kn: ಇದು ಒಳ್ಳೆಯ ಪ್ರಶ್ನೆ, ಇದಕ್ಕೆ ನಮ್ಮ ಅಡ್ವೈಸರ್ ಸರಿಯಾದ ಉತ್ತರ ಕೊಡುವುದು ಒಳ್ಳೆಯದು.
+    ml: ഇത് നല്ല ചോദ്യമാണ്, ഇതിന് ഞങ്ങളുടെ അഡ്വൈസർ ശരിയായ ഉത്തരം നൽകുന്നതാകും നല്ലത്.
+    hi: यह अच्छा सवाल है, और बेहतर होगा कि हमारे एडवाइज़र आपको इसका सही जवाब दें.
+  next: N09_TRANSFER_ESCALATED
+- id: N40_CLOSE_NOT_INTERESTED
+  kind: terminal
+  disposition: NOT_INTERESTED
+  line:
+    en: That is perfectly alright. Thank you for your time, and have a good day.
+    hi_latn: Koi baat nahi. Aapke time ke liye dhanyavaad, aapka din accha ho.
+    bn: কোনো সমস্যা নেই। আপনার সময়ের জন্য ধন্যবাদ, আপনার দিনটি ভালো কাটুক।
+    gu: કોઈ વાંધો નથી. તમારા સમય બદલ આભાર, તમારો દિવસ સારો રહે.
+    mr: काही हरकत नाही. तुमच्या वेळेबद्दल धन्यवाद, तुमचा दिवस चांगला जावो.
+    ta: பரவாயில்லை. உங்கள் நேரத்திற்கு நன்றி, நல்ல நாளாக இருக்கட்டும்.
+    te: ఫర్వాలేదు. మీ సమయానికి ధన్యవాదాలు, మీ రోజు బాగుండాలి.
+    kn: ಪರವಾಗಿಲ್ಲ. ನಿಮ್ಮ ಸಮಯಕ್ಕೆ ಧನ್ಯವಾದಗಳು, ನಿಮ್ಮ ದಿನ ಚೆನ್ನಾಗಿರಲಿ.
+    ml: കുഴപ്പമില്ല. നിങ്ങളുടെ സമയത്തിന് നന്ദി, നല്ല ദിവസം ആശംസിക്കുന്നു.
+    hi: कोई बात नहीं. आपके समय के लिए धन्यवाद, आपका दिन अच्छा हो.
+- id: N41_CLOSE_CALLBACK
+  kind: terminal
+  disposition: CALLBACK_REQUESTED
+  line:
+    en: Thank you. Have a good day.
+    hi_latn: Dhanyavaad. Aapka din accha ho.
+    bn: ধন্যবাদ। আপনার দিনটি ভালো কাটুক।
+    gu: આભાર. તમારો દિવસ સારો રહે.
+    mr: धन्यवाद. तुमचा दिवस चांगला जावो.
+    ta: நன்றி. நல்ல நாளாக இருக்கட்டும்.
+    te: ధన్యవాదాలు. మీ రోజు బాగుండాలి.
+    kn: ಧನ್ಯವಾದಗಳು. ನಿಮ್ಮ ದಿನ ಚೆನ್ನಾಗಿರಲಿ.
+    ml: നന്ദി. നല്ല ദിവസം ആശംസിക്കുന്നു.
+    hi: धन्यवाद. आपका दिन अच्छा हो.
+- id: N42_CLOSE_DNC
+  kind: terminal
+  disposition: DNC_REQUESTED
+  escalate: true
+  line:
+    en: I have noted your request. You will not receive further promotional calls from us. Thank you.
+    hi_latn: Maine aapka request note kar liya hai. Aapko aage promotional calls nahi aayengi. Dhanyavaad.
+    bn: আমি আপনার অনুরোধ নথিভুক্ত করেছি। আপনি আর আমাদের কাছ থেকে প্রমোশনাল কল পাবেন না। ধন্যবাদ।
+    gu: મેં તમારી વિનંતી નોંધી લીધી છે. તમને હવે પછી અમારા તરફથી પ્રમોશનલ કોલ નહીં આવે. આભાર.
+    mr: मी तुमची विनंती नोंदवली आहे. तुम्हाला यापुढे आमच्याकडून प्रमोशनल कॉल येणार नाहीत. धन्यवाद.
+    ta: உங்கள் கோரிக்கையை பதிவு செய்துவிட்டேன். இனி எங்களிடம் இருந்து ப்ரோமோஷனல் கால்கள் வராது. நன்றி.
+    te: మీ అభ్యర్థనను నోట్ చేశాను. ఇకపై మా నుంచి ప్రమోషనల్ కాల్స్ రావు. ధన్యవాదాలు.
+    kn: ನಿಮ್ಮ ವಿನಂತಿಯನ್ನು ದಾಖಲಿಸಿದ್ದೇನೆ. ಇನ್ನು ಮುಂದೆ ನಮ್ಮಿಂದ ಪ್ರಚಾರದ ಕಾಲ್ ಬರುವುದಿಲ್ಲ. ಧನ್ಯವಾದಗಳು.
+    ml: നിങ്ങളുടെ അഭ്യർത്ഥന രേഖപ്പെടുത്തി. ഇനി ഞങ്ങളിൽ നിന്ന് പ്രൊമോഷണൽ കോളുകൾ വരില്ല. നന്ദി.
+    hi: मैंने आपका अनुरोध नोट कर लिया है. आपको आगे हमसे प्रमोशनल कॉल नहीं आएँगे. धन्यवाद.
+- id: N43_CLOSE_WRONG_PERSON
+  kind: terminal
+  disposition: WRONG_PERSON
+  line:
+    en: Thank you, and sorry for the disturbance.
+    hi_latn: Dhanyavaad, aur pareshaani ke liye khed hai.
+    bn: ধন্যবাদ, এবং বিরক্ত করার জন্য দুঃখিত।
+    gu: આભાર, અને ખલેલ બદલ માફ કરશો.
+    mr: धन्यवाद, आणि त्रासाबद्दल क्षमस्व.
+    ta: நன்றி, தொந்தரவுக்கு மன்னிக்கவும்.
+    te: ధన్యవాదాలు, ఇబ్బందికి క్షమించండి.
+    kn: ಧನ್ಯವಾದಗಳು, ತೊಂದರೆಗೆ ಕ್ಷಮಿಸಿ.
+    ml: നന്ദി, ശല്യത്തിന് ക്ഷമിക്കണം.
+    hi: धन्यवाद, और परेशानी के लिए खेद है.
+- id: N44_CLOSE_ABUSIVE
+  kind: terminal
+  disposition: ABUSIVE
+  escalate: true
+  line:
+    en: I am ending the call now. Thank you.
+    hi_latn: Main call ab end kar rahi hoon. Dhanyavaad.
+    bn: আমি এখন কলটি শেষ করছি। ধন্যবাদ।
+    gu: હું હવે કોલ બંધ કરું છું. આભાર.
+    mr: मी आता कॉल बंद करतोय. धन्यवाद.
+    ta: நான் இப்போது கால் முடிக்கிறேன். நன்றி.
+    te: నేను ఇప్పుడు కాల్ ముగిస్తున్నాను. ధన్యవాదాలు.
+    kn: ನಾನು ಈಗ ಕಾಲ್ ಮುಗಿಸುತ್ತಿದ್ದೇನೆ. ಧನ್ಯವಾದಗಳು.
+    ml: ഞാൻ ഇപ്പോൾ കോൾ അവസാനിപ്പിക്കുന്നു. നന്ദി.
+    hi: मैं अब कॉल समाप्त कर रही हूँ. धन्यवाद.
+- id: N45_CLOSE_SILENCE
+  kind: terminal
+  disposition: NO_RESPONSE
+  line:
+    en: I am unable to hear you. We will try again another time. Thank you.
+    hi_latn: Main aapko sun nahi paa rahi. Hum phir kabhi try karenge. Dhanyavaad.
+    bn: আমি আপনার কথা শুনতে পাচ্ছি না। আমরা অন্য সময় আবার চেষ্টা করব। ধন্যবাদ।
+    gu: મને તમારો અવાજ સંભળાતો નથી. અમે ફરી કોઈ વાર પ્રયત્ન કરીશું. આભાર.
+    mr: मला तुमचा आवाज ऐकू येत नाही. आम्ही पुन्हा कधीतरी प्रयत्न करू. धन्यवाद.
+    ta: உங்கள் குரல் கேட்கவில்லை. வேறு நேரத்தில் முயற்சி செய்கிறோம். நன்றி.
+    te: మీ మాట వినిపించడం లేదు. మరో సమయంలో ప్రయత్నిస్తాము. ధన్యవాదాలు.
+    kn: ನಿಮ್ಮ ಧ್ವನಿ ಕೇಳಿಸುತ್ತಿಲ್ಲ. ನಾವು ಇನ್ನೊಮ್ಮೆ ಪ್ರಯತ್ನಿಸುತ್ತೇವೆ. ಧನ್ಯವಾದಗಳು.
+    ml: നിങ്ങളുടെ ശബ്ദം കേൾക്കാൻ കഴിയുന്നില്ല. മറ്റൊരു സമയത്ത് ശ്രമിക്കാം. നന്ദി.
+    hi: मैं आपको सुन नहीं पा रही हूँ. हम किसी और समय कोशिश करेंगे. धन्यवाद.

@@ -1,0 +1,15 @@
+# Serving dependencies. Deliberately short.
+#
+# NOT here: torch, transformers, parler-tts, kokoro-onnx. Those are BUILD-TIME only - ADR-005
+# renders audio offline and the serving box plays files. Keeping them out of the runtime is what
+# lets the image be ~1 GB and gives InfoSec one unsigned native dependency instead of three.
+# Build-time deps live in requirements-build.txt.
+fastapi>=0.115
+uvicorn>=0.32
+websockets>=13
+pyyaml>=6.0
+numpy>=1.26
+scikit-learn>=1.5          # router stand-in; replaced by the embedding router (ADR-004)
+onnxruntime>=1.20          # ASR: ai4bharat/indic-conformer, ONNX, no torch
+soundfile>=0.12
+librosa>=0.10              # 8 kHz telephony resampling for ADR-006

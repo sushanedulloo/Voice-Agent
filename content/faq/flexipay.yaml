@@ -1,0 +1,450 @@
+# FlexiPay-scoped FAQ entries. SYNTHETIC - replace with the SBIC glossary (OI-5).
+#
+# Note what is NOT here: nothing about cash advances, nothing about personal loans, nothing about
+# other issuers' products. RESEARCH 2.4 - a router with no reject option answers the nearest
+# entry confidently. Asking about a cash-advance rate against a purchase-APR entry returns the
+# purchase answer at high confidence, and that is mis-selling. Those questions belong in
+# out_of_scope.yaml, not here.
+
+scope: flexipay
+version: 0.1.0
+status: synthetic
+approval_ref: PENDING-BLC
+entries:
+- id: FAQ_F001
+  question:
+    en: What is this EMI conversion?
+    hi_latn: Yeh EMI conversion kya hai?
+    mr: हे ईएमआय कन्व्हर्जन म्हणजे काय?
+    gu: આ ઇએમઆઇ કન્વર્ઝન શું છે?
+    bn: এই ইএমআই কনভার্সন কী?
+    ta: இந்த ஈஎம்ஐ கன்வர்ஷன் என்னது?
+    te: ఈ ఈఎంఐ కన్వర్షన్ అంటే ఏమిటి?
+    kn: ಈ ಇಎಂಐ ಕನ್ವರ್ಶನ್ ಅಂದರೆ ಏನು?
+    ml: ഈ ഇഎംഐ കൺവേർഷൻ എന്താണ്?
+    hi: यह ईएमआई कन्वर्ज़न क्या है?
+  paraphrases_en:
+  - what is FlexiPay
+  - how does this work
+  - explain the offer
+  paraphrases_hi_latn:
+  - FlexiPay kya hai
+  - yeh kaise kaam karta hai
+  answer:
+    en: It lets you convert eligible purchases already made on your card into monthly instalments, instead of paying the full amount in one bill.
+    hi_latn: Isse aap apne card par ki gayi eligible purchases ko ek hi bill mein poora chukane ke bajay monthly instalments mein convert kar sakte hain.
+    mr: यामुळे तुम्ही कार्डवर आधीच केलेल्या पात्र खरेदी एकाच बिलात पूर्ण न भरता मासिक हप्त्यांमध्ये बदलू शकता.
+    gu: આનાથી તમે કાર્ડ પર પહેલેથી કરેલી પાત્ર ખરીદીને એક જ બિલમાં પૂરી ચૂકવ્યા વગર માસિક હપ્તામાં ફેરવી શકો છો.
+    bn: এতে আপনি কার্ডে ইতিমধ্যে করা যোগ্য কেনাকাটা এক বিলে পুরো না দিয়ে মাসিক কিস্তিতে পরিবর্তন করতে পারেন।
+    ta: இதன் மூலம் கார்டில் ஏற்கனவே செய்த தகுதியான பர்ச்சேஸ்களை ஒரே பில்லில் முழுசா கட்டாம, மாத தவணைகளா மாத்திக்கலாம்.
+    te: దీని ద్వారా కార్డ్ పై ఇప్పటికే చేసిన అర్హత ఉన్న పర్చేజ్‌లను ఒకే బిల్లులో పూర్తిగా చెల్లించకుండా నెలవారీ వాయిదాలుగా మార్చుకోవచ్చు.
+    kn: ಇದರಿಂದ ಕಾರ್ಡ್ ಮೇಲೆ ಈಗಾಗಲೇ ಮಾಡಿದ ಅರ್ಹ ಖರೀದಿಗಳನ್ನು ಒಂದೇ ಬಿಲ್ ನಲ್ಲಿ ಪೂರ್ತಿ ಪಾವತಿಸದೆ ಮಾಸಿಕ ಕಂತುಗಳಾಗಿ ಬದಲಾಯಿಸಬಹುದು.
+    ml: ഇതിലൂടെ കാർഡിൽ നേരത്തെ ചെയ്ത യോഗ്യമായ പർച്ചേസുകൾ ഒരൊറ്റ ബില്ലിൽ മുഴുവൻ അടയ്ക്കാതെ മാസ തവണകളാക്കി മാറ്റാം.
+    hi: इससे आप अपने कार्ड पर पहले से की गई पात्र ख़रीदारी को एक ही बिल में पूरा चुकाने के बजाय मासिक क़िस्तों में बदल सकते हैं.
+- id: FAQ_F002
+  question:
+    en: Which transactions can be converted?
+    hi_latn: Kaunse transactions convert ho sakte hain?
+    mr: कोणते ट्रान्झॅक्शन बदलता येतील?
+    gu: કયા ટ્રાન્ઝેક્શન ફેરવી શકાય?
+    bn: কোন লেনদেন পরিবর্তন করা যাবে?
+    ta: எந்த டிரான்சாக்ஷன் மாத்த முடியும்?
+    te: ఏ లావాదేవీలు మార్చవచ్చు?
+    kn: ಯಾವ ವ್ಯವಹಾರಗಳನ್ನು ಬದಲಾಯಿಸಬಹುದು?
+    ml: ഏതൊക്കെ ഇടപാടുകൾ മാറ്റാം?
+    hi: कौन से ट्रांज़ैक्शन बदले जा सकते हैं?
+  paraphrases_en:
+  - what purchases are eligible
+  - can I convert any spend
+  paraphrases_hi_latn:
+  - kaunse purchase eligible hain
+  answer:
+    en: Eligible purchases above {min_txn_amt} rupees can be converted. Our advisor can confirm which of your transactions qualify.
+    hi_latn: '{min_txn_amt} rupees se upar ki eligible purchases convert ho sakti hain. Hamare advisor confirm kar sakte hain ki aapke kaunse transactions qualify karte hain.'
+    mr: '{min_txn_amt} रुपयांवरील पात्र खरेदी बदलता येतील. तुमचे कोणते ट्रान्झॅक्शन पात्र आहेत, हे आमचे अ‍ॅडव्हायझर सांगू शकतात.'
+    gu: '{min_txn_amt} રૂપિયાથી વધુની પાત્ર ખરીદી ફેરવી શકાય. તમારા કયા ટ્રાન્ઝેક્શન પાત્ર છે એ અમારા એડવાઇઝર કહી શકે.'
+    bn: '{min_txn_amt} টাকার উপরের যোগ্য কেনাকাটা পরিবর্তন করা যাবে। আপনার কোন লেনদেন যোগ্য তা আমাদের অ্যাডভাইজার নিশ্চিত করতে পারবেন।'
+    ta: '{min_txn_amt} ரூபாய்க்கு மேல் உள்ள தகுதியான பர்ச்சேஸ்களை மாத்தலாம். உங்க எந்த டிரான்சாக்ஷன் தகுதியானதுன்னு எங்க அட்வைசர் சொல்வாங்க.'
+    te: '{min_txn_amt} రూపాయల పైన ఉన్న అర్హత ఉన్న పర్చేజ్‌లు మార్చవచ్చు. మీ ఏ లావాదేవీలు అర్హత కలిగి ఉన్నాయో మా అడ్వైజర్ నిర్ధారించగలరు.'
+    kn: '{min_txn_amt} ರೂಪಾಯಿಗಿಂತ ಹೆಚ್ಚಿನ ಅರ್ಹ ಖರೀದಿಗಳನ್ನು ಬದಲಾಯಿಸಬಹುದು. ನಿಮ್ಮ ಯಾವ ವ್ಯವಹಾರಗಳು ಅರ್ಹ ಎಂದು ನಮ್ಮ ಅಡ್ವೈಸರ್ ಖಚಿತಪಡಿಸಬಲ್ಲರು.'
+    ml: '{min_txn_amt} രൂപയ്ക്ക് മുകളിലുള്ള യോഗ്യമായ പർച്ചേസുകൾ മാറ്റാം. നിങ്ങളുടെ ഏതൊക്കെ ഇടപാടുകൾ യോഗ്യമാണെന്ന് ഞങ്ങളുടെ അഡ്വൈസർ സ്ഥിരീകരിക്കും.'
+    hi: '{min_txn_amt} रुपये से ऊपर की पात्र ख़रीदारी बदली जा सकती है. आपके कौन से ट्रांज़ैक्शन पात्र हैं, हमारे एडवाइज़र कन्फ़र्म कर सकते हैं.'
+- id: FAQ_F003
+  question:
+    en: What is the interest rate?
+    hi_latn: Interest rate kya hai?
+    mr: व्याजदर किती आहे?
+    gu: વ્યાજ દર કેટલો છે?
+    bn: সুদের হার কত?
+    ta: வட்டி விகிதம் என்ன?
+    te: వడ్డీ రేటు ఎంత?
+    kn: ಬಡ್ಡಿ ದರ ಎಷ್ಟು?
+    ml: പലിശ നിരക്ക് എത്രയാണ്?
+    hi: ब्याज दर क्या है?
+  paraphrases_en:
+  - how much interest
+  - what rate do you charge
+  - what is the ROI
+  paraphrases_hi_latn:
+  - kitna interest lagega
+  - rate kya hai
+  answer:
+    en: The rate on this offer is {roi_annual_pct} percent per annum. Goods and services tax applies as per government rules.
+    hi_latn: Is offer par rate {roi_annual_pct} percent annual hai. GST government rules ke hisaab se lagega.
+    mr: या ऑफरवर दर वार्षिक {roi_annual_pct} टक्के आहे. जीएसटी सरकारी नियमांनुसार लागू होईल.
+    gu: આ ઓફર પર દર વાર્ષિક {roi_annual_pct} ટકા છે. જીએસટી સરકારી નિયમો મુજબ લાગુ થશે.
+    bn: এই অফারে হার বার্ষিক {roi_annual_pct} শতাংশ। জিএসটি সরকারি নিয়ম অনুযায়ী প্রযোজ্য হবে।
+    ta: இந்த ஆஃபரில் விகிதம் ஆண்டுக்கு {roi_annual_pct} சதவீதம். ஜிஎஸ்டி அரசாங்க விதிகளின்படி பொருந்தும்.
+    te: ఈ ఆఫర్ పై రేటు సంవత్సరానికి {roi_annual_pct} శాతం. జీఎస్టీ ప్రభుత్వ నిబంధనల ప్రకారం వర్తిస్తుంది.
+    kn: ಈ ಆಫರ್ ಮೇಲೆ ದರ ವಾರ್ಷಿಕ {roi_annual_pct} ಶೇಕಡಾ. ಜಿಎಸ್‌ಟಿ ಸರ್ಕಾರಿ ನಿಯಮಗಳ ಪ್ರಕಾರ ಅನ್ವಯಿಸುತ್ತದೆ.
+    ml: ഈ ഓഫറിൽ നിരക്ക് വർഷത്തിൽ {roi_annual_pct} ശതമാനമാണ്. ജിഎസ്ടി സർക്കാർ നിയമപ്രകാരം ബാധകമാണ്.
+    hi: इस ऑफर पर दर {roi_annual_pct} प्रतिशत सालाना है. जीएसटी सरकारी नियमों के अनुसार लगेगा.
+  never_say:
+  - zero interest
+  - no interest
+  - interest free
+- id: FAQ_F004
+  question:
+    en: Is there a processing fee?
+    hi_latn: Koi processing fee hai?
+    mr: प्रोसेसिंग फी आहे का?
+    gu: પ્રોસેસિંગ ફી છે?
+    bn: প্রসেসিং ফি আছে?
+    ta: ப்ராசசிங் கட்டணம் இருக்கா?
+    te: ప్రాసెసింగ్ ఫీజు ఉందా?
+    kn: ಪ್ರೊಸೆಸಿಂಗ್ ಶುಲ್ಕ ಇದೆಯಾ?
+    ml: പ്രോസസിംഗ് ഫീസ് ഉണ്ടോ?
+    hi: क्या कोई प्रोसेसिंग फ़ीस है?
+  paraphrases_en:
+  - any hidden charges
+  - what are the fees
+  paraphrases_hi_latn:
+  - koi chhupa charge hai kya
+  - fees kitni hai
+  answer:
+    en: There is a one-time processing fee of {processing_fee} rupees, plus applicable taxes.
+    hi_latn: Ek baar ka {processing_fee} rupees processing fee hai, aur uspar applicable taxes.
+    mr: एकवेळचा {processing_fee} रुपयांचा प्रोसेसिंग फी आहे, अधिक लागू कर.
+    gu: એક વખતની {processing_fee} રૂપિયાની પ્રોસેસિંગ ફી છે, ઉપરાંત લાગુ કર.
+    bn: এককালীন {processing_fee} টাকার প্রসেসিং ফি আছে, সঙ্গে প্রযোজ্য কর।
+    ta: ஒருமுறை {processing_fee} ரூபாய் ப்ராசசிங் கட்டணம் இருக்கு, கூடவே பொருந்தும் வரிகள்.
+    te: ఒకసారి {processing_fee} రూపాయల ప్రాసెసింగ్ ఫీజు ఉంది, అదనంగా వర్తించే పన్నులు.
+    kn: ಒಂದು ಬಾರಿಯ {processing_fee} ರೂಪಾಯಿ ಪ್ರೊಸೆಸಿಂಗ್ ಶುಲ್ಕ ಇದೆ, ಜೊತೆಗೆ ಅನ್ವಯವಾಗುವ ತೆರಿಗೆ.
+    ml: ഒറ്റത്തവണ {processing_fee} രൂപയുടെ പ്രോസസിംഗ് ഫീസ് ഉണ്ട്, കൂടെ ബാധകമായ നികുതികളും.
+    hi: एक बार की {processing_fee} रुपये की प्रोसेसिंग फ़ीस है, और उस पर लागू टैक्स.
+  never_say:
+  - no charges at all
+  - completely free
+- id: FAQ_F005
+  question:
+    en: What tenures are available?
+    hi_latn: Kaunsi tenures available hain?
+    mr: कोणत्या मुदती उपलब्ध आहेत?
+    gu: કઈ મુદત ઉપલબ્ધ છે?
+    bn: কোন মেয়াদ পাওয়া যায়?
+    ta: என்ன தவணைகள் இருக்கு?
+    te: ఏ వ్యవధులు అందుబాటులో ఉన్నాయి?
+    kn: ಯಾವ ಅವಧಿಗಳು ಲಭ್ಯವಿದೆ?
+    ml: ഏതൊക്കെ കാലാവധികൾ ലഭ്യമാണ്?
+    hi: कौन सी अवधि उपलब्ध हैं?
+  paraphrases_en:
+  - how many months
+  - can I choose the duration
+  paraphrases_hi_latn:
+  - kitne mahine ka option hai
+  answer:
+    en: This offer is available over {tenure_options}. Our advisor can help you pick one.
+    hi_latn: Yeh offer {tenure_options} mein available hai. Hamare advisor aapko chunne mein madad karenge.
+    mr: ही ऑफर {tenure_options} मध्ये उपलब्ध आहे. आमचे अ‍ॅडव्हायझर निवडण्यात मदत करतील.
+    gu: આ ઓફર {tenure_options} માં ઉપલબ્ધ છે. અમારા એડવાઇઝર પસંદ કરવામાં મદદ કરશે.
+    bn: এই অফার {tenure_options} এ পাওয়া যায়। আমাদের অ্যাডভাইজার বেছে নিতে সাহায্য করবেন।
+    ta: இந்த ஆஃபர் {tenure_options} ல் இருக்கு. தேர்ந்தெடுக்க எங்க அட்வைசர் உதவுவாங்க.
+    te: ఈ ఆఫర్ {tenure_options} లో అందుబాటులో ఉంది. ఎంచుకోవడానికి మా అడ్వైజర్ సహాయం చేస్తారు.
+    kn: ಈ ಆಫರ್ {tenure_options} ನಲ್ಲಿ ಲಭ್ಯವಿದೆ. ಆಯ್ಕೆ ಮಾಡಲು ನಮ್ಮ ಅಡ್ವೈಸರ್ ಸಹಾಯ ಮಾಡುತ್ತಾರೆ.
+    ml: ഈ ഓഫർ {tenure_options} ൽ ലഭ്യമാണ്. തിരഞ്ഞെടുക്കാൻ ഞങ്ങളുടെ അഡ്വൈസർ സഹായിക്കും.
+    hi: यह ऑफर {tenure_options} में उपलब्ध है. हमारे एडवाइज़र चुनने में मदद करेंगे.
+- id: FAQ_F006
+  question:
+    en: How much will my monthly instalment be?
+    hi_latn: Meri monthly instalment kitni hogi?
+    mr: माझा मासिक हप्ता किती असेल?
+    gu: મારો માસિક હપ્તો કેટલો થશે?
+    bn: আমার মাসিক কিস্তি কত হবে?
+    ta: என் மாத தவணை எவ்வளவு?
+    te: నా నెలవారీ వాయిదా ఎంత?
+    kn: ನನ್ನ ಮಾಸಿಕ ಕಂತು ಎಷ್ಟು?
+    ml: എന്റെ മാസ തവണ എത്രയാണ്?
+    hi: मेरी मासिक क़िस्त कितनी होगी?
+  paraphrases_en:
+  - what is the EMI amount
+  - how much per month
+  paraphrases_hi_latn:
+  - har mahine kitna dena hoga
+  answer:
+    en: At {tenure_months} months, the indicative instalment is about {indicative_emi} rupees. Our advisor will confirm the exact figure.
+    hi_latn: '{tenure_months} mahine par indicative instalment lagbhag {indicative_emi} rupees hai. Hamare advisor exact figure confirm karenge.'
+    mr: '{tenure_months} महिन्यांवर अंदाजे हप्ता सुमारे {indicative_emi} रुपये आहे. नेमकी रक्कम आमचे अ‍ॅडव्हायझर सांगतील.'
+    gu: '{tenure_months} મહિને અંદાજિત હપ્તો લગભગ {indicative_emi} રૂપિયા છે. ચોક્કસ રકમ અમારા એડવાઇઝર કહેશે.'
+    bn: '{tenure_months} মাসে আনুমানিক কিস্তি প্রায় {indicative_emi} টাকা। সঠিক পরিমাণ আমাদের অ্যাডভাইজার জানাবেন।'
+    ta: '{tenure_months} மாசத்துக்கு தோராயமான தவணை சுமார் {indicative_emi} ரூபாய். சரியான தொகையை எங்க அட்வைசர் சொல்வாங்க.'
+    te: '{tenure_months} నెలలకు అంచనా వాయిదా సుమారు {indicative_emi} రూపాయలు. ఖచ్చితమైన మొత్తం మా అడ్వైజర్ చెప్తారు.'
+    kn: '{tenure_months} ತಿಂಗಳಿಗೆ ಅಂದಾಜು ಕಂತು ಸುಮಾರು {indicative_emi} ರೂಪಾಯಿ. ನಿಖರ ಮೊತ್ತವನ್ನು ನಮ್ಮ ಅಡ್ವೈಸರ್ ಹೇಳುತ್ತಾರೆ.'
+    ml: '{tenure_months} മാസത്തിൽ ഏകദേശ തവണ {indicative_emi} രൂപയാണ്. കൃത്യമായ തുക ഞങ്ങളുടെ അഡ്വൈസർ പറയും.'
+    hi: '{tenure_months} महीने पर, अनुमानित क़िस्त लगभग {indicative_emi} रुपये है. सही रक़म हमारे एडवाइज़र कन्फ़र्म करेंगे.'
+- id: FAQ_F007
+  question:
+    en: Can I close it early?
+    hi_latn: Kya main jaldi band kar sakta hoon?
+    mr: मी हे लवकर बंद करू शकतो का?
+    gu: શું હું આ વહેલું બંધ કરી શકું?
+    bn: আমি কি এটি আগে বন্ধ করতে পারি?
+    ta: நான் இதை முன்னாடியே முடிக்க முடியுமா?
+    te: నేను దీన్ని ముందుగా ముగించవచ్చా?
+    kn: ನಾನು ಇದನ್ನು ಬೇಗ ಮುಗಿಸಬಹುದಾ?
+    ml: എനിക്ക് ഇത് നേരത്തെ അവസാനിപ്പിക്കാമോ?
+    hi: क्या मैं इसे जल्दी बंद कर सकता हूँ?
+  paraphrases_en:
+  - is foreclosure allowed
+  - can I prepay
+  - what if I want to close it
+  paraphrases_hi_latn:
+  - pehle band kar sakte hain kya
+  - prepay ho sakta hai
+  answer:
+    en: Early closure is possible, and foreclosure charges may apply. Our advisor can give you the exact terms.
+    hi_latn: Jaldi band karna sambhav hai, aur foreclosure charges lag sakte hain. Hamare advisor aapko exact terms bata sakte hain.
+    mr: लवकर बंद करणं शक्य आहे, आणि फोरक्लोजर चार्ज लागू शकतो. नेमक्या अटी आमचे अ‍ॅडव्हायझर सांगतील.
+    gu: વહેલું બંધ કરવું શક્ય છે, અને ફોરક્લોઝર ચાર્જ લાગી શકે. ચોક્કસ શરતો અમારા એડવાઇઝર કહેશે.
+    bn: আগে বন্ধ করা সম্ভব, এবং ফোরক্লোজার চার্জ লাগতে পারে। সঠিক শর্ত আমাদের অ্যাডভাইজার জানাবেন।
+    ta: முன்னாடி முடிக்கிறது சாத்தியம், ஃபோர்குளோஷர் கட்டணம் வரலாம். சரியான விதிமுறைகளை எங்க அட்வைசர் சொல்வாங்க.
+    te: ముందుగా ముగించడం సాధ్యమే, ఫోర్‌క్లోజర్ చార్జీలు వర్తించవచ్చు. ఖచ్చితమైన నిబంధనలు మా అడ్వైజర్ చెప్తారు.
+    kn: ಬೇಗ ಮುಗಿಸುವುದು ಸಾಧ್ಯ, ಫೋರ್‌ಕ್ಲೋಶರ್ ಶುಲ್ಕ ಅನ್ವಯವಾಗಬಹುದು. ನಿಖರ ನಿಯಮಗಳನ್ನು ನಮ್ಮ ಅಡ್ವೈಸರ್ ಹೇಳುತ್ತಾರೆ.
+    ml: നേരത്തെ അവസാനിപ്പിക്കാൻ കഴിയും, ഫോർക്ലോഷർ ചാർജ് ബാധകമായേക്കാം. കൃത്യമായ വ്യവസ്ഥകൾ ഞങ്ങളുടെ അഡ്വൈസർ പറയും.
+    hi: जल्दी बंद करना संभव है, और फ़ोरक्लोज़र चार्ज लग सकता है. सही शर्तें हमारे एडवाइज़र बता सकते हैं.
+- id: FAQ_F008
+  question:
+    en: Will this reduce my credit limit?
+    hi_latn: Kya isse meri credit limit kam hogi?
+    mr: यामुळे माझी क्रेडिट लिमिट कमी होईल का?
+    gu: શું આનાથી મારી ક્રેડિટ લિમિટ ઘટશે?
+    bn: এতে কি আমার ক্রেডিট লিমিট কমবে?
+    ta: இதனால என் கிரெடிட் லிமிட் குறையுமா?
+    te: దీనివల్ల నా క్రెడిట్ లిమిట్ తగ్గుతుందా?
+    kn: ಇದರಿಂದ ನನ್ನ ಕ್ರೆಡಿಟ್ ಲಿಮಿಟ್ ಕಡಿಮೆ ಆಗುತ್ತಾ?
+    ml: ഇതുകൊണ്ട് എന്റെ ക്രെഡിറ്റ് ലിമിറ്റ് കുറയുമോ?
+    hi: क्या इससे मेरी क्रेडिट लिमिट कम होगी?
+  paraphrases_en:
+  - does it block my limit
+  - will my available limit drop
+  paraphrases_hi_latn:
+  - available limit kam ho jayegi kya
+  answer:
+    en: The converted amount is held against your limit until it is repaid. Our advisor can explain how this applies to your account.
+    hi_latn: Convert kiya gaya amount repay hone tak aapki limit ke against hold rehta hai. Hamare advisor bata sakte hain ki aapke account par yeh kaise lagu hota hai.
+    mr: बदललेली रक्कम परतफेड होईपर्यंत तुमच्या लिमिटमधून राखून ठेवली जाते. तुमच्या खात्यावर हे कसं लागू होतं, हे आमचे अ‍ॅडव्हायझर सांगू शकतात.
+    gu: ફેરવેલી રકમ ચૂકવાઈ જાય ત્યાં સુધી તમારી લિમિટમાંથી રોકી રાખવામાં આવે છે. તમારા એકાઉન્ટ પર આ કેવી રીતે લાગુ પડે એ અમારા એડવાઇઝર કહી શકે.
+    bn: পরিবর্তিত পরিমাণ শোধ না হওয়া পর্যন্ত আপনার লিমিট থেকে ধরে রাখা হয়। আপনার অ্যাকাউন্টে এটি কীভাবে প্রযোজ্য তা আমাদের অ্যাডভাইজার ব্যাখ্যা করবেন।
+    ta: மாத்தின தொகை திரும்ப கட்டற வரைக்கும் உங்க லிமிட்ல இருந்து ஹோல்ட் பண்ணப்படும். உங்க அக்கவுண்ட்ல இது எப்படி பொருந்துதுன்னு எங்க அட்வைசர் சொல்வாங்க.
+    te: మార్చిన మొత్తం తిరిగి చెల్లించే వరకు మీ లిమిట్ నుంచి హోల్డ్ చేయబడుతుంది. మీ ఖాతాలో ఇది ఎలా వర్తిస్తుందో మా అడ్వైజర్ వివరించగలరు.
+    kn: ಬದಲಾಯಿಸಿದ ಮೊತ್ತವನ್ನು ಮರುಪಾವತಿ ಮಾಡುವವರೆಗೆ ನಿಮ್ಮ ಲಿಮಿಟ್ ನಿಂದ ಹೋಲ್ಡ್ ಮಾಡಲಾಗುತ್ತದೆ. ನಿಮ್ಮ ಖಾತೆಯಲ್ಲಿ ಇದು ಹೇಗೆ ಅನ್ವಯವಾಗುತ್ತದೆ ಎಂದು ನಮ್ಮ ಅಡ್ವೈಸರ್ ವಿವರಿಸಬಲ್ಲರು.
+    ml: മാറ്റിയ തുക തിരിച്ചടയ്ക്കുന്നത് വരെ നിങ്ങളുടെ ലിമിറ്റിൽ നിന്ന് ഹോൾഡ് ചെയ്യപ്പെടും. നിങ്ങളുടെ അക്കൗണ്ടിൽ ഇത് എങ്ങനെ ബാധകമാകുമെന്ന് ഞങ്ങളുടെ അഡ്വൈസർ വിശദീകരിക്കും.
+    hi: बदली गई रक़म चुकाने तक आपकी लिमिट से रोक ली जाती है. आपके अकाउंट पर यह कैसे लागू होता है, हमारे एडवाइज़र समझा सकते हैं.
+- id: FAQ_F009
+  question:
+    en: Will it show on my statement?
+    hi_latn: Kya yeh mere statement par dikhega?
+    mr: हे माझ्या स्टेटमेंटवर दिसेल का?
+    gu: શું આ મારા સ્ટેટમેન્ટ પર દેખાશે?
+    bn: এটি কি আমার স্টেটমেন্টে দেখা যাবে?
+    ta: இது என் ஸ்டேட்மெண்ட்ல தெரியுமா?
+    te: ఇది నా స్టేట్‌మెంట్ లో కనిపిస్తుందా?
+    kn: ಇದು ನನ್ನ ಸ್ಟೇಟ್ಮೆಂಟ್ ನಲ್ಲಿ ಕಾಣುತ್ತಾ?
+    ml: ഇത് എന്റെ സ്റ്റേറ്റ്മെന്റിൽ കാണുമോ?
+    hi: क्या यह मेरे स्टेटमेंट पर दिखेगा?
+  paraphrases_en:
+  - how will I see it
+  - where does it appear
+  paraphrases_hi_latn:
+  - kahan dikhega
+  answer:
+    en: Yes. The instalment appears on your monthly statement.
+    hi_latn: Haan. Instalment aapke monthly statement par dikhta hai.
+    mr: हो. हप्ता तुमच्या मासिक स्टेटमेंटवर दिसतो.
+    gu: હા. હપ્તો તમારા માસિક સ્ટેટમેન્ટ પર દેખાય છે.
+    bn: হ্যাঁ। কিস্তি আপনার মাসিক স্টেটমেন্টে দেখা যায়।
+    ta: ஆமா. தவணை உங்க மாத ஸ்டேட்மெண்ட்ல தெரியும்.
+    te: అవును. వాయిదా మీ నెలవారీ స్టేట్‌మెంట్ లో కనిపిస్తుంది.
+    kn: ಹೌದು. ಕಂತು ನಿಮ್ಮ ಮಾಸಿಕ ಸ್ಟೇಟ್ಮೆಂಟ್ ನಲ್ಲಿ ಕಾಣುತ್ತದೆ.
+    ml: അതെ. തവണ നിങ്ങളുടെ മാസ സ്റ്റേറ്റ്മെന്റിൽ കാണാം.
+    hi: हाँ. क़िस्त आपके मासिक स्टेटमेंट पर दिखती है.
+- id: FAQ_F010
+  question:
+    en: What if I miss an instalment?
+    hi_latn: Agar main koi instalment miss kar doon to?
+    mr: मी हप्ता चुकवला तर काय होईल?
+    gu: જો હું હપ્તો ચૂકી જાઉં તો?
+    bn: আমি কিস্তি মিস করলে কী হবে?
+    ta: நான் தவணை மிஸ் பண்ணா என்ன ஆகும்?
+    te: నేను వాయిదా మిస్ అయితే ఏమవుతుంది?
+    kn: ನಾನು ಕಂತು ತಪ್ಪಿಸಿದರೆ ಏನಾಗುತ್ತೆ?
+    ml: ഞാൻ തവണ മുടക്കിയാൽ എന്ത് സംഭവിക്കും?
+    hi: अगर मैं क़िस्त चूक जाऊँ तो?
+  paraphrases_en:
+  - what happens if I don't pay
+  - is there a late fee
+  paraphrases_hi_latn:
+  - agar nahi bhara to kya hoga
+  answer:
+    en: Standard late payment charges under your card agreement would apply. Our advisor can take you through the details.
+    hi_latn: Aapke card agreement ke standard late payment charges lagenge. Hamare advisor details samjha sakte hain.
+    mr: तुमच्या कार्ड करारानुसार नेहमीचे लेट पेमेंट चार्ज लागतील. तपशील आमचे अ‍ॅडव्हायझर सांगू शकतात.
+    gu: તમારા કાર્ડ કરાર મુજબ સામાન્ય લેટ પેમેન્ટ ચાર્જ લાગશે. વિગતો અમારા એડવાઇઝર કહી શકે.
+    bn: আপনার কার্ড চুক্তি অনুযায়ী স্বাভাবিক লেট পেমেন্ট চার্জ প্রযোজ্য হবে। বিস্তারিত আমাদের অ্যাডভাইজার জানাবেন।
+    ta: உங்க கார்டு ஒப்பந்தத்தின்படி வழக்கமான லேட் பேமெண்ட் கட்டணம் வரும். விவரங்களை எங்க அட்வைசர் சொல்வாங்க.
+    te: మీ కార్డ్ ఒప్పందం ప్రకారం సాధారణ లేట్ పేమెంట్ చార్జీలు వర్తిస్తాయి. వివరాలు మా అడ్వైజర్ చెప్పగలరు.
+    kn: ನಿಮ್ಮ ಕಾರ್ಡ್ ಒಪ್ಪಂದದ ಪ್ರಕಾರ ಸಾಮಾನ್ಯ ಲೇಟ್ ಪೇಮೆಂಟ್ ಶುಲ್ಕ ಅನ್ವಯವಾಗುತ್ತದೆ. ವಿವರಗಳನ್ನು ನಮ್ಮ ಅಡ್ವೈಸರ್ ಹೇಳಬಲ್ಲರು.
+    ml: നിങ്ങളുടെ കാർഡ് കരാർ പ്രകാരം സാധാരണ ലേറ്റ് പേയ്മെന്റ് ചാർജുകൾ ബാധകമാകും. വിശദാംശങ്ങൾ ഞങ്ങളുടെ അഡ്വൈസർ പറയാം.
+    hi: आपके कार्ड एग्रीमेंट के सामान्य लेट पेमेंट चार्ज लगेंगे. डिटेल हमारे एडवाइज़र बता सकते हैं.
+- id: FAQ_F011
+  question:
+    en: Is this a loan?
+    hi_latn: Kya yeh loan hai?
+    mr: हे लोन आहे का?
+    gu: શું આ લોન છે?
+    bn: এটা কি লোন?
+    ta: இது லோனா?
+    te: ఇది లోన్ అా?
+    kn: ಇದು ಲೋನ್ ಆ?
+    ml: ഇത് ലോൺ ആണോ?
+    hi: क्या यह लोन है?
+  paraphrases_en:
+  - is this a personal loan
+  - am I borrowing money
+  paraphrases_hi_latn:
+  - yeh personal loan hai kya
+  answer:
+    en: It is an instalment facility on purchases already made on your card. It is not a separate personal loan, and no money is disbursed to you.
+    hi_latn: Yeh aapke card par pehle se ki gayi purchases par ek instalment facility hai. Yeh alag personal loan nahi hai, aur aapko koi paisa disburse nahi hota.
+    mr: हे तुमच्या कार्डवर आधीच केलेल्या खरेदीवरची हप्ता सुविधा आहे. हे वेगळं पर्सनल लोन नाही, आणि तुम्हाला कोणतीही रक्कम दिली जात नाही.
+    gu: આ તમારા કાર્ડ પર પહેલેથી કરેલી ખરીદી પરની હપ્તા સુવિધા છે. આ અલગ પર્સનલ લોન નથી, અને તમને કોઈ રકમ આપવામાં આવતી નથી.
+    bn: এটি আপনার কার্ডে আগে করা কেনাকাটার উপর একটি কিস্তি সুবিধা। এটি আলাদা পার্সোনাল লোন নয়, এবং আপনাকে কোনো টাকা দেওয়া হয় না।
+    ta: இது உங்க கார்டுல ஏற்கனவே செய்த பர்ச்சேஸ் மேல ஒரு தவணை வசதி. இது தனி பர்சனல் லோன் இல்ல, உங்களுக்கு எந்த தொகையும் தரப்படல.
+    te: ఇది మీ కార్డ్ పై ఇప్పటికే చేసిన పర్చేజ్‌ల మీద ఒక వాయిదా సౌకర్యం. ఇది వేరే పర్సనల్ లోన్ కాదు, మీకు ఎలాంటి డబ్బు ఇవ్వబడదు.
+    kn: ಇದು ನಿಮ್ಮ ಕಾರ್ಡ್ ಮೇಲೆ ಈಗಾಗಲೇ ಮಾಡಿದ ಖರೀದಿಗಳ ಮೇಲಿನ ಒಂದು ಕಂತು ಸೌಲಭ್ಯ. ಇದು ಪ್ರತ್ಯೇಕ ಪರ್ಸನಲ್ ಲೋನ್ ಅಲ್ಲ, ನಿಮಗೆ ಯಾವುದೇ ಹಣ ನೀಡಲಾಗುವುದಿಲ್ಲ.
+    ml: ഇത് നിങ്ങളുടെ കാർഡിൽ നേരത്തെ ചെയ്ത പർച്ചേസുകളുടെ മേലുള്ള ഒരു തവണ സൗകര്യമാണ്. ഇത് വേറെ പേഴ്സണൽ ലോൺ അല്ല, നിങ്ങൾക്ക് പണം നൽകുന്നില്ല.
+    hi: यह आपके कार्ड पर पहले से की गई ख़रीदारी पर एक क़िस्त सुविधा है. यह अलग पर्सनल लोन नहीं है, और आपको कोई रक़म नहीं दी जाती.
+  never_say:
+  - the amount will be credited to your account
+  - you will receive funds
+- id: FAQ_F012
+  question:
+    en: Do I need to submit documents?
+    hi_latn: Kya mujhe documents dene honge?
+    mr: मला कागदपत्रं द्यावी लागतील का?
+    gu: શું મારે દસ્તાવેજો આપવા પડશે?
+    bn: আমাকে কি নথি জমা দিতে হবে?
+    ta: நான் டாகுமெண்ட் கொடுக்கணுமா?
+    te: నేను పత్రాలు ఇవ్వాలా?
+    kn: ನಾನು ದಾಖಲೆ ಕೊಡಬೇಕಾ?
+    ml: എനിക്ക് രേഖകൾ നൽകേണ്ടതുണ്ടോ?
+    hi: क्या मुझे दस्तावेज़ देने होंगे?
+  paraphrases_en:
+  - what paperwork is needed
+  - do you need my salary slip
+  paraphrases_hi_latn:
+  - kaagaz lagenge kya
+  answer:
+    en: No fresh documents are required for this offer. Our advisor will confirm the process.
+    hi_latn: Is offer ke liye naye documents ki zaroorat nahi hai. Hamare advisor process confirm karenge.
+    mr: या ऑफरसाठी नवीन कागदपत्रांची गरज नाही. प्रक्रिया आमचे अ‍ॅडव्हायझर सांगतील.
+    gu: આ ઓફર માટે નવા દસ્તાવેજોની જરૂર નથી. પ્રક્રિયા અમારા એડવાઇઝર જણાવશે.
+    bn: এই অফারের জন্য নতুন নথির প্রয়োজন নেই। প্রক্রিয়া আমাদের অ্যাডভাইজার জানাবেন।
+    ta: இந்த ஆஃபருக்கு புதுசா டாகுமெண்ட் தேவையில்ல. செயல்முறையை எங்க அட்வைசர் சொல்வாங்க.
+    te: ఈ ఆఫర్ కు కొత్త పత్రాలు అవసరం లేదు. ప్రక్రియను మా అడ్వైజర్ చెప్తారు.
+    kn: ಈ ಆಫರ್ ಗೆ ಹೊಸ ದಾಖಲೆಗಳ ಅಗತ್ಯವಿಲ್ಲ. ಪ್ರಕ್ರಿಯೆಯನ್ನು ನಮ್ಮ ಅಡ್ವೈಸರ್ ತಿಳಿಸುತ್ತಾರೆ.
+    ml: ഈ ഓഫറിന് പുതിയ രേഖകൾ ആവശ്യമില്ല. നടപടിക്രമം ഞങ്ങളുടെ അഡ്വൈസർ അറിയിക്കും.
+    hi: इस ऑफर के लिए नए दस्तावेज़ों की ज़रूरत नहीं है. प्रक्रिया हमारे एडवाइज़र कन्फ़र्म करेंगे.
+- id: FAQ_F013
+  question:
+    en: How long does it take to process?
+    hi_latn: Process hone mein kitna time lagta hai?
+    mr: प्रोसेस व्हायला किती वेळ लागतो?
+    gu: પ્રોસેસ થવામાં કેટલો સમય લાગે?
+    bn: প্রসেস হতে কত সময় লাগে?
+    ta: ப்ராசஸ் ஆக எவ்வளவு நேரம் ஆகும்?
+    te: ప్రాసెస్ కావడానికి ఎంత సమయం పడుతుంది?
+    kn: ಪ್ರೊಸೆಸ್ ಆಗಲು ಎಷ್ಟು ಸಮಯ ಬೇಕು?
+    ml: പ്രോസസ് ആകാൻ എത്ര സമയം എടുക്കും?
+    hi: प्रोसेस होने में कितना समय लगता है?
+  paraphrases_en:
+  - when will it be active
+  - how soon
+  paraphrases_hi_latn:
+  - kab tak ho jayega
+  answer:
+    en: Our advisor will confirm the timeline once your request is raised.
+    hi_latn: Request raise hone ke baad hamare advisor timeline confirm karenge.
+    mr: तुमची विनंती नोंदवल्यानंतर आमचे अ‍ॅडव्हायझर कालावधी सांगतील.
+    gu: તમારી વિનંતી નોંધાયા પછી અમારા એડવાઇઝર સમયમર્યાદા જણાવશે.
+    bn: আপনার অনুরোধ নথিভুক্ত হওয়ার পর আমাদের অ্যাডভাইজার সময়সীমা জানাবেন।
+    ta: உங்க ரிக்வெஸ்ட் பதிவு ஆன பிறகு எங்க அட்வைசர் கால அளவை சொல்வாங்க.
+    te: మీ అభ్యర్థన నమోదైన తర్వాత మా అడ్వైజర్ కాలవ్యవధి చెప్తారు.
+    kn: ನಿಮ್ಮ ವಿನಂತಿ ದಾಖಲಾದ ನಂತರ ನಮ್ಮ ಅಡ್ವೈಸರ್ ಕಾಲಮಿತಿ ತಿಳಿಸುತ್ತಾರೆ.
+    ml: നിങ്ങളുടെ അഭ്യർത്ഥന രേഖപ്പെടുത്തിയ ശേഷം ഞങ്ങളുടെ അഡ്വൈസർ സമയപരിധി അറിയിക്കും.
+    hi: आपका अनुरोध दर्ज होने के बाद हमारे एडवाइज़र समय-सीमा कन्फ़र्म करेंगे.
+- id: FAQ_F014
+  question:
+    en: Can I convert only part of the amount?
+    hi_latn: Kya main sirf kuch hissa convert kar sakta hoon?
+    mr: मी फक्त काही रक्कम बदलू शकतो का?
+    gu: શું હું માત્ર થોડી રકમ ફેરવી શકું?
+    bn: আমি কি শুধু কিছু অংশ পরিবর্তন করতে পারি?
+    ta: நான் கொஞ்சம் மட்டும் மாத்த முடியுமா?
+    te: నేను కొంత మొత్తం మాత్రమే మార్చవచ్చా?
+    kn: ನಾನು ಸ್ವಲ್ಪ ಮೊತ್ತ ಮಾತ್ರ ಬದಲಾಯಿಸಬಹುದಾ?
+    ml: എനിക്ക് കുറച്ച് തുക മാത്രം മാറ്റാമോ?
+    hi: क्या मैं सिर्फ़ कुछ रक़म बदल सकता हूँ?
+  paraphrases_en:
+  - do I have to convert everything
+  - can I choose the amount
+  paraphrases_hi_latn:
+  - poora amount convert karna zaroori hai kya
+  answer:
+    en: Our advisor can tell you which amounts are available for conversion on your account.
+    hi_latn: Hamare advisor bata sakte hain ki aapke account par kaunse amounts conversion ke liye available hain.
+    mr: तुमच्या खात्यावर कोणत्या रकमा बदलण्यासाठी उपलब्ध आहेत, हे आमचे अ‍ॅडव्हायझर सांगू शकतात.
+    gu: તમારા એકાઉન્ટ પર કઈ રકમ ફેરવવા માટે ઉપલબ્ધ છે એ અમારા એડવાઇઝર કહી શકે.
+    bn: আপনার অ্যাকাউন্টে কোন পরিমাণ পরিবর্তনের জন্য পাওয়া যায় তা আমাদের অ্যাডভাইজার বলতে পারবেন।
+    ta: உங்க அக்கவுண்ட்ல எந்த தொகைகள் மாத்த கிடைக்குதுன்னு எங்க அட்வைசர் சொல்வாங்க.
+    te: మీ ఖాతాలో ఏ మొత్తాలు మార్చడానికి అందుబాటులో ఉన్నాయో మా అడ్వైజర్ చెప్పగలరు.
+    kn: ನಿಮ್ಮ ಖಾತೆಯಲ್ಲಿ ಯಾವ ಮೊತ್ತಗಳು ಬದಲಾಯಿಸಲು ಲಭ್ಯವಿದೆ ಎಂದು ನಮ್ಮ ಅಡ್ವೈಸರ್ ಹೇಳಬಲ್ಲರು.
+    ml: നിങ്ങളുടെ അക്കൗണ്ടിൽ ഏതൊക്കെ തുകകൾ മാറ്റാൻ ലഭ്യമാണെന്ന് ഞങ്ങളുടെ അഡ്വൈസർ പറയാം.
+    hi: आपके अकाउंट पर कौन सी रक़म बदलने के लिए उपलब्ध है, हमारे एडवाइज़र बता सकते हैं.
+- id: FAQ_F015
+  question:
+    en: Can I cancel after agreeing?
+    hi_latn: Haan kehne ke baad cancel kar sakta hoon?
+    mr: होकार दिल्यानंतर मी रद्द करू शकतो का?
+    gu: હા કહ્યા પછી હું રદ કરી શકું?
+    bn: সম্মতি দেওয়ার পর কি বাতিল করতে পারি?
+    ta: சம்மதிச்ச பிறகு நான் கேன்சல் பண்ண முடியுமா?
+    te: ఒప్పుకున్న తర్వాత రద్దు చేయవచ్చా?
+    kn: ಒಪ್ಪಿದ ನಂತರ ರದ್ದು ಮಾಡಬಹುದಾ?
+    ml: സമ്മതിച്ച ശേഷം റദ്ദാക്കാമോ?
+    hi: हाँ कहने के बाद क्या मैं रद्द कर सकता हूँ?
+  paraphrases_en:
+  - what if I change my mind
+  - is it reversible
+  paraphrases_hi_latn:
+  - agar main mann badal loon to
+  answer:
+    en: Our advisor will explain the cancellation terms before anything is confirmed.
+    hi_latn: Kuch bhi confirm hone se pehle hamare advisor cancellation terms samjha denge.
+    mr: काहीही निश्चित होण्यापूर्वी आमचे अ‍ॅडव्हायझर रद्द करण्याच्या अटी सांगतील.
+    gu: કંઈપણ કન્ફર્મ થાય એ પહેલાં અમારા એડવાઇઝર રદ કરવાની શરતો સમજાવશે.
+    bn: কিছু নিশ্চিত হওয়ার আগে আমাদের অ্যাডভাইজার বাতিলের শর্ত ব্যাখ্যা করবেন।
+    ta: எதுவும் உறுதி ஆகுறதுக்கு முன்னாடி எங்க அட்வைசர் கேன்சல் விதிமுறைகளை சொல்லுவாங்க.
+    te: ఏదైనా నిర్ధారణ కాకముందే మా అడ్వైజర్ రద్దు నిబంధనలు వివరిస్తారు.
+    kn: ಏನೂ ಖಚಿತವಾಗುವ ಮೊದಲು ನಮ್ಮ ಅಡ್ವೈಸರ್ ರದ್ದತಿ ನಿಯಮಗಳನ್ನು ವಿವರಿಸುತ್ತಾರೆ.
+    ml: എന്തെങ്കിലും സ്ഥിരീകരിക്കുന്നതിന് മുൻപ് ഞങ്ങളുടെ അഡ്വൈസർ റദ്ദാക്കൽ വ്യവസ്ഥകൾ വിശദീകരിക്കും.
+    hi: कुछ भी कन्फ़र्म होने से पहले हमारे एडवाइज़र रद्द करने की शर्तें समझा देंगे.

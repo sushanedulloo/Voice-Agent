@@ -1,0 +1,446 @@
+# FAQ entries valid for every product.
+#
+# SYNTHETIC. Replace wholesale with the SBIC-supplied glossary (OI-5 - we have never seen it,
+# so entry count, conditional logic and whether the bot may reason across entries are all unknown).
+#
+# ADR-002: these answers are played verbatim. The router returns an id; it does not compose a
+# reply from them. An entry that does not exist has no answer - that is the point.
+
+scope: common
+version: 0.1.0
+status: synthetic
+approval_ref: PENDING-BLC
+entries:
+- id: FAQ_C001
+  question:
+    en: Who are you?
+    hi_latn: Aap kaun hain?
+    mr: तुम्ही कोण आहात?
+    gu: તમે કોણ છો?
+    bn: আপনি কে?
+    ta: நீங்க யாரு?
+    te: మీరు ఎవరు?
+    kn: ನೀವು ಯಾರು?
+    ml: നിങ്ങൾ ആരാണ്?
+    hi: आप कौन हैं?
+  paraphrases_en:
+  - which company is this
+  - where are you calling from
+  - what is this about
+  paraphrases_hi_latn:
+  - kaunsi company se hain
+  - kahan se call kar rahe hain
+  answer:
+    en: I am {agent_display_name}, an automated assistant calling on behalf of {brand_name}.
+    hi_latn: Main {agent_display_name} hoon, {brand_name} ki taraf se ek automated assistant.
+    mr: मी {agent_display_name}, {brand_name} च्या वतीने बोलणारी एक ऑटोमेटेड असिस्टंट आहे.
+    gu: હું {agent_display_name}, {brand_name} વતી બોલતી એક ઓટોમેટેડ આસિસ્ટન્ટ છું.
+    bn: আমি {agent_display_name}, {brand_name} এর পক্ষ থেকে একটি অটোমেটেড অ্যাসিস্ট্যান্ট।
+    ta: நான் {agent_display_name}, {brand_name} சார்பாக பேசும் ஒரு ஆட்டோமேட்டட் அசிஸ்டன்ட்.
+    te: నేను {agent_display_name}, {brand_name} తరపున మాట్లాడే ఒక ఆటోమేటెడ్ అసిస్టెంట్.
+    kn: ನಾನು {agent_display_name}, {brand_name} ಪರವಾಗಿ ಮಾತಾಡುವ ಒಂದು ಆಟೋಮೇಟೆಡ್ ಅಸಿಸ್ಟೆಂಟ್.
+    ml: ഞാൻ {agent_display_name}, {brand_name} ന് വേണ്ടി സംസാരിക്കുന്ന ഒരു ഓട്ടോമേറ്റഡ് അസിസ്റ്റന്റ് ആണ്.
+    hi: मैं {agent_display_name} हूँ, {brand_name} की तरफ़ से एक ऑटोमेटेड असिस्टेंट.
+- id: FAQ_C002
+  question:
+    en: Am I speaking to a robot?
+    hi_latn: Kya main robot se baat kar raha hoon?
+    mr: मी रोबोटशी बोलतोय का?
+    gu: શું હું રોબોટ સાથે વાત કરું છું?
+    bn: আমি কি রোবটের সাথে কথা বলছি?
+    ta: நான் ரோபோட்டிடம் பேசுறேனா?
+    te: నేను రోబోట్ తో మాట్లాడుతున్నానా?
+    kn: ನಾನು ರೋಬೋಟ್ ಜೊತೆ ಮಾತಾಡ್ತಿದ್ದೇನಾ?
+    ml: ഞാൻ റോബോട്ടിനോടാണോ സംസാരിക്കുന്നത്?
+    hi: क्या मैं रोबोट से बात कर रहा हूँ?
+  paraphrases_en:
+  - is this a recording
+  - are you a real person
+  - is this AI
+  paraphrases_hi_latn:
+  - yeh recording hai kya
+  - aap asli insaan hain
+  answer:
+    en: Yes, I am an automated assistant. I can connect you to a human advisor at any time - just ask.
+    hi_latn: Haan, main ek automated assistant hoon. Aap jab chahein, main aapko human advisor se connect kar sakti hoon - bas kahiye.
+    mr: हो, मी एक ऑटोमेटेड असिस्टंट आहे. तुम्हाला हवं तेव्हा मी तुम्हाला माणसाशी जोडू शकते, फक्त सांगा.
+    gu: હા, હું એક ઓટોમેટેડ આસિસ્ટન્ટ છું. તમે ઇચ્છો ત્યારે હું તમને માણસ સાથે જોડી શકું છું, બસ કહો.
+    bn: হ্যাঁ, আমি একটি অটোমেটেড অ্যাসিস্ট্যান্ট। আপনি চাইলে যেকোনো সময় আমি আপনাকে একজন মানুষের সাথে যুক্ত করতে পারি, শুধু বলুন।
+    ta: ஆமா, நான் ஒரு ஆட்டோமேட்டட் அசிஸ்டன்ட். நீங்க கேட்டா எப்போ வேணாலும் மனிதரிடம் இணைக்க முடியும், சொல்லுங்க.
+    te: అవును, నేను ఒక ఆటోమేటెడ్ అసిస్టెంట్. మీరు కోరుకుంటే ఎప్పుడైనా మనిషితో కనెక్ట్ చేయగలను, చెప్పండి.
+    kn: ಹೌದು, ನಾನು ಒಂದು ಆಟೋಮೇಟೆಡ್ ಅಸಿಸ್ಟೆಂಟ್. ನೀವು ಕೇಳಿದರೆ ಯಾವಾಗ ಬೇಕಾದರೂ ವ್ಯಕ್ತಿಗೆ ಕನೆಕ್ಟ್ ಮಾಡಬಲ್ಲೆ, ಹೇಳಿ.
+    ml: അതെ, ഞാൻ ഒരു ഓട്ടോമേറ്റഡ് അസിസ്റ്റന്റ് ആണ്. നിങ്ങൾ ആവശ്യപ്പെട്ടാൽ എപ്പോൾ വേണമെങ്കിലും ഒരാളുമായി ബന്ധിപ്പിക്കാം, പറഞ്ഞാൽ മതി.
+    hi: हाँ, मैं एक ऑटोमेटेड असिस्टेंट हूँ. आप जब चाहें, मैं आपको किसी व्यक्ति से जोड़ सकती हूँ, बस कहिए.
+- id: FAQ_C003
+  question:
+    en: Is this call being recorded?
+    hi_latn: Kya yeh call record ho rahi hai?
+    mr: हा कॉल रेकॉर्ड होतोय का?
+    gu: શું આ કોલ રેકોર્ડ થાય છે?
+    bn: এই কলটি কি রেকর্ড হচ্ছে?
+    ta: இந்த கால் ரெக்கார்ட் ஆகுதா?
+    te: ఈ కాల్ రికార్డ్ అవుతోందా?
+    kn: ಈ ಕಾಲ್ ರೆಕಾರ್ಡ್ ಆಗ್ತಿದೆಯಾ?
+    ml: ഈ കോൾ റെക്കോർഡ് ചെയ്യുന്നുണ്ടോ?
+    hi: क्या यह कॉल रिकॉर्ड हो रही है?
+  paraphrases_en:
+  - are you recording me
+  - why is this recorded
+  paraphrases_hi_latn:
+  - aap record kar rahe hain kya
+  answer:
+    en: Yes. This call is recorded for quality and training purposes.
+    hi_latn: Haan. Yeh call quality aur training ke liye record ki ja rahi hai.
+    mr: हो. हा कॉल क्वालिटी आणि ट्रेनिंगसाठी रेकॉर्ड केला जातोय.
+    gu: હા. આ કોલ ક્વોલિટી અને ટ્રેનિંગ માટે રેકોર્ડ થાય છે.
+    bn: হ্যাঁ। এই কলটি গুণমান ও প্রশিক্ষণের জন্য রেকর্ড করা হচ্ছে।
+    ta: ஆமா. இந்த கால் குவாலிட்டி மற்றும் ட்ரெயினிங்குக்காக ரெக்கார்ட் ஆகுது.
+    te: అవును. ఈ కాల్ క్వాలిటీ మరియు ట్రైనింగ్ కోసం రికార్డ్ అవుతోంది.
+    kn: ಹೌದು. ಈ ಕಾಲ್ ಕ್ವಾಲಿಟಿ ಮತ್ತು ಟ್ರೈನಿಂಗ್ ಗಾಗಿ ರೆಕಾರ್ಡ್ ಆಗುತ್ತಿದೆ.
+    ml: അതെ. ഈ കോൾ ക്വാളിറ്റി, ട്രെയിനിംഗ് ആവശ്യങ്ങൾക്കായി റെക്കോർഡ് ചെയ്യുന്നു.
+    hi: हाँ. यह कॉल क्वालिटी और ट्रेनिंग के लिए रिकॉर्ड की जा रही है.
+- id: FAQ_C004
+  question:
+    en: Do you need my card number?
+    hi_latn: Kya aapko mera card number chahiye?
+    mr: तुम्हाला माझा कार्ड नंबर हवा आहे का?
+    gu: શું તમને મારો કાર્ડ નંબર જોઈએ છે?
+    bn: আপনার কি আমার কার্ড নম্বর দরকার?
+    ta: உங்களுக்கு என் கார்டு நம்பர் வேணுமா?
+    te: మీకు నా కార్డ్ నంబర్ కావాలా?
+    kn: ನಿಮಗೆ ನನ್ನ ಕಾರ್ಡ್ ನಂಬರ್ ಬೇಕಾ?
+    ml: നിങ്ങൾക്ക് എന്റെ കാർഡ് നമ്പർ വേണോ?
+    hi: क्या आपको मेरा कार्ड नंबर चाहिए?
+  paraphrases_en:
+  - will you ask for OTP
+  - do you want my PIN
+  - do you need my CVV
+  paraphrases_hi_latn:
+  - OTP maangenge kya
+  - PIN chahiye kya
+  answer:
+    en: No. I will never ask for your card number, PIN, CVV or OTP. Please do not share these with anyone.
+    hi_latn: Nahi. Main kabhi aapka card number, PIN, CVV ya OTP nahi maangungi. Kripya yeh kisi ke saath share na karein.
+    mr: नाही. मी कधीही तुमचा कार्ड नंबर, पिन, सीव्हीव्ही किंवा ओटीपी मागणार नाही. कृपया हे कोणालाही सांगू नका.
+    gu: ના. હું ક્યારેય તમારો કાર્ડ નંબર, પિન, સીવીવી કે ઓટીપી નહીં માંગું. કૃપા કરીને આ કોઈને ન કહો.
+    bn: না। আমি কখনও আপনার কার্ড নম্বর, পিন, সিভিভি বা ওটিপি চাইব না। অনুগ্রহ করে এগুলি কাউকে বলবেন না।
+    ta: இல்ல. நான் எப்போதும் உங்க கார்டு நம்பர், பின், சிவிவி அல்லது ஓடிபி கேட்க மாட்டேன். தயவுசெய்து இதை யாருக்கும் சொல்லாதீங்க.
+    te: లేదు. నేను ఎప్పుడూ మీ కార్డ్ నంబర్, పిన్, సీవీవీ లేదా ఓటీపీ అడగను. దయచేసి వీటిని ఎవరికీ చెప్పకండి.
+    kn: ಇಲ್ಲ. ನಾನು ಎಂದಿಗೂ ನಿಮ್ಮ ಕಾರ್ಡ್ ನಂಬರ್, ಪಿನ್, ಸಿವಿವಿ ಅಥವಾ ಓಟಿಪಿ ಕೇಳುವುದಿಲ್ಲ. ದಯವಿಟ್ಟು ಇವುಗಳನ್ನು ಯಾರಿಗೂ ಹೇಳಬೇಡಿ.
+    ml: ഇല്ല. ഞാൻ ഒരിക്കലും നിങ്ങളുടെ കാർഡ് നമ്പർ, പിൻ, സിവിവി അല്ലെങ്കിൽ ഒടിപി ചോദിക്കില്ല. ദയവായി ഇവ ആരോടും പറയരുത്.
+    hi: नहीं. मैं कभी आपका कार्ड नंबर, पिन, सीवीवी या ओटीपी नहीं माँगूँगी. कृपया ये किसी के साथ साझा न करें.
+  never_say:
+  - please share your card number
+  - read out the OTP
+- id: FAQ_C005
+  question:
+    en: How did you get my number?
+    hi_latn: Aapko mera number kahan se mila?
+    mr: माझा नंबर कुठून मिळाला?
+    gu: મારો નંબર ક્યાંથી મળ્યો?
+    bn: আমার নম্বর কোথা থেকে পেলেন?
+    ta: என் நம்பர் எங்க இருந்து கிடைச்சது?
+    te: నా నంబర్ ఎక్కడ నుంచి వచ్చింది?
+    kn: ನನ್ನ ನಂಬರ್ ಎಲ್ಲಿಂದ ಸಿಕ್ಕಿತು?
+    ml: എന്റെ നമ്പർ എവിടെ നിന്ന് കിട്ടി?
+    hi: आपको मेरा नंबर कहाँ से मिला?
+  paraphrases_en:
+  - who gave you my details
+  - where did you get my information
+  paraphrases_hi_latn:
+  - meri details kisne di
+  answer:
+    en: I am calling on the number registered with your {brand_name} card account.
+    hi_latn: Main aapke {brand_name} card account par registered number par call kar rahi hoon.
+    mr: मी तुमच्या {brand_name} कार्ड खात्यावर नोंदणीकृत नंबरवर कॉल करतोय.
+    gu: હું તમારા {brand_name} કાર્ડ એકાઉન્ટ પર રજિસ્ટર્ડ નંબર પર કોલ કરું છું.
+    bn: আমি আপনার {brand_name} কার্ড অ্যাকাউন্টে নিবন্ধিত নম্বরে কল করছি।
+    ta: உங்கள் {brand_name} கார்டு அக்கவுண்டில் பதிவு செய்யப்பட்ட நம்பருக்கு கால் பண்ணுகிறேன்.
+    te: మీ {brand_name} కార్డ్ ఖాతాలో రిజిస్టర్ అయిన నంబర్ కు కాల్ చేస్తున్నాను.
+    kn: ನಿಮ್ಮ {brand_name} ಕಾರ್ಡ್ ಖಾತೆಯಲ್ಲಿ ನೋಂದಾಯಿತ ನಂಬರ್ ಗೆ ಕಾಲ್ ಮಾಡುತ್ತಿದ್ದೇನೆ.
+    ml: നിങ്ങളുടെ {brand_name} കാർഡ് അക്കൗണ്ടിൽ രജിസ്റ്റർ ചെയ്ത നമ്പറിലാണ് വിളിക്കുന്നത്.
+    hi: मैं आपके {brand_name} कार्ड अकाउंट पर रजिस्टर्ड नंबर पर कॉल कर रही हूँ.
+- id: FAQ_C006
+  question:
+    en: How do I stop these calls?
+    hi_latn: Yeh calls kaise band karein?
+    mr: हे कॉल कसे बंद करायचे?
+    gu: આ કોલ કેવી રીતે બંધ કરવા?
+    bn: এই কলগুলি কীভাবে বন্ধ করব?
+    ta: இந்த கால்களை எப்படி நிறுத்துவது?
+    te: ఈ కాల్స్ ఎలా ఆపాలి?
+    kn: ಈ ಕಾಲ್ ಗಳನ್ನು ಹೇಗೆ ನಿಲ್ಲಿಸುವುದು?
+    ml: ഈ കോളുകൾ എങ്ങനെ നിർത്താം?
+    hi: ये कॉल कैसे बंद करें?
+  paraphrases_en:
+  - put me on DND
+  - remove me from your list
+  - I don't want marketing calls
+  paraphrases_hi_latn:
+  - DND pe daal dijiye
+  - list se hata dijiye
+  answer:
+    en: I can note that right now, and you will not receive further promotional calls from us.
+    hi_latn: Main abhi note kar sakti hoon, aur aapko aage promotional calls nahi aayengi.
+    mr: मी आत्ताच नोंद करू शकते, आणि तुम्हाला यापुढे आमच्याकडून प्रमोशनल कॉल येणार नाहीत.
+    gu: હું અત્યારે જ નોંધી શકું છું, અને તમને હવે પછી અમારા તરફથી પ્રમોશનલ કોલ નહીં આવે.
+    bn: আমি এখনই নথিভুক্ত করতে পারি, এবং আপনি আর আমাদের কাছ থেকে প্রমোশনাল কল পাবেন না।
+    ta: நான் இப்போதே பதிவு செய்கிறேன், இனி எங்களிடம் இருந்து ப்ரோமோஷனல் கால்கள் வராது.
+    te: నేను ఇప్పుడే నోట్ చేస్తాను, ఇకపై మా నుంచి ప్రమోషనల్ కాల్స్ రావు.
+    kn: ನಾನು ಈಗಲೇ ನೋಂದಾಯಿಸುತ್ತೇನೆ, ಇನ್ನು ಮುಂದೆ ನಮ್ಮಿಂದ ಪ್ರಚಾರದ ಕಾಲ್ ಬರುವುದಿಲ್ಲ.
+    ml: ഞാൻ ഇപ്പോൾ തന്നെ രേഖപ്പെടുത്താം, ഇനി ഞങ്ങളിൽ നിന്ന് പ്രൊമോഷണൽ കോളുകൾ വരില്ല.
+    hi: मैं अभी नोट कर सकती हूँ, और आपको आगे हमसे प्रमोशनल कॉल नहीं आएँगे.
+- id: FAQ_C007
+  question:
+    en: Is my data safe?
+    hi_latn: Kya meri details surakshit hain?
+    mr: माझी माहिती सुरक्षित आहे का?
+    gu: શું મારી માહિતી સુરક્ષિત છે?
+    bn: আমার তথ্য কি নিরাপদ?
+    ta: என் தகவல் பாதுகாப்பா இருக்கா?
+    te: నా సమాచారం సురక్షితమేనా?
+    kn: ನನ್ನ ಮಾಹಿತಿ ಸುರಕ್ಷಿತವೇ?
+    ml: എന്റെ വിവരങ്ങൾ സുരക്ഷിതമാണോ?
+    hi: क्या मेरी जानकारी सुरक्षित है?
+  paraphrases_en:
+  - what do you do with my data
+  - is this secure
+  paraphrases_hi_latn:
+  - meri information ka kya karte hain
+  answer:
+    en: Your information is handled under {brand_name} policy. I do not hold your card details on this call. Our advisor can explain further.
+    hi_latn: Aapki information {brand_name} policy ke tahat handle hoti hai. Is call par mere paas aapke card details nahi hain. Hamare advisor aur bata sakte hain.
+    mr: तुमची माहिती {brand_name} च्या पॉलिसीनुसार हाताळली जाते. या कॉलवर माझ्याकडे तुमचे कार्ड डिटेल्स नाहीत. आमचे अ‍ॅडव्हायझर अधिक सांगू शकतात.
+    gu: તમારી માહિતી {brand_name} ની પોલિસી મુજબ સંભાળવામાં આવે છે. આ કોલ પર મારી પાસે તમારા કાર્ડ ડિટેલ્સ નથી. અમારા એડવાઇઝર વધુ કહી શકે.
+    bn: আপনার তথ্য {brand_name} এর নীতি অনুযায়ী পরিচালিত হয়। এই কলে আমার কাছে আপনার কার্ডের তথ্য নেই। আমাদের অ্যাডভাইজার আরও বলতে পারবেন।
+    ta: உங்கள் தகவல் {brand_name} பாலிசி படி கையாளப்படுகிறது. இந்த காலில் என்கிட்ட உங்க கார்டு விவரங்கள் இல்ல. எங்க அட்வைசர் மேலும் சொல்வாங்க.
+    te: మీ సమాచారం {brand_name} పాలసీ ప్రకారం నిర్వహించబడుతుంది. ఈ కాల్ లో నా దగ్గర మీ కార్డ్ వివరాలు లేవు. మా అడ్వైజర్ మరింత చెప్పగలరు.
+    kn: ನಿಮ್ಮ ಮಾಹಿತಿ {brand_name} ನೀತಿಯ ಪ್ರಕಾರ ನಿರ್ವಹಿಸಲಾಗುತ್ತದೆ. ಈ ಕಾಲ್ ನಲ್ಲಿ ನನ್ನ ಬಳಿ ನಿಮ್ಮ ಕಾರ್ಡ್ ವಿವರಗಳಿಲ್ಲ. ನಮ್ಮ ಅಡ್ವೈಸರ್ ಹೆಚ್ಚು ಹೇಳಬಲ್ಲರು.
+    ml: നിങ്ങളുടെ വിവരങ്ങൾ {brand_name} നയപ്രകാരം കൈകാര്യം ചെയ്യുന്നു. ഈ കോളിൽ എന്റെ കയ്യിൽ നിങ്ങളുടെ കാർഡ് വിവരങ്ങൾ ഇല്ല. ഞങ്ങളുടെ അഡ്വൈസർ കൂടുതൽ പറയാം.
+    hi: आपकी जानकारी {brand_name} की पॉलिसी के तहत संभाली जाती है. इस कॉल पर मेरे पास आपके कार्ड की डिटेल नहीं है. हमारे एडवाइज़र और बता सकते हैं.
+- id: FAQ_C008
+  question:
+    en: Can I check this on the app?
+    hi_latn: Kya main yeh app par dekh sakta hoon?
+    mr: मी हे अ‍ॅपवर बघू शकतो का?
+    gu: શું હું આ એપ પર જોઈ શકું?
+    bn: আমি কি এটি অ্যাপে দেখতে পারি?
+    ta: நான் இதை ஆப்ல பார்க்க முடியுமா?
+    te: నేను దీన్ని యాప్ లో చూడవచ్చా?
+    kn: ನಾನು ಇದನ್ನು ಆ್ಯಪ್ ನಲ್ಲಿ ನೋಡಬಹುದಾ?
+    ml: എനിക്ക് ഇത് ആപ്പിൽ കാണാമോ?
+    hi: क्या मैं यह ऐप पर देख सकता हूँ?
+  paraphrases_en:
+  - is this on my statement
+  - can I verify online
+  paraphrases_hi_latn:
+  - online verify kar sakte hain kya
+  answer:
+    en: Yes. You can view offers on your {brand_name} app, or call the number printed on the back of your card.
+    hi_latn: Haan. Aap apne {brand_name} app par offers dekh sakte hain, ya card ke peeche likhe number par call kar sakte hain.
+    mr: हो. तुम्ही तुमच्या {brand_name} अ‍ॅपवर ऑफर बघू शकता, किंवा कार्डच्या मागे छापलेल्या नंबरवर कॉल करू शकता.
+    gu: હા. તમે તમારી {brand_name} એપ પર ઓફર જોઈ શકો છો, અથવા કાર્ડની પાછળ છપાયેલા નંબર પર કોલ કરી શકો છો.
+    bn: হ্যাঁ। আপনি আপনার {brand_name} অ্যাপে অফার দেখতে পারেন, অথবা কার্ডের পিছনে ছাপা নম্বরে কল করতে পারেন।
+    ta: ஆமா. உங்கள் {brand_name} ஆப்பில் ஆஃபர்களை பார்க்கலாம், அல்லது கார்டின் பின்புறம் உள்ள நம்பருக்கு கால் பண்ணலாம்.
+    te: అవును. మీ {brand_name} యాప్ లో ఆఫర్లు చూడవచ్చు, లేదా కార్డ్ వెనుక ఉన్న నంబర్ కు కాల్ చేయవచ్చు.
+    kn: ಹೌದು. ನಿಮ್ಮ {brand_name} ಆ್ಯಪ್ ನಲ್ಲಿ ಆಫರ್ ನೋಡಬಹುದು, ಅಥವಾ ಕಾರ್ಡ್ ಹಿಂದೆ ಇರುವ ನಂಬರ್ ಗೆ ಕಾಲ್ ಮಾಡಬಹುದು.
+    ml: അതെ. നിങ്ങളുടെ {brand_name} ആപ്പിൽ ഓഫറുകൾ കാണാം, അല്ലെങ്കിൽ കാർഡിന്റെ പിന്നിൽ അച്ചടിച്ച നമ്പറിൽ വിളിക്കാം.
+    hi: हाँ. आप अपने {brand_name} ऐप पर ऑफर देख सकते हैं, या कार्ड के पीछे लिखे नंबर पर कॉल कर सकते हैं.
+- id: FAQ_C009
+  question:
+    en: Can you call me later?
+    hi_latn: Kya aap baad mein call kar sakte hain?
+    mr: तुम्ही नंतर कॉल करू शकता का?
+    gu: શું તમે પછી કોલ કરી શકો?
+    bn: আপনি কি পরে কল করতে পারেন?
+    ta: நீங்க பிறகு கால் பண்ண முடியுமா?
+    te: మీరు తర్వాత కాల్ చేయగలరా?
+    kn: ನೀವು ನಂತರ ಕಾಲ್ ಮಾಡಬಹುದಾ?
+    ml: നിങ്ങൾക്ക് പിന്നീട് വിളിക്കാമോ?
+    hi: क्या आप बाद में कॉल कर सकते हैं?
+  paraphrases_en:
+  - I'm busy now
+  - call me in the evening
+  paraphrases_hi_latn:
+  - abhi busy hoon
+  - shaam ko call karein
+  answer:
+    en: Certainly. We will call you back at a more convenient time.
+    hi_latn: Zaroor. Hum aapko kisi convenient time par dobara call karenge.
+    mr: नक्कीच. आम्ही तुम्हाला सोयीच्या वेळी परत कॉल करू.
+    gu: ચોક્કસ. અમે તમને અનુકૂળ સમયે પાછા કોલ કરીશું.
+    bn: অবশ্যই। আমরা আপনাকে সুবিধাজনক সময়ে আবার কল করব।
+    ta: கண்டிப்பாக. வசதியான நேரத்தில் நாங்கள் திரும்ப கால் பண்ணுகிறோம்.
+    te: తప్పకుండా. మేము మీకు అనుకూలమైన సమయంలో తిరిగి కాల్ చేస్తాము.
+    kn: ಖಂಡಿತ. ನಾವು ನಿಮಗೆ ಅನುಕೂಲಕರ ಸಮಯದಲ್ಲಿ ಮತ್ತೆ ಕಾಲ್ ಮಾಡುತ್ತೇವೆ.
+    ml: തീർച്ചയായും. സൗകര്യപ്രദമായ സമയത്ത് ഞങ്ങൾ തിരികെ വിളിക്കാം.
+    hi: ज़रूर. हम आपको किसी सुविधाजनक समय पर दोबारा कॉल करेंगे.
+- id: FAQ_C010
+  question:
+    en: How long will this take?
+    hi_latn: Isme kitna time lagega?
+    mr: याला किती वेळ लागेल?
+    gu: આમાં કેટલો સમય લાગશે?
+    bn: এতে কত সময় লাগবে?
+    ta: இதுக்கு எவ்வளவு நேரம் ஆகும்?
+    te: దీనికి ఎంత సమయం పడుతుంది?
+    kn: ಇದಕ್ಕೆ ಎಷ್ಟು ಸಮಯ ಆಗುತ್ತೆ?
+    ml: ഇതിന് എത്ര സമയം എടുക്കും?
+    hi: इसमें कितना समय लगेगा?
+  paraphrases_en:
+  - I don't have time
+  - make it quick
+  paraphrases_hi_latn:
+  - mere paas time nahi hai
+  - jaldi bataiye
+  answer:
+    en: About a minute. If you would like the full details, our advisor can take you through them.
+    hi_latn: Lagbhag ek minute. Agar aap poori details chahte hain, hamare advisor aapko samjha sakte hain.
+    mr: साधारण एक मिनिट. तुम्हाला पूर्ण तपशील हवा असेल, तर आमचे अ‍ॅडव्हायझर सांगू शकतात.
+    gu: લગભગ એક મિનિટ. તમને પૂરી વિગતો જોઈતી હોય, તો અમારા એડવાઇઝર કહી શકે.
+    bn: প্রায় এক মিনিট। আপনি বিস্তারিত চাইলে, আমাদের অ্যাডভাইজার বলতে পারবেন।
+    ta: ஒரு நிமிடம். உங்களுக்கு முழு விவரம் வேணும்னா, எங்க அட்வைசர் சொல்லுவாங்க.
+    te: సుమారు ఒక నిమిషం. మీకు పూర్తి వివరాలు కావాలంటే, మా అడ్వైజర్ చెప్పగలరు.
+    kn: ಸುಮಾರು ಒಂದು ನಿಮಿಷ. ನಿಮಗೆ ಪೂರ್ಣ ವಿವರ ಬೇಕಾದರೆ, ನಮ್ಮ ಅಡ್ವೈಸರ್ ಹೇಳಬಲ್ಲರು.
+    ml: ഏകദേശം ഒരു മിനിറ്റ്. നിങ്ങൾക്ക് പൂർണ്ണ വിവരങ്ങൾ വേണമെങ്കിൽ, ഞങ്ങളുടെ അഡ്വൈസർ പറയാം.
+    hi: लगभग एक मिनट. अगर आप पूरी डिटेल चाहते हैं, तो हमारे एडवाइज़र समझा सकते हैं.
+- id: FAQ_C011
+  question:
+    en: Can I speak in another language?
+    hi_latn: Kya main dusri bhasha mein baat kar sakta hoon?
+    mr: मी दुसऱ्या भाषेत बोलू शकतो का?
+    gu: શું હું બીજી ભાષામાં વાત કરી શકું?
+    bn: আমি কি অন্য ভাষায় কথা বলতে পারি?
+    ta: நான் வேற மொழியில பேசலாமா?
+    te: నేను వేరే భాషలో మాట్లాడవచ్చా?
+    kn: ನಾನು ಬೇರೆ ಭಾಷೆಯಲ್ಲಿ ಮಾತಾಡಬಹುದಾ?
+    ml: എനിക്ക് മറ്റൊരു ഭാഷയിൽ സംസാരിക്കാമോ?
+    hi: क्या मैं दूसरी भाषा में बात कर सकता हूँ?
+  paraphrases_en:
+  - do you speak Tamil
+  - can we talk in Hindi
+  paraphrases_hi_latn:
+  - Hindi mein baat kar sakte hain
+  answer:
+    en: Yes. Please tell me which language you prefer.
+    hi_latn: Haan. Kripya bataiye aap kaunsi bhasha pasand karenge.
+    mr: हो. कृपया सांगा तुम्हाला कोणती भाषा आवडेल.
+    gu: હા. કૃપા કરીને કહો તમને કઈ ભાષા ગમશે.
+    bn: হ্যাঁ। অনুগ্রহ করে বলুন আপনি কোন ভাষা পছন্দ করবেন।
+    ta: ஆமா. உங்களுக்கு எந்த மொழி வேணும்னு சொல்லுங்க.
+    te: అవును. మీకు ఏ భాష కావాలో చెప్పండి.
+    kn: ಹೌದು. ನಿಮಗೆ ಯಾವ ಭಾಷೆ ಬೇಕು ಹೇಳಿ.
+    ml: അതെ. നിങ്ങൾക്ക് ഏത് ഭാഷ വേണമെന്ന് പറയൂ.
+    hi: हाँ. कृपया बताइए आपको कौन सी भाषा पसंद है.
+- id: FAQ_C012
+  question:
+    en: Will you send me an SMS?
+    hi_latn: Kya aap SMS bhejenge?
+    mr: तुम्ही मला एसएमएस पाठवाल का?
+    gu: શું તમે મને એસએમએસ મોકલશો?
+    bn: আপনি কি আমাকে এসএমএস পাঠাবেন?
+    ta: நீங்க எனக்கு எஸ்எம்எஸ் அனுப்புவீங்களா?
+    te: మీరు నాకు ఎస్ఎంఎస్ పంపుతారా?
+    kn: ನೀವು ನನಗೆ ಎಸ್ಎಂಎಸ್ ಕಳುಹಿಸ್ತೀರಾ?
+    ml: നിങ്ങൾ എനിക്ക് എസ്എംഎസ് അയയ്ക്കുമോ?
+    hi: क्या आप मुझे एसएमएस भेजेंगे?
+  paraphrases_en:
+  - can you message me the details
+  - send it on WhatsApp
+  paraphrases_hi_latn:
+  - details message kar dijiye
+  answer:
+    en: Our advisor can confirm what will be sent to your registered mobile number.
+    hi_latn: Hamare advisor confirm kar sakte hain ki aapke registered mobile number par kya bheja jayega.
+    mr: आमचे अ‍ॅडव्हायझर सांगू शकतात की तुमच्या नोंदणीकृत मोबाइल नंबरवर काय पाठवलं जाईल.
+    gu: અમારા એડવાઇઝર કહી શકે કે તમારા રજિસ્ટર્ડ મોબાઇલ નંબર પર શું મોકલવામાં આવશે.
+    bn: আমাদের অ্যাডভাইজার নিশ্চিত করতে পারবেন আপনার নিবন্ধিত মোবাইল নম্বরে কী পাঠানো হবে।
+    ta: உங்க பதிவு செய்த மொபைல் நம்பருக்கு என்ன அனுப்பப்படும்னு எங்க அட்வைசர் உறுதி செய்வாங்க.
+    te: మీ రిజిస్టర్డ్ మొబైల్ నంబర్ కు ఏమి పంపబడుతుందో మా అడ్వైజర్ నిర్ధారించగలరు.
+    kn: ನಿಮ್ಮ ನೋಂದಾಯಿತ ಮೊಬೈಲ್ ನಂಬರ್ ಗೆ ಏನು ಕಳುಹಿಸಲಾಗುತ್ತದೆ ಎಂದು ನಮ್ಮ ಅಡ್ವೈಸರ್ ಖಚಿತಪಡಿಸಬಲ್ಲರು.
+    ml: നിങ്ങളുടെ രജിസ്റ്റർ ചെയ്ത മൊബൈൽ നമ്പറിലേക്ക് എന്ത് അയയ്ക്കുമെന്ന് ഞങ്ങളുടെ അഡ്വൈസർ സ്ഥിരീകരിക്കും.
+    hi: हमारे एडवाइज़र बता सकते हैं कि आपके रजिस्टर्ड मोबाइल नंबर पर क्या भेजा जाएगा.
+- id: FAQ_C013
+  question:
+    en: Is there any charge for this call?
+    hi_latn: Is call ka koi charge hai?
+    mr: या कॉलचा काही चार्ज आहे का?
+    gu: આ કોલનો કોઈ ચાર્જ છે?
+    bn: এই কলের কি কোনো চার্জ আছে?
+    ta: இந்த காலுக்கு ஏதாவது கட்டணம் இருக்கா?
+    te: ఈ కాల్ కు ఏదైనా చార్జ్ ఉందా?
+    kn: ಈ ಕಾಲ್ ಗೆ ಯಾವುದೇ ಚಾರ್ಜ್ ಇದೆಯಾ?
+    ml: ഈ കോളിന് എന്തെങ്കിലും ചാർജ് ഉണ്ടോ?
+    hi: क्या इस कॉल का कोई चार्ज है?
+  paraphrases_en:
+  - will I be billed for this
+  paraphrases_hi_latn:
+  - iska paisa lagega kya
+  answer:
+    en: No. There is no charge for this call.
+    hi_latn: Nahi. Is call ka koi charge nahi hai.
+    mr: नाही. या कॉलचा कोणताही चार्ज नाही.
+    gu: ના. આ કોલનો કોઈ ચાર્જ નથી.
+    bn: না। এই কলের কোনো চার্জ নেই।
+    ta: இல்ல. இந்த காலுக்கு எந்த கட்டணமும் இல்ல.
+    te: లేదు. ఈ కాల్ కు ఎలాంటి చార్జ్ లేదు.
+    kn: ಇಲ್ಲ. ಈ ಕಾಲ್ ಗೆ ಯಾವುದೇ ಚಾರ್ಜ್ ಇಲ್ಲ.
+    ml: ഇല്ല. ഈ കോളിന് ഒരു ചാർജും ഇല്ല.
+    hi: नहीं. इस कॉल का कोई चार्ज नहीं है.
+- id: FAQ_C014
+  question:
+    en: I want to speak to a person.
+    hi_latn: Mujhe kisi vyakti se baat karni hai.
+    mr: मला माणसाशी बोलायचं आहे.
+    gu: મારે માણસ સાથે વાત કરવી છે.
+    bn: আমি একজন মানুষের সাথে কথা বলতে চাই।
+    ta: நான் ஒரு நபரிடம் பேசணும்.
+    te: నేను ఒక వ్యక్తితో మాట్లాడాలి.
+    kn: ನಾನು ವ್ಯಕ್ತಿಯ ಜೊತೆ ಮಾತಾಡಬೇಕು.
+    ml: എനിക്ക് ഒരാളോട് സംസാരിക്കണം.
+    hi: मुझे किसी व्यक्ति से बात करनी है.
+  paraphrases_en:
+  - transfer me to an agent
+  - get me a human
+  paraphrases_hi_latn:
+  - agent se baat karao
+  - kisi insaan se baat karni hai
+  answer:
+    en: Certainly. I will connect you to our advisor now.
+    hi_latn: Zaroor. Main aapko abhi hamare advisor se connect karti hoon.
+    mr: नक्कीच. मी तुम्हाला आत्ता आमच्या अ‍ॅडव्हायझरशी जोडते.
+    gu: ચોક્કસ. હું તમને અત્યારે અમારા એડવાઇઝર સાથે જોડું છું.
+    bn: অবশ্যই। আমি আপনাকে এখনই আমাদের অ্যাডভাইজারের সাথে যুক্ত করছি।
+    ta: கண்டிப்பாக. உங்களை இப்போது எங்கள் அட்வைசரிடம் இணைக்கிறேன்.
+    te: తప్పకుండా. మిమ్మల్ని ఇప్పుడు మా అడ్వైజర్ కు కనెక్ట్ చేస్తున్నాను.
+    kn: ಖಂಡಿತ. ನಿಮ್ಮನ್ನು ಈಗ ನಮ್ಮ ಅಡ್ವೈಸರ್ ಗೆ ಕನೆಕ್ಟ್ ಮಾಡುತ್ತಿದ್ದೇನೆ.
+    ml: തീർച്ചയായും. ഞാൻ നിങ്ങളെ ഇപ്പോൾ ഞങ്ങളുടെ അഡ്വൈസറുമായി ബന്ധിപ്പിക്കാം.
+    hi: ज़रूर. मैं आपको अभी हमारे एडवाइज़र से जोड़ती हूँ.
+- id: FAQ_C015
+  question:
+    en: I already spoke to someone about this.
+    hi_latn: Main iske baare mein pehle baat kar chuka hoon.
+    mr: मी याबद्दल आधीच बोललो आहे.
+    gu: હું આ વિશે પહેલાં વાત કરી ચૂક્યો છું.
+    bn: আমি এই বিষয়ে আগে কথা বলেছি।
+    ta: நான் இதைப் பத்தி ஏற்கனவே பேசிட்டேன்.
+    te: నేను దీని గురించి ఇంతకుముందే మాట్లాడాను.
+    kn: ನಾನು ಇದರ ಬಗ್ಗೆ ಈಗಾಗಲೇ ಮಾತಾಡಿದ್ದೇನೆ.
+    ml: ഞാൻ ഇതിനെക്കുറിച്ച് നേരത്തെ സംസാരിച്ചിട്ടുണ്ട്.
+    hi: मैं इस बारे में पहले बात कर चुका हूँ.
+  paraphrases_en:
+  - someone already called me
+  - I've heard this before
+  paraphrases_hi_latn:
+  - pehle bhi call aayi thi
+  answer:
+    en: Thank you for telling me. Our advisor can check the status for you.
+    hi_latn: Batane ke liye dhanyavaad. Hamare advisor aapke liye status check kar sakte hain.
+    mr: सांगितल्याबद्दल धन्यवाद. आमचे अ‍ॅडव्हायझर तुमच्यासाठी स्टेटस तपासू शकतात.
+    gu: કહેવા બદલ આભાર. અમારા એડવાઇઝર તમારા માટે સ્ટેટસ ચેક કરી શકે.
+    bn: জানানোর জন্য ধন্যবাদ। আমাদের অ্যাডভাইজার আপনার জন্য স্ট্যাটাস দেখতে পারবেন।
+    ta: சொன்னதுக்கு நன்றி. எங்க அட்வைசர் உங்களுக்காக ஸ்டேட்டஸ் செக் பண்ணுவாங்க.
+    te: చెప్పినందుకు ధన్యవాదాలు. మా అడ్వైజర్ మీ కోసం స్టేటస్ చెక్ చేయగలరు.
+    kn: ಹೇಳಿದ್ದಕ್ಕೆ ಧನ್ಯವಾದ. ನಮ್ಮ ಅಡ್ವೈಸರ್ ನಿಮಗಾಗಿ ಸ್ಟೇಟಸ್ ಚೆಕ್ ಮಾಡಬಲ್ಲರು.
+    ml: പറഞ്ഞതിന് നന്ദി. ഞങ്ങളുടെ അഡ്വൈസർ നിങ്ങൾക്കായി സ്റ്റാറ്റസ് പരിശോധിക്കാം.
+    hi: बताने के लिए धन्यवाद. हमारे एडवाइज़र आपके लिए स्टेटस चेक कर सकते हैं.

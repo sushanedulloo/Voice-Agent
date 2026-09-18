@@ -1,0 +1,37 @@
+# Model weights. 8.1 GB, fetched by tools/fetch_models.py, licences recorded in
+# models/MANIFEST.json. Never in git.
+models/
+
+# Rendered audio. ~140 MB and regenerable by tools/prerender_audio.py.
+# NOT in git - but see APPROACH.md: audio_cache/wav/INDEX.json is the handoff artefact
+# when a collaborator renders on a GPU and ships the cache back.
+audio_cache/
+
+# Run artefacts: audit trails, dashboards, generated bases, server logs.
+runs/
+
+# Virtualenvs
+.venv*/
+venv/
+
+# Secrets. .env.example is committed; .env never is.
+.env
+
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+
+# Office lock files (~$foo.pptx) - created whenever the deck is open.
+~$*
+
+# The client's own deck. 5.9 MB binary, SBI Card confidential, and the repo
+# convention is text-only (CLAUDE.md, Conventions). It is source-of-truth for
+# scope, so it travels by email/drive, not by git.
+*.pptx
+slides.txt
+raci.txt
+
+# Output of tools/import_script.py runs - regenerable, and a real BLC pack must
+# never be committed. packs/ is where imported packs land.
+packs/

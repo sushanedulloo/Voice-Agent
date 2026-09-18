@@ -1,0 +1,100 @@
+# Mandatory disclosures. Bound to nodes via `requires_disclosure`.
+# The validator proves a node carrying an obligation cannot be reached without it having played,
+# on EVERY path. That is the mechanical form of "disclosure before restricted topic"
+# (RESEARCH §2.6 target: >= 98%; identity-before-disclosure 100%).
+
+version: 0.1.0
+status: synthetic
+disclosures:
+  D01_IDENTITY:
+    must_precede:
+    - pitch
+    - offer_terms
+    rationale: Caller identity must be stated before any product discussion.
+    line:
+      en: I am {agent_display_name}, calling on behalf of {brand_name}.
+      hi_latn: Main {agent_display_name}, {brand_name} ki taraf se call kar rahi hoon.
+      bn: আমি {agent_display_name}, {brand_name} এর পক্ষ থেকে কল করছি।
+      gu: હું {agent_display_name}, {brand_name} વતી કોલ કરું છું.
+      mr: मी {agent_display_name}, {brand_name} च्या वतीने कॉल करतोय.
+      ta: நான் {agent_display_name}, {brand_name} சார்பாக கால் பண்ணுகிறேன்.
+      te: నేను {agent_display_name}, {brand_name} తరపున కాల్ చేస్తున్నాను.
+      kn: ನಾನು {agent_display_name}, {brand_name} ಪರವಾಗಿ ಕಾಲ್ ಮಾಡುತ್ತಿದ್ದೇನೆ.
+      ml: ഞാൻ {agent_display_name}, {brand_name} ന് വേണ്ടി വിളിക്കുന്നു.
+      hi: मैं {agent_display_name}, {brand_name} की तरफ़ से कॉल कर रही हूँ.
+  D02_RECORDED_LINE:
+    must_precede:
+    - pitch
+    - offer_terms
+    rationale: Recorded-line notice. Required before the conversation proceeds.
+    line:
+      en: This call is recorded for quality and training purposes.
+      hi_latn: Yeh call quality aur training ke liye record ki ja rahi hai.
+      bn: এই কলটি গুণমান ও প্রশিক্ষণের জন্য রেকর্ড করা হচ্ছে।
+      gu: આ કોલ ક્વોલિટી અને ટ્રેનિંગ માટે રેકોર્ડ થાય છે.
+      mr: हा कॉल क्वालिटी आणि ट्रेनिंगसाठी रेकॉर्ड केला जातोय.
+      ta: இந்த கால் குவாலிட்டி மற்றும் ட்ரெயினிங்குக்காக ரெக்கார்ட் செய்யப்படுகிறது.
+      te: ఈ కాల్ క్వాలిటీ మరియు ట్రైనింగ్ కోసం రికార్డ్ చేయబడుతోంది.
+      kn: ಈ ಕಾಲ್ ಕ್ವಾಲಿಟಿ ಮತ್ತು ಟ್ರೈನಿಂಗ್ ಗಾಗಿ ರೆಕಾರ್ಡ್ ಆಗುತ್ತಿದೆ.
+      ml: ഈ കോൾ ക്വാളിറ്റി, ട്രെയിനിംഗ് ആവശ്യങ്ങൾക്കായി റെക്കോർഡ് ചെയ്യുന്നു.
+      hi: यह कॉल क्वालिटी और ट्रेनिंग के लिए रिकॉर्ड की जा रही है.
+  D03_FLEXIPAY_TERMS:
+    must_precede:
+    - offer_terms
+    rationale: Interest, fee and tenure must be disclosed before acceptance is sought.
+    line:
+      en: This conversion carries interest of {roi_annual_pct} percent per annum and a one-time processing fee of {processing_fee} rupees. Goods and services tax applies as per government rules.
+      hi_latn: Is conversion par {roi_annual_pct} percent annual interest lagta hai, aur {processing_fee} rupees ka one-time processing fee hai. GST government rules ke hisaab se lagega.
+      bn: এই কনভার্সনে বার্ষিক {roi_annual_pct} শতাংশ সুদ এবং {processing_fee} টাকার এককালীন প্রসেসিং ফি প্রযোজ্য। জিএসটি সরকারি নিয়ম অনুযায়ী প্রযোজ্য হবে।
+      gu: આ કન્વર્ઝન પર વાર્ષિક {roi_annual_pct} ટકા વ્યાજ અને {processing_fee} રૂપિયાની એક વખતની પ્રોસેસિંગ ફી લાગે છે. જીએસટી સરકારી નિયમો મુજબ લાગુ થશે.
+      mr: या कन्व्हर्जनवर वार्षिक {roi_annual_pct} टक्के व्याज आणि {processing_fee} रुपयांचा एकवेळचा प्रोसेसिंग फी लागतो. जीएसटी सरकारी नियमांनुसार लागू होईल.
+      ta: இந்த கன்வர்ஷனுக்கு ஆண்டுக்கு {roi_annual_pct} சதவீதம் வட்டி மற்றும் {processing_fee} ரூபாய் ஒருமுறை ப்ராசசிங் கட்டணம் உள்ளது. ஜிஎஸ்டி அரசாங்க விதிகளின்படி பொருந்தும்.
+      te: ఈ కన్వర్షన్ పై సంవత్సరానికి {roi_annual_pct} శాతం వడ్డీ మరియు {processing_fee} రూపాయల ఒకసారి ప్రాసెసింగ్ ఫీజు ఉంటుంది. జీఎస్టీ ప్రభుత్వ నిబంధనల ప్రకారం వర్తిస్తుంది.
+      kn: ಈ ಕನ್ವರ್ಶನ್ ಮೇಲೆ ವಾರ್ಷಿಕ {roi_annual_pct} ಶೇಕಡಾ ಬಡ್ಡಿ ಮತ್ತು {processing_fee} ರೂಪಾಯಿ ಒಂದು ಬಾರಿಯ ಪ್ರೊಸೆಸಿಂಗ್ ಶುಲ್ಕ ಇರುತ್ತದೆ. ಜಿಎಸ್‌ಟಿ ಸರ್ಕಾರಿ ನಿಯಮಗಳ ಪ್ರಕಾರ ಅನ್ವಯಿಸುತ್ತದೆ.
+      ml: ഈ കൺവേർഷന് വർഷത്തിൽ {roi_annual_pct} ശതമാനം പലിശയും {processing_fee} രൂപയുടെ ഒറ്റത്തവണ പ്രോസസിംഗ് ഫീസും ഉണ്ട്. ജിഎസ്ടി സർക്കാർ നിയമപ്രകാരം ബാധകമാണ്.
+      hi: इस कन्वर्ज़न पर {roi_annual_pct} प्रतिशत सालाना ब्याज और {processing_fee} रुपये की एक बार की प्रोसेसिंग फ़ीस लगती है. जीएसटी सरकारी नियमों के अनुसार लगेगा.
+  D04_CLIP_TERMS:
+    must_precede:
+    - offer_terms
+    rationale: A limit enhancement is an offer subject to terms, not an entitlement.
+    line:
+      en: The revised limit is subject to the terms and conditions of your card agreement.
+      hi_latn: Revised limit aapke card agreement ke terms and conditions ke adheen hai.
+      bn: সংশোধিত লিমিট আপনার কার্ড চুক্তির শর্তাবলীর অধীন।
+      gu: સુધારેલી લિમિટ તમારા કાર્ડ કરારની શરતોને આધીન છે.
+      mr: सुधारित लिमिट तुमच्या कार्ड कराराच्या अटी आणि शर्तींच्या अधीन आहे.
+      ta: திருத்தப்பட்ட லிமிட் உங்கள் கார்டு ஒப்பந்தத்தின் விதிமுறைகளுக்கு உட்பட்டது.
+      te: సవరించిన లిమిట్ మీ కార్డ్ ఒప్పందం నిబంధనలకు లోబడి ఉంటుంది.
+      kn: ಪರಿಷ್ಕೃತ ಲಿಮಿಟ್ ನಿಮ್ಮ ಕಾರ್ಡ್ ಒಪ್ಪಂದದ ನಿಯಮಗಳಿಗೆ ಒಳಪಟ್ಟಿದೆ.
+      ml: പുതുക്കിയ ലിമിറ്റ് നിങ്ങളുടെ കാർഡ് കരാറിന്റെ നിബന്ധനകൾക്ക് വിധേയമാണ്.
+      hi: संशोधित लिमिट आपके कार्ड एग्रीमेंट के नियमों और शर्तों के अधीन है.
+  D05_MULTICARD_TERMS:
+    must_precede:
+    - offer_terms
+    rationale: Fees must be disclosed before a second card is discussed as acceptable.
+    line:
+      en: This card carries a joining fee of {joining_fee} rupees and an annual fee of {annual_fee} rupees, which is reversed on {fee_waiver_condition}.
+      hi_latn: Is card par {joining_fee} rupees joining fee aur {annual_fee} rupees annual fee hai, jo {fee_waiver_condition} par reverse ho jaati hai.
+      bn: এই কার্ডে {joining_fee} টাকা জয়েনিং ফি এবং {annual_fee} টাকা বার্ষিক ফি আছে, যা {fee_waiver_condition} এ ফেরত দেওয়া হয়।
+      gu: આ કાર્ડ પર {joining_fee} રૂપિયા જોઇનિંગ ફી અને {annual_fee} રૂપિયા વાર્ષિક ફી છે, જે {fee_waiver_condition} પર પાછી મળે છે.
+      mr: या कार्डवर {joining_fee} रुपये जॉइनिंग फी आणि {annual_fee} रुपये वार्षिक फी आहे, जी {fee_waiver_condition} वर परत केली जाते.
+      ta: இந்த கார்டுக்கு {joining_fee} ரூபாய் ஜாய்னிங் கட்டணம் மற்றும் {annual_fee} ரூபாய் ஆண்டு கட்டணம் உள்ளது, இது {fee_waiver_condition} ல் திரும்ப வழங்கப்படும்.
+      te: ఈ కార్డ్ పై {joining_fee} రూపాయల జాయినింగ్ ఫీజు మరియు {annual_fee} రూపాయల వార్షిక ఫీజు ఉంటుంది, ఇది {fee_waiver_condition} పై తిరిగి ఇవ్వబడుతుంది.
+      kn: ಈ ಕಾರ್ಡ್ ಗೆ {joining_fee} ರೂಪಾಯಿ ಜಾಯಿನಿಂಗ್ ಶುಲ್ಕ ಮತ್ತು {annual_fee} ರೂಪಾಯಿ ವಾರ್ಷಿಕ ಶುಲ್ಕ ಇದೆ, ಇದು {fee_waiver_condition} ಮೇಲೆ ಹಿಂತಿರುಗಿಸಲಾಗುತ್ತದೆ.
+      ml: ഈ കാർഡിന് {joining_fee} രൂപ ജോയിനിംഗ് ഫീസും {annual_fee} രൂപ വാർഷിക ഫീസും ഉണ്ട്, അത് {fee_waiver_condition} ൽ തിരികെ നൽകും.
+      hi: इस कार्ड पर {joining_fee} रुपये जॉइनिंग फ़ीस और {annual_fee} रुपये सालाना फ़ीस है, जो {fee_waiver_condition} पर वापस कर दी जाती है.
+  D06_ADVISOR_HANDOFF:
+    must_precede:
+    - transfer
+    rationale: The customer is told a human will take over before the transfer happens.
+    line:
+      en: I will now connect you to our advisor, who will confirm your details and complete the process.
+      hi_latn: Main aapko ab hamare advisor se connect kar rahi hoon, jo aapki details confirm karke process complete karenge.
+      bn: আমি এখন আপনাকে আমাদের অ্যাডভাইজারের সাথে যুক্ত করছি, যিনি আপনার তথ্য নিশ্চিত করে প্রক্রিয়াটি সম্পূর্ণ করবেন।
+      gu: હું હવે તમને અમારા એડવાઇઝર સાથે જોડું છું, જે તમારી વિગતો કન્ફર્મ કરીને પ્રક્રિયા પૂર્ણ કરશે.
+      mr: मी आता तुम्हाला आमच्या अ‍ॅडव्हायझरशी जोडतोय, जे तुमचे तपशील कन्फर्म करून प्रक्रिया पूर्ण करतील.
+      ta: இப்போது உங்களை எங்கள் அட்வைசரிடம் இணைக்கிறேன், அவர் உங்கள் விவரங்களை உறுதி செய்து செயல்முறையை முடிப்பார்.
+      te: ఇప్పుడు మిమ్మల్ని మా అడ్వైజర్ కు కనెక్ట్ చేస్తున్నాను, వారు మీ వివరాలు నిర్ధారించి ప్రక్రియను పూర్తి చేస్తారు.
+      kn: ಈಗ ನಿಮ್ಮನ್ನು ನಮ್ಮ ಅಡ್ವೈಸರ್ ಗೆ ಕನೆಕ್ಟ್ ಮಾಡುತ್ತಿದ್ದೇನೆ, ಅವರು ನಿಮ್ಮ ವಿವರಗಳನ್ನು ಖಚಿತಪಡಿಸಿ ಪ್ರಕ್ರಿಯೆ ಪೂರ್ಣಗೊಳಿಸುತ್ತಾರೆ.
+      ml: ഞാൻ ഇപ്പോൾ നിങ്ങളെ ഞങ്ങളുടെ അഡ്വൈസറുമായി ബന്ധിപ്പിക്കുന്നു, അവർ നിങ്ങളുടെ വിശദാംശങ്ങൾ സ്ഥിരീകരിച്ച് നടപടി പൂർത്തിയാക്കും.
+      hi: मैं अब आपको हमारे एडवाइज़र से जोड़ रही हूँ, जो आपकी डिटेल कन्फ़र्म करके प्रक्रिया पूरी करेंगे.
