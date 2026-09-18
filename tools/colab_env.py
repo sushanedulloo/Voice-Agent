@@ -222,13 +222,18 @@ def verify() -> bool:
         import torchaudio
         print(f"  torchaudio   {torchaudio.__version__}")
         print(f"  protobuf     {_version('protobuf')}")
+        # Through engine.prerender, not a bare `import transformers`: prerender is what sets
+        # USE_TF=0, and verifying under conditions the render will not have is not verifying.
+        from engine import prerender                                 # noqa: F401
         import transformers
         print(f"  transformers {transformers.__version__}")
         if not transformers.__version__.startswith(TRANSFORMERS.split("==")[1]):
             print(f"  ! expected {TRANSFORMERS} - restart the session and re-run install()")
             ok = False
-        # Force the lazy module that actually pulls the protobuf chain in. Without this, verify()
-        # passes and the failure surfaces later, inside the render, wearing a different hat.
+        print(f"  tensorflow   {'disabled (USE_TF=0)' if os.environ.get('USE_TF') == '0' else 'ENABLED - see engine/prerender.py'}")
+        # Force the lazy module that actually pulls the TF/protobuf chain in. Without this,
+        # verify() passes and the failure surfaces later, inside the render, wearing a different
+        # hat - a TTS load that dies in an object-detection loss import.
         from transformers import modeling_utils                      # noqa: F401
         import parler_tts                                            # noqa: F401
         print("  parler_tts   imported")
@@ -248,13 +253,18 @@ def _explain(exc: Exception) -> None:
     text = str(exc)
     if "runtime_version" in text and "protobuf" in text:
         have = _version("protobuf")
-        print(f"\n  This is the protobuf collision, not a transformers bug. Installed: {have}.")
-        print(f"  Colab's own packages are generated against protobuf >= {PROTOBUF_FLOOR}; "
-              f"something in\n  parler-tts's tree pulled it back.\n")
+        print(f"\n  TensorFlow, not transformers and not protobuf on its own. The chain is:\n")
+        print("      parler_tts -> transformers.modeling_utils -> loss_deformable_detr")
+        print("        -> image_transforms -> `import tensorflow` -> attr_value_pb2\n")
+        print(f"  Colab's TensorFlow is generated against protobuf >= {PROTOBUF_FLOOR}; "
+              f"installed is {have},\n  because parler-tts's tree pins it lower. Nothing in our "
+              f"path needs TensorFlow.\n")
+        print("  engine/prerender.py sets USE_TF=0 to stop transformers looking for it. Seeing "
+              "this\n  means it was imported before that ran, or the checkout is stale:\n")
         print(f"      !pip install -q 'protobuf>={PROTOBUF_FLOOR}'")
         print("      colab_env.restart()        # then re-run from cell 1")
-        print("\n  The restart is required: protobuf is already imported before a Colab session "
-              "finishes\n  booting, so a reinstall alone changes nothing in this kernel.")
+        print("\n  The restart is not optional - protobuf and transformers are already in "
+              "sys.modules,\n  and a reinstall does not touch a module this kernel has loaded.")
     elif "torchaudio" in text or "torio" in text:
         print("\n  torch and torchaudio are a mismatched pair - the native extension will not "
               "load\n  and parler_tts cannot import. Do not install one without the other.")

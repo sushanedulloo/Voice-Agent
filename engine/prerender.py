@@ -33,6 +33,27 @@ from dataclasses import dataclass, field
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 
+# Keep transformers away from TensorFlow and Flax.
+#
+# We use exactly one backend: torch. But transformers probes for all three at import time, and
+# `transformers/image_transforms.py` does a bare `import tensorflow as tf` when it finds one.
+# Colab ships TensorFlow, TensorFlow's generated _pb2 files need protobuf >= 5.27, and several
+# packages in parler-tts's tree pin protobuf below that. The result is that loading a TTS model
+# fails inside an object-detection loss import:
+#
+#   parler_tts -> transformers.PreTrainedModel -> modeling_utils -> loss.loss_deformable_detr
+#     -> image_transforms -> tensorflow -> attr_value_pb2
+#     -> ImportError: cannot import name 'runtime_version' from 'google.protobuf'
+#
+# Pinning protobuf up fixes the symptom. This removes the cause: nothing in our path needs TF,
+# so transformers should not go looking for it. Set before any transformers import, which is
+# why it is module level here - ParlerRenderer imports transformers lazily inside __init__, so
+# importing this module is always first.
+#
+# setdefault, not assignment: an operator who deliberately exports USE_TF keeps their choice.
+os.environ.setdefault("USE_TF", "0")
+os.environ.setdefault("USE_JAX", "0")
+
 # THE one definition of where audio lives. apps/server.py, tools/prerender_audio.py and
 # tools/render_status.py all resolve through here rather than each rebuilding the path, so a
 # render that writes somewhere else cannot silently disagree with a server that reads the
