@@ -41,7 +41,24 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 # narrow and "whatever is latest" is not a version.
 TRANSFORMERS = "transformers==4.46.1"
 PARLER = "parler-tts @ git+https://github.com/huggingface/parler-tts.git"
-EXTRA = ["accelerate>=0.26.0", "sentencepiece", "protobuf", "soundfile", "pyyaml", "librosa"]
+
+# protobuf is a FLOOR, not a bare name, and the distinction is the whole reason this constant
+# has a comment.
+#
+# Colab's preinstalled stack is generated against protobuf 5.x: its `_pb2.py` files begin with
+# `from google.protobuf import runtime_version`, which only exists in protobuf >= 5.27. Several
+# packages in parler-tts's dependency tree still declare an old protobuf ceiling, and pip's
+# resolver satisfies that by silently DOWNGRADING the protobuf Colab is running on. pip reports
+# success. The next import of anything protobuf-generated then dies with
+#
+#     cannot import name 'runtime_version' from 'google.protobuf'
+#
+# which reads like a transformers bug and is not one. A floor makes the resolver either honour
+# it or fail loudly at install time, where the message is actionable.
+PROTOBUF_FLOOR = "5.27"
+
+EXTRA = ["accelerate>=0.26.0", "sentencepiece", f"protobuf>={PROTOBUF_FLOOR}",
+         "soundfile", "pyyaml", "librosa"]
 
 # NOT installed on Colab: torch and torchaudio.
 #
@@ -94,30 +111,80 @@ def gpu() -> dict:
 # 2. Dependencies
 # --------------------------------------------------------------------------------------------
 
-def install(quiet: bool = True) -> None:
+def _version(package: str):
+    from importlib.metadata import PackageNotFoundError, version    # noqa: PLC0415
+    try:
+        return version(package)
+    except PackageNotFoundError:
+        return None
+
+
+def _older_than(have: str, floor: str) -> bool:
+    def parts(v):
+        return [int(x) for x in v.split(".")[:3] if x.isdigit()]
+    return parts(have) < parts(floor)
+
+
+def install(quiet: bool = True) -> bool:
     """Install the build-time deps on top of whatever torch the host already has.
 
-    Run this BEFORE anything in the session imports transformers. Colab pre-installs
-    transformers but does not pre-import it, so installing first means no runtime restart; if
-    something has already imported it, pip's replacement will not take effect until a restart
-    and `verify()` will say so.
+    Returns True if the session must be RESTARTED before anything else will work.
+
+    Run this before anything in the session imports transformers. Colab pre-installs it but does
+    not pre-import it, so installing first usually avoids a restart. protobuf is different: it
+    is already imported by the time a Colab session finishes booting, so if the resolver moves
+    it, a restart is not optional.
     """
     if not (on_colab() and SKIP_TORCH_ON_COLAB):
         print("  not on Colab - installing the full pinned set from requirements-build.txt")
         _run([sys.executable, "-m", "pip", "install", "-q" if quiet else "-v",
               "-r", str(ROOT / "requirements-build.txt")])
-        return
+        return False
 
-    if "transformers" in sys.modules:
-        print("  ! transformers is already imported in this session. pip will install the "
-              "pinned version but this kernel keeps the old one.\n"
-              "  ! Runtime -> Restart session, then run this cell again before any import.")
+    before = {name: _version(name) for name in ("protobuf", "transformers")}
 
     args = [sys.executable, "-m", "pip", "install"]
     if quiet:
         args.append("-q")
     _run(args + [TRANSFORMERS, PARLER, *EXTRA])
     print("  torch left alone on purpose - see SKIP_TORCH_ON_COLAB in tools/colab_env.py")
+
+    # Belt and braces: the floor in EXTRA should prevent a downgrade, but a transitive pin
+    # resolved in a later pass can still win. Check the outcome rather than trusting the input.
+    have = _version("protobuf")
+    if have and _older_than(have, PROTOBUF_FLOOR):
+        print(f"  ! the dependency tree pulled protobuf back to {have}; Colab's own packages "
+              f"need >= {PROTOBUF_FLOOR}. Repairing.")
+        _run(args + [f"protobuf>={PROTOBUF_FLOOR}"])
+        have = _version("protobuf")
+        print(f"  protobuf now {have}")
+
+    after = {"protobuf": have, "transformers": _version("transformers")}
+    moved = [n for n in before if before[n] != after[n] and n in _loaded_roots()]
+    if moved:
+        print(f"\n  RESTART REQUIRED - {', '.join(moved)} changed underneath a module this "
+              f"kernel has already imported.\n"
+              f"  Call colab_env.restart(), then re-run from cell 1.")
+    return bool(moved)
+
+
+def _loaded_roots() -> set:
+    """Top-level packages this kernel has already imported. protobuf lands here as
+    `google.protobuf`, which is why this looks at prefixes rather than exact names."""
+    loaded = set()
+    for name in list(sys.modules):
+        loaded.add(name.split(".")[0])
+        if name.startswith("google.protobuf"):
+            loaded.add("protobuf")
+    return loaded
+
+
+def restart() -> None:
+    """Restart the Colab kernel. Everything in memory goes, including the repo on sys.path -
+    which is why the instruction is always "re-run from cell 1" rather than "re-run this cell"."""
+    print("  restarting - re-run from cell 1 once the kernel is back")
+    import IPython                                                  # noqa: PLC0415
+    IPython.get_ipython().kernel.do_shutdown(restart=True)
 
 
 def verify() -> bool:
@@ -130,17 +197,43 @@ def verify() -> bool:
               f"{torch.cuda.is_available() and torch.cuda.is_bf16_supported()}")
         import torchaudio
         print(f"  torchaudio   {torchaudio.__version__}")
+        print(f"  protobuf     {_version('protobuf')}")
         import transformers
         print(f"  transformers {transformers.__version__}")
         if not transformers.__version__.startswith(TRANSFORMERS.split("==")[1]):
             print(f"  ! expected {TRANSFORMERS} - restart the session and re-run install()")
             ok = False
+        # Force the lazy module that actually pulls the protobuf chain in. Without this, verify()
+        # passes and the failure surfaces later, inside the render, wearing a different hat.
+        from transformers import modeling_utils                      # noqa: F401
         import parler_tts                                            # noqa: F401
         print("  parler_tts   imported")
     except Exception as exc:                                         # noqa: BLE001
         print(f"  FAILED {type(exc).__name__}: {exc}")
+        _explain(exc)
         ok = False
     return ok
+
+
+def _explain(exc: Exception) -> None:
+    """Turn the two failures this stack actually produces into instructions.
+
+    Both of them point at transformers and neither is a transformers problem, so the raw
+    traceback sends you to the wrong place.
+    """
+    text = str(exc)
+    if "runtime_version" in text and "protobuf" in text:
+        have = _version("protobuf")
+        print(f"\n  This is the protobuf collision, not a transformers bug. Installed: {have}.")
+        print(f"  Colab's own packages are generated against protobuf >= {PROTOBUF_FLOOR}; "
+              f"something in\n  parler-tts's tree pulled it back.\n")
+        print(f"      !pip install -q 'protobuf>={PROTOBUF_FLOOR}'")
+        print("      colab_env.restart()        # then re-run from cell 1")
+        print("\n  The restart is required: protobuf is already imported before a Colab session "
+              "finishes\n  booting, so a reinstall alone changes nothing in this kernel.")
+    elif "torchaudio" in text or "torio" in text:
+        print("\n  torch and torchaudio are a mismatched pair - the native extension will not "
+              "load\n  and parler_tts cannot import. Do not install one without the other.")
 
 
 # --------------------------------------------------------------------------------------------
