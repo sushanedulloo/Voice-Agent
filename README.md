@@ -1,14 +1,14 @@
-# SBI Card Outbound Voice Agent
+# Outbound Voice Agent
 
-A multilingual outbound voice agent that takes the **front ninety seconds** of SBI Card's
+A multilingual outbound voice agent that takes the **front ninety seconds** of a card issuer's
 cross-sell calls: greet, pitch from a legally approved script, answer from an approved FAQ
 glossary, detect interest, and warm-transfer interested customers to a human advisor.
 
-We are a sub-vendor. The dialer, SIP trunk, advisors and CRM belong to SBI Card's calling
+We are a sub-vendor. The dialer, SIP trunk, advisors and CRM belong to the client's calling
 partner. We own the voice layer and the analytics around it.
 
 > **Nothing here is approved content.** The default pack is TransOrg-invented placeholder
-> standing in for the BLC script and the SBIC FAQ glossary, neither of which we have seen
+> standing in for the BLC script and the client's FAQ glossary, neither of which we have seen
 > (OI-5). Every run prints its pack's provenance. See [Content packs](#content-packs).
 
 ---
@@ -50,13 +50,22 @@ NeMo Guardrails' Colang falls through to an `llm continuation` flow that generat
 
 | Path | What |
 |---|---|
-| `content/` | The default content pack — everything the bot may say |
-| `packs/` | Alternate packs (client-supplied, imported) |
 | `engine/` | Runtime: content, router, machine, session, audit, ASR |
-| `apps/` | REPL, browser call console, campaign runner |
-| `tools/` | Validator, importer, benchmark, reports |
-| `docs/` | SRS, DESIGN, RISKS, ADRs, RESEARCH |
+| `apps/` | REPL, browser call console, campaign runner, API |
+| `content/` | The default content pack — everything the bot may say |
+| `tools/` | Validator, importer, renderers, benchmark, reports |
+| `tests/` | The compliance invariants |
+| `docs/` | Every document. Start at [`docs/README.md`](docs/README.md) |
+| `incoming/` | Drop zone for a client-supplied script, with a sample |
 | `cost_model.py` | Unit economics. Runnable. One place an assumption lives |
+
+Three documents carry the working knowledge:
+
+| | |
+|---|---|
+| [`docs/RUNBOOK.md`](docs/RUNBOOK.md) | Every command, from a cold machine |
+| [`docs/APPROACH.md`](docs/APPROACH.md) | Where we are, what is next, and the GPU render handoff |
+| [`docs/Context.md`](docs/Context.md) | The engagement: business, competition, economics |
 
 ### Engine
 
@@ -78,12 +87,12 @@ conversations lengthen — so the phase is tracked in code, not held in a prompt
 ## Content packs
 
 A pack is a directory. The runtime has no other source of customer-facing language, so replacing
-the placeholder with SBIC's approved script is a directory swap:
+the placeholder with the client's approved script is a directory swap:
 
 ```bash
-python tools/validate_content.py --pack packs/sbic-blc-2026-10
-python apps/campaign.py          --pack packs/sbic-blc-2026-10 --base runs/base.csv
-python apps/server.py            --pack packs/sbic-blc-2026-10
+python tools/validate_content.py --pack packs/client-blc-2026-10
+python apps/campaign.py          --pack packs/client-blc-2026-10 --base runs/base.csv
+python apps/server.py            --pack packs/client-blc-2026-10
 ```
 
 `pack.yaml` declares `provenance` (`synthetic` or `blc-approved`) and an approval ref. Every
@@ -93,9 +102,9 @@ words were approved when that call happened — a version string is a claim, a h
 When the client sends a spreadsheet:
 
 ```bash
-python tools/import_script.py --in incoming/sbic --out packs/sbic-blc-2026-10 \
-                              --name sbic-blc --approval-ref BLC-2026-1012
-python tools/validate_content.py --pack packs/sbic-blc-2026-10
+python tools/import_script.py --in incoming/client-script --out packs/client-blc-2026-10 \
+                              --name client-blc --approval-ref BLC-2026-1012
+python tools/validate_content.py --pack packs/client-blc-2026-10
 ```
 
 The importer keeps their text byte-for-byte — hand-copying an approved disclosure into YAML is a

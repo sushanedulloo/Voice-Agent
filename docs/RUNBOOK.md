@@ -114,10 +114,10 @@ played in what order, and whether anything unapproved was ever uttered.
 Content is a directory, not a deployment. When the BLC script arrives:
 
 ```bat
-python tools\import_script.py --in incoming\sbic --out packs\sbic-blc-2026-10 ^
-                              --name sbic-blc --approval-ref BLC-2026-1012
-python tools\validate_content.py --pack packs\sbic-blc-2026-10
-python apps\server.py            --pack packs\sbic-blc-2026-10
+python tools\import_script.py --in incoming\client-script --out packs\client-blc-2026-10 ^
+                              --name client-blc --approval-ref BLC-2026-1012
+python tools\validate_content.py --pack packs\client-blc-2026-10
+python apps\server.py            --pack packs\client-blc-2026-10
 ```
 
 The pack will not load until the validator passes. That is deliberate.

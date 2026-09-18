@@ -1,15 +1,17 @@
 # Project Documentation
 
-SBI Card AI-BOT Outbound Telesales Voice Agent · TransOrg Analytics · September 2026
+AI-BOT Outbound Telesales Voice Agent · TransOrg Analytics · September 2026
 
 ## Where to start
 
 | If you are… | Read |
 |---|---|
-| New to the engagement | [`../Context.md`](../Context.md) — the business, the competition, the economics |
+| New to the engagement | [`Context.md`](Context.md) — the business, the competition, the economics |
+| Running it | [`RUNBOOK.md`](RUNBOOK.md) — every command, from a cold machine |
+| Picking up where we left off | [`APPROACH.md`](APPROACH.md) — next steps and the GPU render handoff |
 | Picking up the build | [`../CLAUDE.md`](../CLAUDE.md), then [`SRS.md`](SRS.md), then [`DESIGN.md`](DESIGN.md) |
 | Reviewing the architecture | [`DIAGRAMS.md`](DIAGRAMS.md) and [`adr/`](adr/README.md) |
-| From SBI Card InfoSec | [`SECURITY-COMPLIANCE.md`](SECURITY-COMPLIANCE.md), [`SRS.md` §6](SRS.md#6-compliance-requirements) |
+| From the client's InfoSec | [`SRS.md` §6](SRS.md#6-compliance-requirements) and [`RISKS.md`](RISKS.md) |
 | Running the numbers | [`../cost_model.py`](../cost_model.py) — runnable, not a spreadsheet screenshot |
 | Deciding what to worry about | [`RISKS.md`](RISKS.md) |
 
@@ -22,9 +24,14 @@ SBI Card AI-BOT Outbound Telesales Voice Agent · TransOrg Analytics · Septembe
 | [`DIAGRAMS.md`](DIAGRAMS.md) | C4 views, sequence diagrams, state machine, ER model, deployment | Draft |
 | [`adr/`](adr/README.md) | Architecture Decision Records — six accepted | Active |
 | [`TEST-STRATEGY.md`](TEST-STRATEGY.md) | Test levels, compliance evidence, evaluation method | Draft |
-| [`SECURITY-COMPLIANCE.md`](SECURITY-COMPLIANCE.md) | Regulatory obligations mapped to engineering controls | Draft |
 | [`RISKS.md`](RISKS.md) | Risk register, scored, with triggers and owners | Active |
-| [`api/`](api/) | Interface contracts | Draft |
+| [`api/`](api/) | Interface contracts — `openapi.yaml` | Draft |
+| [`RUNBOOK.md`](RUNBOOK.md) | Every command, from a cold machine | Active |
+| [`APPROACH.md`](APPROACH.md) | Where we are, what is next, the GPU handoff | Active |
+| [`Context.md`](Context.md) | Engagement brief. Superseded on cost — see point 3 | Reference |
+| [`DELIVERY-PLAN.md`](DELIVERY-PLAN.md) | Sequenced plan to the Day-30 gate | Active |
+| [`RESEARCH.md`](RESEARCH.md) | What the field actually does, with sources | Reference |
+| [`SCRIPT.md`](SCRIPT.md) | The synthetic script, annotated | Draft |
 
 ## Reading the requirement IDs
 
@@ -62,3 +69,4 @@ charter-sourced items are the contract.**
 - ADRs are immutable. Superseding means a new record, not an edit.
 - Every assumption is a named, sourced constant. `cost_model.py` is the pattern.
 - Where `Context.md` and the charter deck disagree, **the charter wins.**
+- All documentation lives here. The repository root carries only `README.md` and build files.

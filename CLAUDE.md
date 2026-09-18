@@ -39,13 +39,13 @@ of them is a project-ending event, not a bug.
 | Document | What it settles |
 |---|---|
 | `AI BOT Calling .pptx` | **The client's own charter.** Process map, RACI, 7-feature scope, Phase-1 targets, the three product flowcharts. Authoritative on scope. |
-| `Context.md` | Engagement brief: economics, competitors, positioning, history. Authoritative on strategy. Note: some cost figures superseded — see below. |
+| `docs/Context.md` | Engagement brief: economics, competitors, positioning, history. Authoritative on strategy. Note: some cost figures superseded — see below. |
 | `cost_model.py` | Bottom-up unit economics. Runnable. Re-run after changing any assumption. |
 | `docs/SRS.md` | Numbered, traceable requirements. Every requirement cites its source. |
 | `docs/DESIGN.md` | Architecture, diagrams, latency budget, data model. |
 | `docs/adr/` | Architecture Decision Records — why, not just what. |
 
-**Where `Context.md` and the charter disagree, the charter wins.** Context.md is our reading of
+**Where `docs/Context.md` and the charter disagree, the charter wins.** Context.md is our reading of
 the engagement; the .pptx is what the client actually wrote.
 
 ## Numbers that matter
@@ -53,7 +53,7 @@ the engagement; the .pptx is what the client actually wrote.
 Run `python cost_model.py` rather than quoting from memory. As of the September 2026 research:
 
 - Direct cost **₹0.22–0.82** per conversation; fully loaded **₹1.67–2.26** at Phase-1 volume.
-- `Context.md`'s ₹3.85/min figure is **superseded** — it double-counted the QA team, priced
+- `docs/Context.md`'s ₹3.85/min figure is **superseded** — it double-counted the QA team, priced
   runtime TTS for lines that are pre-rendered, and sized infra for 1,000 concurrent sessions.
 - Real concurrency requirement: **~121 average, ~243 peak.** Not 1,000.
 - Latency: **P50 ≤ 1.0 s, P95 ≤ 1.8 s.** Sub-second P95 over Indian PSTN is not achievable — an
@@ -85,7 +85,7 @@ Do not design around a guess on these. Flag and ask.
 4. **Does the partner meter media streaming?** We model telephony at ₹0 on their trunk. If they
    charge to fork RTP to us (~₹0.15/min is the Indian norm), that exceeds our entire model cost.
 5. **The commercial structure** (MSA with the calling partner, cost-reimbursement billing) is
-   asserted in `Context.md` but is **not in the charter deck**. Trace it before relying on it.
+   asserted in `docs/Context.md` but is **not in the charter deck**. Trace it before relying on it.
 
 ## Build order
 

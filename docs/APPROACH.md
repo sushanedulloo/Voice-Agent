@@ -2,7 +2,7 @@
 
 Branch `VoiceAgent`. Written 18 Sep 2026.
 
-Read `README.md` for what the system is and `RUNBOOK.md` for how to run it. This file is the
+Read [`../README.md`](../README.md) for what the system is and [`RUNBOOK.md`](RUNBOOK.md) for how to run it. This file is the
 plan: where we are, who does what next, and what we are deliberately not doing yet.
 
 ---
@@ -102,11 +102,11 @@ synthetic content than on SBIC's.
 Four commands. No code changes — that is what the content-pack design is for.
 
 ```bash
-python tools/import_script.py --in incoming/sbic --out packs/sbic-blc \
-                              --name sbic-blc --approval-ref BLC-2026-xxxx
-python tools/validate_content.py --pack packs/sbic-blc      # 0 errors or it does not run
-python tools/prerender_audio.py  --pack packs/sbic-blc --engine parler --locales en hi mr gu bn ta te kn ml
-python apps/server.py            --pack packs/sbic-blc
+python tools/import_script.py --in incoming/client-script --out packs/client-blc \
+                              --name client-blc --approval-ref BLC-2026-xxxx
+python tools/validate_content.py --pack packs/client-blc      # 0 errors or it does not run
+python tools/prerender_audio.py  --pack packs/client-blc --engine parler --locales en hi mr gu bn ta te kn ml
+python apps/server.py            --pack packs/client-blc
 ```
 
 The synthetic audio becomes orphaned — different words, different hashes. Delete it.

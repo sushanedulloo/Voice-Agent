@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Turn a client-supplied spreadsheet into a content pack.
 
-    python tools/import_script.py --in incoming/sbic --out packs/sbic-blc-2026-10 \\
-                                  --name sbic-blc --approval-ref BLC-2026-1012-FLEXI
+    python tools/import_script.py --in incoming/client-script --out packs/client-blc-2026-10 \\
+                                  --name client-blc --approval-ref BLC-2026-1012-FLEXI
 
 Expects three CSVs in --in (export each sheet of whatever workbook they send):
 

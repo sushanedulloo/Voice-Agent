@@ -3,7 +3,7 @@
 models/
 
 # Rendered audio. ~140 MB and regenerable by tools/prerender_audio.py.
-# NOT in git - but see APPROACH.md: audio_cache/wav/INDEX.json is the handoff artefact
+# NOT in git - but see docs/APPROACH.md: audio_cache/wav/INDEX.json is the handoff artefact
 # when a collaborator renders on a GPU and ships the cache back.
 audio_cache/
 
